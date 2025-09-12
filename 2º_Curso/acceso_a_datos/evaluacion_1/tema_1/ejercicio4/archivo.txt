@@ -1,0 +1,1 @@
+Esto es un texto de prueba para el ejercicio 4 de la asignatura acceso a datos.
