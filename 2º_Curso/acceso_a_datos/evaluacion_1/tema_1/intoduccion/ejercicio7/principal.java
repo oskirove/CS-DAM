@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class ejercicio {
+public class principal {
     public static void getWordInLines(String word) {
         try (Scanner sc = new Scanner(new File("2º_Curso/acceso_a_datos/evaluacion_1/tema_1/ejercicio7/archivo.txt"))) {
 
