@@ -10,6 +10,8 @@ public class funciones {
 
     public static void dividirFicheroPorLineas(File file, int lines) throws IOException {
         try (Scanner sc = new Scanner(file)) {
+            String[] buffer = new String[lines];
+            
             while (sc.hasNext()) {
                 System.out.println(sc.nextLine());
             }
