@@ -4,16 +4,67 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class funciones {
 
-    public static void dividirFicheroPorLineas(File file, int lines) throws IOException {
+    public static int solicitarOpcion(String mensaje) {
+        Scanner sc = new Scanner(System.in);
+
+        boolean trigger = false;
+
+        int opcion = 0;
+
+        while (!trigger) {
+            System.out.print(mensaje);
+            String texto = sc.nextLine();
+
+            try {
+                opcion = Integer.parseInt(texto);
+                System.out.println();
+                trigger = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Debes introducir un número válido");
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        return opcion;
+    }
+
+    public static void dividirFicheroPorLineas(File file, int lineas) throws IOException {
+
+        int contadorArchivos = 1;
+        int contadorLineas = 0;
+        PrintWriter escritor = null;
         try (Scanner sc = new Scanner(file)) {
-            String[] buffer = new String[lines];
-            
-            while (sc.hasNext()) {
-                System.out.println(sc.nextLine());
+
+            while (sc.hasNextLine()) {
+                if (contadorLineas == 0) {
+                    String nombresFicheros = "fichero" + contadorArchivos + ".txt";
+                    escritor = new PrintWriter(new FileWriter(nombresFicheros));
+                }
+
+                escritor.println(sc.nextLine());
+                contadorLineas++;
+
+                if (contadorLineas == lineas) {
+                    escritor.close();
+                    contadorLineas = 0;
+                    contadorArchivos++;
+                }
+            }
+
+            if (contadorLineas > 0 && escritor != null) {
+                escritor.close();
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (escritor != null) {
+                escritor.close();
             }
         }
     }
@@ -33,5 +84,9 @@ public class funciones {
             }
             System.out.println();
         }
+    }
+
+    public static void fusionarDocs(String archivo) {
+        
     }
 }
