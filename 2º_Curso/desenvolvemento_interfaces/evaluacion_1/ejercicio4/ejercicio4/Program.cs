@@ -27,7 +27,7 @@ namespace ejercicio4
                     {
                         case 1:
                             bool trigger1 = false;
-                            while (!trigger1)
+                            while (!trigger1)//TODO funcion de entrada con comprobacion de rango
                             {
                                 int año = f.solicitarEntero("Introduce un año: ");
                                 Console.WriteLine();
@@ -99,7 +99,6 @@ namespace ejercicio4
                         case 3:
                             goto case 1;
                             
-                            break;
                         case 4:
                             Console.WriteLine("Saliendo.");
                             break;
