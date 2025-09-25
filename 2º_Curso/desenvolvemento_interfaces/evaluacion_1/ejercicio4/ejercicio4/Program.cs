@@ -14,6 +14,7 @@ namespace ejercicio4
                 Console.WriteLine("MENÚ");
                 Console.WriteLine("1.- Comprueba si un año es bisiesto.");
                 Console.WriteLine("2.- Suma de rango de números.");
+                Console.WriteLine("3.- Realizar las dos primeras opciones.");
                 Console.WriteLine("4.- Salir.");
                 Console.WriteLine();
 
@@ -42,6 +43,11 @@ namespace ejercicio4
 
                                 Console.WriteLine(f.checkBisiesto(año) ? "El año {0} es bisiesto." : "El año {1} no es bisiesto.", año, año);
                                 Console.WriteLine();
+                            }
+
+                            if (opcion == 3)
+                            {
+                                goto case 2;
                             }
 
                             break;
@@ -91,8 +97,8 @@ namespace ejercicio4
 
                             break;
                         case 3:
+                            goto case 1;
                             
-
                             break;
                         case 4:
                             Console.WriteLine("Saliendo.");
