@@ -86,7 +86,14 @@ public class funciones {
         }
     }
 
-    public static void fusionarDocs(String archivo) {
+    public static void fusionarDocs(File archivo) {
+        File[] lista = archivo.listFiles();
         
+        System.out.println();
+
+        for (File file : lista) {
+            System.out.println(file.getName());
+        }
+        System.out.println();
     }
 }

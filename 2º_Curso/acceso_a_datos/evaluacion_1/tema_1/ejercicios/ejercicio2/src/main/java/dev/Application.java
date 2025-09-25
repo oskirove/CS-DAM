@@ -34,10 +34,10 @@ public class Application {
 
           break;
         case 3:
-          System.out.println("Introduce la ruta relativa del archivo: ");
+          System.out.print("Introduce la ruta relativa del archivo: ");
           String archivo = sc.nextLine();
           
-          funciones.fusionarDocs(archivo);
+          funciones.fusionarDocs( new File(archivo));
           break;
         case 4:
 
