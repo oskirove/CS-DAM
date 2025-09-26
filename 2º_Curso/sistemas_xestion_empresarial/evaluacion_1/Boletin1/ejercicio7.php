@@ -1,15 +1,13 @@
 <?php
 
-function calcularPrecioPasaje($mascota) {
+function calcularPrecio($mascota) {
 
     $tipoMascota = strtolower($mascota);
     $precio = 0;
     
     switch ($tipoMascota) {
         
-        case 'hurón':
-            $precio = 1.00;
-            break;
+        case 'huron':
         case 'gato':
             $precio = 1.00;
             break;
@@ -30,18 +28,18 @@ function calcularPrecioPasaje($mascota) {
     echo "El precio para un $tipoMascota es de $precio €";
 }
 
-calcularPrecioPasaje('Gato');
+calcularPrecio('Gato');
 echo "<br>";
 
-calcularPrecioPasaje('Perro');
+calcularPrecio('Perro');
 echo "<br>";
 
-calcularPrecioPasaje('Loro');
+calcularPrecio('Loro');
 echo "<br>";
 
-calcularPrecioPasaje('Hurón');
+calcularPrecio('Huron');
 echo "<br>";
 
-calcularPrecioPasaje('Conejo');
+calcularPrecio('Conejo');
 
 ?>
