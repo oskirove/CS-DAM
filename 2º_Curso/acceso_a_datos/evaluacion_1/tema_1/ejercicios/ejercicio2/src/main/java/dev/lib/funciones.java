@@ -25,8 +25,7 @@ public class funciones {
                 System.out.println();
                 trigger = true;
             } catch (IllegalArgumentException e) {
-                System.out.println("Debes introducir un número válido");
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("\33[31mError: Debes introducir un número válido\33[0m");
             }
         }
 
@@ -38,6 +37,7 @@ public class funciones {
         int contadorArchivos = 1;
         int contadorLineas = 0;
         PrintWriter escritor = null;
+
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
@@ -61,7 +61,7 @@ public class funciones {
             }
 
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("\33[31mError: " + e.getMessage() + "\33[0m");
         } finally {
             if (escritor != null) {
                 escritor.close();
@@ -86,14 +86,35 @@ public class funciones {
         }
     }
 
-    public static void fusionarDocs(File archivo) {
+    public static void fusionarDocs(File archivo) throws IOException {
+
+        if (!archivo.isDirectory()) {
+            System.out.println();
+            System.out.println("\33[41mError: el archivo no es válido o no existe\33[0m");
+        }
+
         File[] lista = archivo.listFiles();
-        
+
         System.out.println();
 
-        for (File file : lista) {
-            System.out.println(file.getName());
+        if (lista != null) {
+            try (PrintWriter escritor = new PrintWriter(new FileWriter("ficheroFusionado.txt", true))) {
+                for (File file : lista) {
+                    try (Scanner sc = new Scanner(file);) {
+
+                        while (sc.hasNextLine()) {
+                            escritor.print(sc.nextLine() + " ");
+                        }
+
+                    } catch (IOException e) {
+                        System.out.println("\33[31mError al leer el fichero " + file.getName() + "\33[0m");
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("\33[31mError al crear o escribir en el fichero de fusion \33[0m");
+            }
+        } else {
+            System.out.println("\33[31mNo se han podido leer los ficheros del directorio\33[0m");
         }
-        System.out.println();
     }
 }

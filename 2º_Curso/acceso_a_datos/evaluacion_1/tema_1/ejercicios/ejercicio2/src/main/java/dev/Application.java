@@ -13,10 +13,14 @@ public class Application {
     int opcion = 0;
 
     do {
-      System.out.println("1.- Dividir fichero por lineas.");
+      System.out.println();
+      System.out.println("\33[44m----MENÚ MANEJO DE FICHEROS Y ARCHIVOS----\33[0m");
+      System.out.println();
+      System.out.println("\33[1;34m1.- Dividir fichero por lineas.");
       System.out.println("2.- Dividir fichero por caracteres.");
       System.out.println("3.- Fusionar documentos de un archivo en uno.");
-      System.out.println("4.- Salir.");
+      System.out.println("4.- Salir.\33[0m");
+      System.out.println();
 
       opcion = funciones.solicitarOpcion("Introduce un número: ");
 
@@ -36,11 +40,12 @@ public class Application {
         case 3:
           System.out.print("Introduce la ruta relativa del archivo: ");
           String archivo = sc.nextLine();
-          
-          funciones.fusionarDocs( new File(archivo));
+
+          funciones.fusionarDocs(new File(archivo));
           break;
         case 4:
-
+          System.out.println("\33[1;32mSaliendo del programa...\33[0m");
+          System.out.println();
           break;
         default:
           System.out.println("Opción no válida");
