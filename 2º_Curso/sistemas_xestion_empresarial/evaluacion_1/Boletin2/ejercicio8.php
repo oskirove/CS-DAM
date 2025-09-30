@@ -20,4 +20,3 @@ foreach ($nombres as $nombre) {
 }
 
 echo "</table>";
-?>
