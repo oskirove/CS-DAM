@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Depart implements Serializable {
+
     private UUID departmentID;
     private String name;
 
@@ -34,7 +35,22 @@ public class Depart implements Serializable {
     }
 
     @Override
+
     public String toString() {
-        return "Depart{id=" + departmentID + ", nombre='" + name + "'}";
+        final String VERDE = "\033[32m";
+        final String CYAN = "\033[36m";
+        final String CIERRE = "\033[0m";
+
+        return String.format(
+                "\n%s───────────────────────────────%s\n" +
+                        "%sDepartamento%s\n" +
+                        "%sID:%s %s\n" +
+                        "%sNombre:%s %s\n" +
+                        "%s───────────────────────────────%s\n",
+                CYAN, CIERRE,
+                VERDE, CIERRE,
+                CYAN, CIERRE, departmentID,
+                CYAN, CIERRE, name,
+                CYAN, CIERRE);
     }
 }

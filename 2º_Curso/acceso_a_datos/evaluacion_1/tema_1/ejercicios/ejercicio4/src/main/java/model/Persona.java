@@ -65,7 +65,7 @@ public class Persona implements Serializable {
 
     @Override
     public String toString() {
-        return "Persona{" + "userID=" + userID + ", name='" + name + '\'' + ", age=" + age + ", departmentID="
-                + departmentID + '}';
+        return "\033[1;32m\n" + name.toUpperCase() + " \033[0m\n" + "- ID: " + userID + "\n" + "- Edad: " + age + "\n" + "- departamento:"
+                + departmentID + '\n';
     }
 }
