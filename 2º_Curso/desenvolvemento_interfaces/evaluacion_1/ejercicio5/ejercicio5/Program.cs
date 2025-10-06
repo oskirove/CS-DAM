@@ -7,7 +7,7 @@ namespace ejercicio5
 
         public static bool calculoFactorial(ref int value)
         {
-            if (value < 0) return false;
+            if (value < 0 || value > 10) return false;
 
             int acum = 1;
 
@@ -19,7 +19,7 @@ namespace ejercicio5
             return true;
         }
 
-        public static posicionesAleatorias()
+        public static posicionesAleatorias(int cantidad)
         {
 
         }
@@ -31,6 +31,8 @@ namespace ejercicio5
             Console.WriteLine(calculoFactorial(ref num));
 
             Console.WriteLine("Hola mundo");
+
+            Console.ReadKey();
         }
     }
 }
