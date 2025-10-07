@@ -12,9 +12,9 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("ejercicio5")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71649aef9d9667e212009c9fd67745c4cb985aa0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca427e7bb1317952a2f9d83cf012fe62dc4735ab")]
 [assembly: System.Reflection.AssemblyProductAttribute("ejercicio5")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ejercicio5")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
