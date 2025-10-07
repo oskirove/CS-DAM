@@ -1,37 +1,27 @@
 <?php
 
-function renderModal($id, $title, $primaryLabel = 'Enviar', $secondaryLabel = 'Cerrar')
+function renderModal($id, $title)
 {
     ob_start();
 
 ?>
     <style>
         .btn-primary {
-            background-color: #001d36ff;
+            background-color: #e9e2c9;
             border: none;
-            transition: background-color 0.4s ease-in-out, transform 0.4s ease-in-out;
-            border-radius: 13px;
-            padding: 5px 16px;
+            transition: background-color 0.4s ease-in-out, transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+            border-radius: 16px;
+            padding: 14px 22px;
             font-weight: 700;
+            color: #454233;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary:hover {
-            background-color: #001d36ff;
+            background-color: #ded7bfff;
             transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background-color: #e00101ff;
-            border: none;
-            transition: background-color 0.4s ease-in-out, transform 0.4s ease-in-out;
-            border-radius: 13px;
-            padding: 5px 16px;
-            font-weight: 700;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            background-color: #b30000ff;
+            color: #454233;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
 
         .modal-content {
@@ -40,7 +30,7 @@ function renderModal($id, $title, $primaryLabel = 'Enviar', $secondaryLabel = 'C
         }
 
         .modal-header {
-            background-color: #001222ff;
+            background-color: #454233;
             color: white;
             border-bottom: none;
             padding: 15px 20px;
@@ -54,11 +44,11 @@ function renderModal($id, $title, $primaryLabel = 'Enviar', $secondaryLabel = 'C
     </style>
 
     <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#<?= $id ?>'>
-        Registrarse
+        Suscribirse
     </button>
 
     <div class='modal fade' id='<?= $id ?>' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' aria-labelledby='<?= $id ?>Label' aria-hidden='true'>
-        <div class='modal-dialog modal-dialog-centered modal-lg'>
+        <div class='modal-dialog modal-dialog-centered modal-xl'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <h1 class='modal-title fs-5' id='<?= $id ?>Label'><?= $title ?></h1>
@@ -68,14 +58,14 @@ function renderModal($id, $title, $primaryLabel = 'Enviar', $secondaryLabel = 'C
                     <form class="row g-3 needs-validation" novalidate>
                         <div class="col-md-4">
                             <label for="validationCustom01" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+                            <input type="text" class="form-control" id="validationCustom01" value="Claude" required>
                             <div class="valid-feedback">
                                 Todo correcto!
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="validationCustom02" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+                            <input type="text" class="form-control" id="validationCustom02" value="Monet" required>
                             <div class="valid-feedback">
                                 Todo correcto!
                             </div>
@@ -100,25 +90,53 @@ function renderModal($id, $title, $primaryLabel = 'Enviar', $secondaryLabel = 'C
                         <div class="col-md-3">
                             <label for="validationCustom04" class="form-label">State</label>
                             <select class="form-select" id="validationCustom04" required>
-                                <option selected disabled value="">Choose...</option>
-                                <option>...</option>
+                                <option selected disabled value="">Subscripción</option>
+                                <option>Semanal - 5,99€</option>
+                                <option>Mensual - 17,99€</option>
+                                <option>Anual - 69,99€</option>
                             </select>
                             <div class="invalid-feedback">
                                 Please select a valid state.
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label for="validationCustom05" class="form-label">Zip</label>
-                            <input type="text" class="form-control" id="validationCustom05" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid zip.
+                            <label for="validationCustom05" class="form-label">Publicaciones</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkDefault" checked>
+                                <label class="form-check-label" for="checkDefault">
+                                    National Geographic
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
+                                <label class="form-check-label" for="checkChecked">
+                                    Electronic Letters
+                                </label>
+                            </div>
+                             <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
+                                <label class="form-check-label" for="checkChecked">
+                                    Conocer
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
+                                <label class="form-check-label" for="checkChecked">
+                                    Science
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
+                                <label class="form-check-label" for="checkChecked">
+                                    Desarrollo Web
+                                </label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                                 <label class="form-check-label" for="invalidCheck">
-                                    Agree to terms and conditions
+                                    ¿Desea recibir información sobre las publicaciones?
                                 </label>
                                 <div class="invalid-feedback">
                                     You must agree before submitting.
