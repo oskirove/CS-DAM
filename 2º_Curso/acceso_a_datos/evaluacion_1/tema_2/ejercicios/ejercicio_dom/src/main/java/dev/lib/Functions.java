@@ -1,5 +1,8 @@
 package dev.lib;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -7,6 +10,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSOutput;
+import org.w3c.dom.ls.LSSerializer;
 
 public class Functions {
 
@@ -112,8 +120,48 @@ public class Functions {
     public void modificarDOM(String tit, String dir, String gen) {
         Document doc = crearDOM();
 
-        Element nodoPelicula = doc.createElement("pelicula");
-        nodoPelicula.setAttribute("genero", gen);
-        nodoPelicula.appendChild(doc.createElement("\n"));
+        try {
+            Element nodoPelicula = doc.createElement("pelicula");
+            nodoPelicula.setAttribute("genero", gen);
+
+            Element nodoTitulo = doc.createElement("titulo");
+            Text textTitulo = doc.createTextNode(tit);
+            nodoTitulo.appendChild(textTitulo);
+            nodoPelicula.appendChild(nodoTitulo);
+
+            Element nodoDirector = doc.createElement("director");
+            Text textDirector = doc.createTextNode(dir);
+            nodoDirector.appendChild(textDirector);
+            nodoPelicula.appendChild(nodoDirector);
+
+            Node nodoPeliculas = doc.getFirstChild();
+            nodoPeliculas.appendChild(nodoPelicula);
+
+            grabarDOM(doc, ruta);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void grabarDOM(Document document, String ficheroSalida)
+            throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, FileNotFoundException {
+        DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+        DOMImplementationLS ls = (DOMImplementationLS) registry.getDOMImplementation("XML 3.0 LS 3.0");
+        // Se crea un destino vacio
+        LSOutput output = ls.createLSOutput();
+        output.setEncoding("UTF-8");
+        // Se establece el flujo de salida
+        output.setByteStream(new FileOutputStream(ficheroSalida));
+        // output.setByteStream(System.out);
+        // Permite escribir un documento DOM en XML
+        LSSerializer serializer = ls.createLSSerializer();
+        // Se establecen las propiedades del serializador
+        serializer.setNewLine("\r\n");
+
+        serializer.getDomConfig().setParameter("format-pretty-print", true);
+        // Se escribe el documento ya sea en un fichero o en una cadena de texto
+        serializer.write(document, output);
+        // String xmlCad=serializer.writeToString(document);
     }
 }
