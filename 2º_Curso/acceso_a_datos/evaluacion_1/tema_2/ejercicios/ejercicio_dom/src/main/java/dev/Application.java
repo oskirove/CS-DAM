@@ -9,8 +9,14 @@ public class Application {
 
     //f.mostrarTitulosPeliculas();
 
-    // f.mostrarInfoPeliculas();
+    //f.mostrarInfoPeliculas();
 
-    f.mostrarNDirectores(2);
+    //f.mostrarNDirectores(2);
+
+    String tit = "Cars";
+    String director = "Walt Disney";
+    String gen = "Carreras";
+
+    f.modificarDOM(tit, director, gen);
   }
 }

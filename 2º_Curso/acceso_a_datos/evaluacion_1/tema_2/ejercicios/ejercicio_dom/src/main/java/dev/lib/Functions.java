@@ -102,7 +102,18 @@ public class Functions {
         for (int i = 0; i < listaPeliculas.getLength(); i++) {
             Node nodoPeliculas = listaPeliculas.item(i);
 
-            
+            String titulos = nodoPeliculas.getTextContent();
+
+            System.out.println(titulos);
+
         }
+    }
+
+    public void modificarDOM(String tit, String dir, String gen) {
+        Document doc = crearDOM();
+
+        Element nodoPelicula = doc.createElement("pelicula");
+        nodoPelicula.setAttribute("genero", gen);
+        nodoPelicula.appendChild(doc.createElement("\n"));
     }
 }
