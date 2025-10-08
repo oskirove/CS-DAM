@@ -108,12 +108,17 @@ public class Functions {
         NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
 
         for (int i = 0; i < listaPeliculas.getLength(); i++) {
-            Node nodoPeliculas = listaPeliculas.item(i);
+            Node nodoPelicula = listaPeliculas.item(i);
 
-            String titulos = nodoPeliculas.getTextContent();
+            if (nodoPelicula.getNodeType() == Node.ELEMENT_NODE) {
+                Element elementoPelicula = (Element) nodoPelicula;
+                NodeList listaDirectores = elementoPelicula.getElementsByTagName("director");
 
-            System.out.println(titulos);
-
+                if (listaDirectores.getLength() == cantidadDirectores) {
+                    String pelicula = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
+                    System.out.println(pelicula);
+                }
+            }
         }
     }
 

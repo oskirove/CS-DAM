@@ -11,12 +11,6 @@ public class Application {
 
     //f.mostrarInfoPeliculas();
 
-    //f.mostrarNDirectores(2);
-
-    String tit = "Cars";
-    String director = "Walt Disney";
-    String gen = "Carreras";
-
-    f.modificarDOM(tit, director, gen);
+    f.mostrarNDirectores(2);
   }
 }
