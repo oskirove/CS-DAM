@@ -22,6 +22,7 @@ public class Functions {
     private String COLOR_CIERRE = "\033[0m";
     private String ruta = "/home/oscar/CS-DAM/2º_Curso/acceso_a_datos/evaluacion_1/tema_2/ejercicios/dom.xml";
 
+    // Ejercicio 1
     public Document crearDOM() {
         Document doc = null;
 
@@ -38,6 +39,7 @@ public class Functions {
         return doc;
     }
 
+    // Ejercicio 2
     public void mostrarTitulosPeliculas() {
 
         Document doc = crearDOM();
@@ -58,6 +60,7 @@ public class Functions {
         }
     }
 
+    // Ejercicio 3
     public void mostrarInfoPeliculas() {
 
         Document doc = crearDOM();
@@ -96,6 +99,7 @@ public class Functions {
         }
     }
 
+    // Ejercicio 5
     public void mostrarNDirectores(int cantidadDirectores) {
         Document doc = crearDOM();
 
@@ -117,6 +121,34 @@ public class Functions {
                 if (listaDirectores.getLength() == cantidadDirectores) {
                     String pelicula = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
                     System.out.println(pelicula);
+                }
+            }
+        }
+    }
+
+    // Ejercicio 6
+    public void mostrarGéneros() {
+        Document doc = crearDOM();
+
+        if (doc == null) {
+            System.out.println(
+                    COLOR_ERROR + "No se pueden mostrar porque el DOM no existe." + COLOR_CIERRE);
+            return;
+        }
+
+        NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
+
+        for (int i = 0; i < listaPeliculas.getLength(); i++) {
+            Node nodoPelicula = listaPeliculas.item(i);
+
+            Element elementoPelicula = (Element) nodoPelicula;
+
+            for (int j = 0; j < elementoPelicula.getAttributes().getLength(); j++) {
+
+                Node atributo = elementoPelicula.getAttributes().item(j);
+
+                if (atributo.getNodeName().equals("genero")) {
+                    System.out.println(atributo.getNodeValue());
                 }
             }
         }

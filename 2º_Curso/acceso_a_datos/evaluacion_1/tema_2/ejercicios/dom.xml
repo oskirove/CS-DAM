@@ -49,8 +49,4 @@
             <apellido>Scott</apellido>
         </director>
     </pelicula>
-    <pelicula genero="Carreras">
-        <titulo>Cars</titulo>
-        <director>Walt Disney</director>
-    </pelicula>
 </filmoteca>

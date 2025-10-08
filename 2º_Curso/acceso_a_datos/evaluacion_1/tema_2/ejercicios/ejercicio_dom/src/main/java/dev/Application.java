@@ -11,6 +11,8 @@ public class Application {
 
     //f.mostrarInfoPeliculas();
 
-    f.mostrarNDirectores(2);
+    //f.mostrarNDirectores(2);
+
+    f.mostrarGéneros();
   }
 }
