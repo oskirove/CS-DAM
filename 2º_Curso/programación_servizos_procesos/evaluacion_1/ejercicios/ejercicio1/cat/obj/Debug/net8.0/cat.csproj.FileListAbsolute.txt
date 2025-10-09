@@ -1,0 +1,15 @@
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\bin\Debug\net8.0\cat.exe
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\bin\Debug\net8.0\cat.deps.json
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\bin\Debug\net8.0\cat.runtimeconfig.json
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\bin\Debug\net8.0\cat.dll
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\bin\Debug\net8.0\cat.pdb
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.AssemblyInfoInputs.cache
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.AssemblyInfo.cs
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.csproj.CoreCompileInputs.cache
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.sourcelink.json
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.dll
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\refint\cat.dll
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.pdb
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\cat.genruntimeconfig.cache
+C:\Users\oscar\source\repos\oskirove\2º_Curso\programación_servizos_procesos\evaluacion_1\ejercicios\ejercicio1\cat\obj\Debug\net8.0\ref\cat.dll
