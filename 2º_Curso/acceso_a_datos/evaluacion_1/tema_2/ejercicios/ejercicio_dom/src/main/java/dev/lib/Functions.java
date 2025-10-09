@@ -2,6 +2,7 @@ package dev.lib;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -137,20 +138,23 @@ public class Functions {
         }
 
         NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
+        ArrayList<String> generos = new ArrayList<>();
 
         for (int i = 0; i < listaPeliculas.getLength(); i++) {
-            Node nodoPelicula = listaPeliculas.item(i);
 
-            Element elementoPelicula = (Element) nodoPelicula;
+            Element elementoPelicula = (Element) listaPeliculas.item(i);
 
-            for (int j = 0; j < elementoPelicula.getAttributes().getLength(); j++) {
+            String genero = elementoPelicula.getAttribute("genero");
 
-                Node atributo = elementoPelicula.getAttributes().item(j);
-
-                if (atributo.getNodeName().equals("genero")) {
-                    System.out.println(atributo.getNodeValue());
-                }
+            if (!generos.contains(genero)) {
+                generos.add(genero);
             }
+        }
+
+        System.out.println("Géneros: " + generos.size());
+
+        for (String g : generos) {
+            System.out.println(" - " + g);
         }
     }
 
