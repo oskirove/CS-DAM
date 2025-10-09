@@ -10,7 +10,7 @@ namespace ejercicio1
         static int Main(string[] args)
         {
 
-            args = new string[] { "ls", "c:\\temp" };
+            args = new string[] { "ls", "ejercicio1" };
 
             if (args.Length == 0)
             {
@@ -45,9 +45,10 @@ namespace ejercicio1
                     String ruta = Environment.GetEnvironmentVariable("SYSTEMROOT");
                     path = ruta + args[1].Substring(2).Trim();
                 }
-                else if (args[1].StartsWith(Environment.GetEnvironmentVariable("HOMEPATH")))
+                else 
                 {
-                    path = args[1];
+                    path = Environment.CurrentDirectory + "\\"+args[1];
+                    Console.WriteLine(path);
                 }
 
                 Functions f = new Functions();
