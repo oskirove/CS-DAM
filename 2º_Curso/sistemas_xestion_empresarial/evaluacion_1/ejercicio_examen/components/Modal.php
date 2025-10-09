@@ -3,7 +3,6 @@
 function renderModal($id, $title)
 {
     ob_start();
-
 ?>
     <style>
         .btn-primary {
@@ -55,94 +54,83 @@ function renderModal($id, $title)
                     <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                 </div>
                 <div class='modal-body'>
-                    <form class="row g-3 needs-validation" novalidate>
+                    <form class="row g-3 needs-validation" action="datos_form.php" method="post">
                         <div class="col-md-4">
-                            <label for="validationCustom01" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="validationCustom01" value="Claude" required>
-                            <div class="valid-feedback">
-                                Todo correcto!
-                            </div>
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            <div class="valid-feedback">Todo correcto!</div>
                         </div>
+
                         <div class="col-md-4">
-                            <label for="validationCustom02" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="Monet" required>
-                            <div class="valid-feedback">
-                                Todo correcto!
-                            </div>
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                            <div class="valid-feedback">Todo correcto!</div>
                         </div>
+
                         <div class="col-md-4">
-                            <label for="validationCustomUsername" class="form-label">Usuario</label>
+                            <label for="usuario" class="form-label">Usuario</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                                <div class="invalid-feedback">
-                                    Elige un nombre de usuario.
-                                </div>
+                                <input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">Elige un nombre de usuario.</div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
-                            <label for="validationCustom03" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="validationCustom03" required>
-                            <div class="invalid-feedback">
-                                Proporciona un correo válido.
-                            </div>
+                            <label for="correo" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="correo" name="correo" required>
+                            <div class="invalid-feedback">Proporciona un correo válido.</div>
                         </div>
+
                         <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">State</label>
-                            <select class="form-select" id="validationCustom04" required>
-                                <option selected disabled value="">Subscripción</option>
-                                <option>Semanal - 5,99€</option>
-                                <option>Mensual - 17,99€</option>
-                                <option>Anual - 69,99€</option>
+                            <label for="plan" class="form-label">Plan</label>
+                            <select class="form-select" id="plan" name="plan" required>
+                                <option selected disabled value="">Selecciona un plan</option>
+                                <option value="Semanal - 5,99€">Semanal - 5,99€</option>
+                                <option value="Mensual - 17,99€">Mensual - 17,99€</option>
+                                <option value="Anual - 69,99€">Anual - 69,99€</option>
                             </select>
-                            <div class="invalid-feedback">
-                                Please select a valid state.
-                            </div>
+                            <div class="invalid-feedback">Selecciona un plan válido.</div>
                         </div>
+
                         <div class="col-md-3">
-                            <label for="validationCustom05" class="form-label">Publicaciones</label>
+                            <label class="form-label">Publicaciones</label>
+
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault" checked>
-                                <label class="form-check-label" for="checkDefault">
-                                    National Geographic
-                                </label>
+                                <input class="form-check-input" type="checkbox" name="publicaciones[]" value="National Geographic" id="pub1">
+                                <label class="form-check-label" for="pub1">National Geographic</label>
                             </div>
+
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
-                                <label class="form-check-label" for="checkChecked">
-                                    Electronic Letters
-                                </label>
+                                <input class="form-check-input" type="checkbox" name="publicaciones[]" value="Electronic Letters" id="pub2">
+                                <label class="form-check-label" for="pub2">Electronic Letters</label>
                             </div>
-                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
-                                <label class="form-check-label" for="checkChecked">
-                                    Conocer
-                                </label>
-                            </div>
+
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
-                                <label class="form-check-label" for="checkChecked">
-                                    Science
-                                </label>
+                                <input class="form-check-input" type="checkbox" name="publicaciones[]" value="Conocer" id="pub3">
+                                <label class="form-check-label" for="pub3">Conocer</label>
                             </div>
+
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkChecked">
-                                <label class="form-check-label" for="checkChecked">
-                                    Desarrollo Web
-                                </label>
+                                <input class="form-check-input" type="checkbox" name="publicaciones[]" value="Science" id="pub4">
+                                <label class="form-check-label" for="pub4">Science</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="publicaciones[]" value="Desarrollo Web" id="pub5">
+                                <label class="form-check-label" for="pub5">Desarrollo Web</label>
                             </div>
                         </div>
+
                         <div class="col-12">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                                <label class="form-check-label" for="invalidCheck">
+                                <input class="form-check-input" type="checkbox" name="recibir_info" value="si" id="recibir_info">
+                                <label class="form-check-label" for="recibir_info">
                                     ¿Desea recibir información sobre las publicaciones?
                                 </label>
-                                <div class="invalid-feedback">
-                                    You must agree before submitting.
-                                </div>
                             </div>
                         </div>
+
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Completar</button>
                         </div>
@@ -152,6 +140,6 @@ function renderModal($id, $title)
         </div>
     </div>
 <?php
-
     return ob_get_clean();
 }
+?>
