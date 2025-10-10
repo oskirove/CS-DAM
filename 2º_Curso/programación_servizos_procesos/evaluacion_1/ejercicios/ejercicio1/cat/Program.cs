@@ -1,6 +1,4 @@
 ﻿using cat.lib;
-using System.IO;
-using System.Linq.Expressions;
 
 namespace cat
 {
@@ -11,7 +9,7 @@ namespace cat
 
         static void Main(string[] args)
         {
-            args = new string[] { "cat","-n5", "cat.exe"};
+            args = new string[] { "cat", "-n4", "C:\\Users\\oscar\\Downloads\\texto.txt" };
 
             Functions f = new Functions();
 
@@ -24,7 +22,7 @@ namespace cat
             {
                 Console.WriteLine(COLOR_ERROR + "Exceso de argumentos" + CIERRE);
                 Console.WriteLine(COLOR_ERROR + "Ejemplo de uso: cat myfile.txt" + CIERRE);
-                Console.WriteLine(COLOR_ERROR + "Ejemplo de uso: cat -n<Número de lineas> myfile.txt" + CIERRE);
+                Console.WriteLine(COLOR_ERROR + "Ejemplo de uso: cat -n<lineas> myfile.txt" + CIERRE);
             }
 
             switch (args.Length)
@@ -35,20 +33,34 @@ namespace cat
                         Console.WriteLine(COLOR_ERROR + "El primer argumento no es válido" + CIERRE);
                     }
 
-                    if (args[1] != "-n")
+                    if (!args[1].StartsWith("-n"))
                     {
                         Console.WriteLine(COLOR_ERROR + "Argumento de lineas no válido" + CIERRE);
                     }
 
                     String file = args[2].Trim();
-                    String path = Environment.CurrentDirectory + "\\" + file;
+
+                    String path = null;
+
+                    if (args[2].StartsWith("C:\\"))
+                    {
+                        path = args[2];
+                    }
+                    else
+                    {
+                        path = Environment.CurrentDirectory + "\\" + file;
+                    }
 
                     if (!File.Exists(path))
                     {
                         Console.WriteLine(COLOR_ERROR + "El fichero no existe" + CIERRE);
                     }
 
-                    f.ejecutarCatLineas(path, 4);
+                    String lineas = args[1].Remove(0, 2);
+
+                    int.TryParse(lineas, out int conversionLineas);
+
+                    f.ejecutarCatLineas(path, conversionLineas);
                     break;
 
                 case 2:
@@ -58,7 +70,16 @@ namespace cat
                     }
 
                     String file1 = args[1].Trim();
-                    String path1 = Environment.CurrentDirectory + "\\" + file1;
+                    String path1 = null;
+
+                    if (args[1].StartsWith("C:\\"))
+                    {
+                        path1 = args[1];
+                    }
+                    else
+                    {
+                        path1 = Environment.CurrentDirectory + "\\" + file1;
+                    }
 
                     if (!File.Exists(path1))
                     {
