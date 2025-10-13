@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace cat.lib
+﻿namespace cat.lib
 {
     internal class Functions
     {
@@ -14,7 +8,7 @@ namespace cat.lib
 
             String line;
             StreamReader sr;
-            sr = new StreamReader(fichero);
+            sr = new StreamReader(fichero);//TODO using y control excepciones
             line = sr.ReadLine();
 
             while (line != null) {
@@ -33,7 +27,7 @@ namespace cat.lib
             line = sr.ReadLine();
             int contador = 1;
 
-            while (contador != lineas)
+            while (contador != lineas)//TODO llegada a final de archivo
             {
                 contador++;
       

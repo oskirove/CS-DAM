@@ -9,7 +9,8 @@ namespace cat
 
         static void Main(string[] args)
         {
-            args = new string[] { "cat", "-n4", "C:\\Users\\oscar\\Downloads\\texto.txt" };
+            //C:\\Users\\oscar\\Downloads\\texto.txt
+            args = new string[] { "cat", "-n10", "cat.exe" };
 
             Functions f = new Functions();
 
@@ -38,18 +39,18 @@ namespace cat
                         Console.WriteLine(COLOR_ERROR + "Argumento de lineas no válido" + CIERRE);
                     }
 
-                    String file = args[2].Trim();
+                    String file = args[2];//.Trim();
 
-                    String path = null;
+                    String path = file;
 
-                    if (args[2].StartsWith("C:\\"))
-                    {
-                        path = args[2];
-                    }
-                    else
-                    {
-                        path = Environment.CurrentDirectory + "\\" + file;
-                    }
+                    //if (args[2].StartsWith("C:\\"))
+                    //{
+                    //    path = args[2];
+                    //}
+                    //else
+                    //{
+                    //    path = Environment.CurrentDirectory + "\\" + file;
+                    //}
 
                     if (!File.Exists(path))
                     {
