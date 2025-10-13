@@ -19,8 +19,8 @@ import org.w3c.dom.ls.LSSerializer;
 
 public class Functions {
 
-    private String COLOR_ERROR = "\033[31m";
-    private String COLOR_CIERRE = "\033[0m";
+    private String COLOR_ERROR = "\033[1;31m";
+    private String CIERRE = "\033[0m";
     private String ruta = "/home/oscar/CS-DAM/2º_Curso/acceso_a_datos/evaluacion_1/tema_2/ejercicios/dom.xml";
 
     // Ejercicio 1
@@ -33,7 +33,7 @@ public class Functions {
             DocumentBuilder builder = factoria.newDocumentBuilder();
             doc = builder.parse(ruta);
         } catch (Exception e) {
-            System.out.println(COLOR_ERROR + "Error al generar el arbol DOM" + COLOR_CIERRE);
+            System.out.println(COLOR_ERROR + "Error al generar el arbol DOM" + CIERRE);
             e.printStackTrace();
         }
 
@@ -46,7 +46,7 @@ public class Functions {
         Document doc = crearDOM();
 
         if (doc == null) {
-            System.out.println(COLOR_ERROR + "No se puede mostrar los títulos porque el DOM no existe." + COLOR_CIERRE);
+            System.out.println(COLOR_ERROR + "No se puede mostrar los títulos porque el DOM no existe." + CIERRE);
             return;
         }
 
@@ -68,7 +68,7 @@ public class Functions {
 
         if (doc == null) {
             System.out.println(
-                    COLOR_ERROR + "No se puede mostrar la información porque el DOM no existe." + COLOR_CIERRE);
+                    COLOR_ERROR + "No se puede mostrar la información porque el DOM no existe." + CIERRE);
             return;
         }
 
@@ -77,26 +77,24 @@ public class Functions {
         for (int i = 0; i < listaPeliculas.getLength(); i++) {
             Node nodoPelicula = listaPeliculas.item(i);
 
-            if (nodoPelicula.getNodeType() == Node.ELEMENT_NODE) {
-                Element elementoPelicula = (Element) nodoPelicula;
+            Element elementoPelicula = (Element) nodoPelicula;
 
-                String titulo = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
+            String titulo = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
 
-                System.out.println("Pelicula: " + titulo);
+            System.out.println("Pelicula: " + titulo);
 
-                NodeList listaDirectores = elementoPelicula.getElementsByTagName("director");
+            NodeList listaDirectores = elementoPelicula.getElementsByTagName("director");
 
-                for (int j = 0; j < listaDirectores.getLength(); j++) {
-                    Node nodoDirector = listaDirectores.item(j);
+            for (int j = 0; j < listaDirectores.getLength(); j++) {
+                Node nodoDirector = listaDirectores.item(j);
 
-                    String nombreDirector = nodoDirector.getTextContent().trim().replace("\n", " ").replaceAll(" +",
-                            " ");
+                String nombreDirector = nodoDirector.getTextContent().trim().replace("\n", " ").replaceAll(" +",
+                        " ");
 
-                    System.out.println(" - Director: " + nombreDirector);
-                }
-
-                System.out.println();
+                System.out.println(" - Director: " + nombreDirector);
             }
+
+            System.out.println();
         }
     }
 
@@ -106,7 +104,7 @@ public class Functions {
 
         if (doc == null) {
             System.out.println(
-                    COLOR_ERROR + "No se puede mostrar porque el DOM no existe." + COLOR_CIERRE);
+                    COLOR_ERROR + "No se puede mostrar porque el DOM no existe." + CIERRE);
             return;
         }
 
@@ -133,7 +131,7 @@ public class Functions {
 
         if (doc == null) {
             System.out.println(
-                    COLOR_ERROR + "No se pueden mostrar porque el DOM no existe." + COLOR_CIERRE);
+                    COLOR_ERROR + "No se pueden mostrar porque el DOM no existe." + CIERRE);
             return;
         }
 
@@ -158,22 +156,93 @@ public class Functions {
         }
     }
 
-    public void modificarDOM(String tit, String dir, String gen) {
+    // Ejercicio 7
+
+    public void añadirAtributo(String pelicula, String atributo, String valor) {
+        Document doc = crearDOM();
+
+        NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
+
+        for (int i = 0; i < listaPeliculas.getLength(); i++) {
+
+            Node nodoPelicula = listaPeliculas.item(i);
+            Element elementoPelicula = (Element) nodoPelicula;
+
+            String titulo = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
+
+            if (titulo.equals(pelicula)) {
+
+                try {
+                    if (!elementoPelicula.hasAttribute(atributo)) {
+                        elementoPelicula.setAttribute(atributo, valor);
+                        grabarDOM(doc, ruta);
+                    } else {
+                        System.out.println(
+                                COLOR_ERROR + "La pelicula " + pelicula.toUpperCase() + " ya contiene el atributo "
+                                        + atributo.toUpperCase() + CIERRE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void eliminarAtributo(String pelicula, String atributo) {
+        Document doc = crearDOM();
+
+        NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
+
+        for (int i = 0; i < listaPeliculas.getLength(); i++) {
+            Node nodoPelicula = listaPeliculas.item(i);
+            Element elementoPelicula = (Element) nodoPelicula;
+
+            String titulo = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
+
+            if (titulo.equals(pelicula)) {
+                try {
+                    if (elementoPelicula.hasAttribute(atributo)) {
+                        elementoPelicula.removeAttribute(atributo);
+                        grabarDOM(doc, ruta);
+                    } else {
+                        System.out.println(COLOR_ERROR + "La pelicula " + pelicula.toUpperCase()
+                                + " no contiene el atributo " + atributo.toUpperCase() + "." + CIERRE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    // Ejercicio 8
+    public void añadirPeliDOM(String title, String nameDir, String apellDir, String gen, String año) {
         Document doc = crearDOM();
 
         try {
             Element nodoPelicula = doc.createElement("pelicula");
             nodoPelicula.setAttribute("genero", gen);
+            nodoPelicula.setAttribute("año", año);
 
             Element nodoTitulo = doc.createElement("titulo");
-            Text textTitulo = doc.createTextNode(tit);
+            Text textTitulo = doc.createTextNode(title);
             nodoTitulo.appendChild(textTitulo);
             nodoPelicula.appendChild(nodoTitulo);
 
             Element nodoDirector = doc.createElement("director");
-            Text textDirector = doc.createTextNode(dir);
-            nodoDirector.appendChild(textDirector);
+            Element nodoNombre = doc.createElement("nombre");
+            Element nodoApellido = doc.createElement("apellido");
+
+            Text textNameDirector = doc.createTextNode(nameDir);
+            Text textApellDirector = doc.createTextNode(apellDir);
+
             nodoPelicula.appendChild(nodoDirector);
+
+            nodoDirector.appendChild(nodoNombre);
+            nodoDirector.appendChild(nodoApellido);
+
+            nodoNombre.appendChild(textNameDirector);
+            nodoApellido.appendChild(textApellDirector);
 
             Node nodoPeliculas = doc.getFirstChild();
             nodoPeliculas.appendChild(nodoPelicula);
@@ -181,6 +250,29 @@ public class Functions {
             grabarDOM(doc, ruta);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    // Ejercicio 9
+    public void modificarNombreDirector(String nombreDirector, String nombreModificado) {
+        Document doc = crearDOM();
+
+        NodeList listaDirectores = doc.getElementsByTagName("director");
+
+        for (int i = 0; i < listaDirectores.getLength(); i++) {
+            Node nodoDirector = listaDirectores.item(i);
+            Element elementoDirector = (Element) nodoDirector;
+
+            String nombre = elementoDirector.getElementsByTagName("nombre").item(0).getTextContent();
+
+            if (nombre.equals(nombreDirector)) {
+                try {
+                    elementoDirector.setTextContent(nombreModificado);
+                    grabarDOM(doc, ruta);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -199,7 +291,6 @@ public class Functions {
         LSSerializer serializer = ls.createLSSerializer();
         // Se establecen las propiedades del serializador
         serializer.setNewLine("\r\n");
-
         serializer.getDomConfig().setParameter("format-pretty-print", true);
         // Se escribe el documento ya sea en un fichero o en una cadena de texto
         serializer.write(document, output);

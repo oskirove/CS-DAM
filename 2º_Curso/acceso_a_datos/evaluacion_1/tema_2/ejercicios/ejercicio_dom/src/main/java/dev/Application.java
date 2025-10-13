@@ -13,6 +13,14 @@ public class Application {
 
     //f.mostrarNDirectores(2);
 
-    f.mostrarGéneros();
+    //f.mostrarGéneros();
+
+    //f.añadirPeliDOM("Depredador", "Jhon", "Tiernan", "Acción", "1998");
+
+    //f.añadirAtributo("Depredador", "idioma", "en");
+
+    //f.eliminarAtributo("Depredador", "idioma");
+
+    f.modificarNombreDirector("Larry", "Lana");
   }
 }
