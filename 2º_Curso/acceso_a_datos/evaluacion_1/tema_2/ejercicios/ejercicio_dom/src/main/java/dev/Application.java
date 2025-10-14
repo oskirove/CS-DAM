@@ -21,6 +21,8 @@ public class Application {
 
     //f.eliminarAtributo("Depredador", "idioma");
 
-    f.modificarNombreDirector("Larry", "Lana");
+    //f.modificarNombreDirector("Larry", "Lana");
+
+    f.añadirDirector("Dune", "Alfredo", "Landa");
   }
 }

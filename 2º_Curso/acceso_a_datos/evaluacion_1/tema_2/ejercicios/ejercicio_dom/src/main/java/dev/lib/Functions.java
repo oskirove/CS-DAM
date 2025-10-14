@@ -257,22 +257,60 @@ public class Functions {
     public void modificarNombreDirector(String nombreDirector, String nombreModificado) {
         Document doc = crearDOM();
 
-        NodeList listaDirectores = doc.getElementsByTagName("director");
+        NodeList listaNombres = doc.getElementsByTagName("nombre");
 
-        for (int i = 0; i < listaDirectores.getLength(); i++) {
-            Node nodoDirector = listaDirectores.item(i);
-            Element elementoDirector = (Element) nodoDirector;
+        for (int i = 0; i < listaNombres.getLength(); i++) {
+            Node nodoNombre = listaNombres.item(i);
+            Element elementoNombre = (Element) nodoNombre;
 
-            String nombre = elementoDirector.getElementsByTagName("nombre").item(0).getTextContent();
+            String nombre = elementoNombre.getTextContent();
 
             if (nombre.equals(nombreDirector)) {
                 try {
-                    elementoDirector.setTextContent(nombreModificado);
+                    elementoNombre.setTextContent(nombreModificado);
                     grabarDOM(doc, ruta);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    // Ejercicio 10
+    public void añadirDirector(String pelicula, String nombre, String apellido) {
+        Document doc = crearDOM();
+
+        NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
+
+        for (int j = 0; j < listaPeliculas.getLength(); j++) {
+            Node nodoPelicula = listaPeliculas.item(j);
+            Element elementoPelicula = (Element) nodoPelicula;
+            String titulo = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
+
+            if (titulo.equals(pelicula)) {
+                try {
+
+                    Element nuevoNodoDirector = doc.createElement("director");
+                    Element nodoNombre = doc.createElement("nombre");
+                    Element nodoApellido = doc.createElement("apellido");
+
+                    Text textNameDirector = doc.createTextNode(nombre);
+                    Text textApellDirector = doc.createTextNode(apellido);
+
+                    nuevoNodoDirector.appendChild(nodoNombre);
+                    nuevoNodoDirector.appendChild(nodoApellido);
+
+                    nodoNombre.appendChild(textNameDirector);
+                    nodoApellido.appendChild(textApellDirector);
+
+                    nodoPelicula.appendChild(nuevoNodoDirector);
+                    grabarDOM(doc, ruta);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
     }
 
