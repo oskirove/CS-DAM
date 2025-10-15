@@ -314,6 +314,11 @@ public class Functions {
         }
     }
 
+    //Ejercicio 11
+    public void eliminarPeliculas(String titulo) {
+
+    }
+
     public void grabarDOM(Document document, String ficheroSalida)
             throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, FileNotFoundException {
