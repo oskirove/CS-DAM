@@ -19,18 +19,29 @@ namespace ejercicio5
             return true;
         }
 
-        public static posicionesAleatorias(int cantidad)
+        public static void posicionesAleatorias(int? cantidad = null)
         {
+            int total = cantidad ?? 10;
+            Random rand = new Random();
 
+            for (int i = 0; i < total; i++)
+            {
+                int x = rand.Next(1, 21);
+                int y = rand.Next(1, 11);
+
+                Console.SetCursorPosition(x, y);
+                Console.Write("*");
+            }
+
+            Console.SetCursorPosition(0, 11);
         }
+
         static void Main(string[] args)
         {
 
             int num = 5;
 
-            Console.WriteLine(calculoFactorial(ref num));
-
-            Console.WriteLine("Hola mundo");
+            posicionesAleatorias(12);
 
             Console.ReadKey();
         }
