@@ -16,5 +16,27 @@ namespace Ejercicio6
         {
             InitializeComponent();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            String texto = textBox1.Text.Trim();
+
+            DialogResult resultado = MessageBox.Show(
+                $"¿Deseas poner \"{texto}\" como título del formulario?",
+                "Confirmar cambio de título",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (resultado == DialogResult.Yes)
+            {
+                this.Text = texto;
+            }
+        }
     }
 }
