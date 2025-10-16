@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><filmoteca>
+<?xml version="1.0" encoding="UTF-8"?>
+<filmoteca>
     <pelicula año="1984" genero="Ciencia Ficción">
         <titulo>Dune</titulo>
         <director>

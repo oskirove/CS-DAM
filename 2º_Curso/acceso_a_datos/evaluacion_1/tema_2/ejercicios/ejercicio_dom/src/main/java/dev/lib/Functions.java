@@ -1,11 +1,17 @@
 package dev.lib;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -314,9 +320,73 @@ public class Functions {
         }
     }
 
-    //Ejercicio 11
+    // Ejercicio 11
     public void eliminarPeliculas(String titulo) {
+        Document doc = crearDOM();
 
+        NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
+
+        for (int i = 0; i < listaPeliculas.getLength(); i++) {
+            Node nodoPelicula = listaPeliculas.item(i);
+            Element elementoPelicula = (Element) nodoPelicula;
+
+            String title = elementoPelicula.getElementsByTagName("titulo").item(0).getTextContent();
+
+            if (title.equals(titulo)) {
+                try {
+                    Node padre = elementoPelicula.getParentNode();
+                    padre.removeChild(elementoPelicula);
+                    grabarDOM(doc, ruta);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    // Ejercicio 12
+    public void crearDomPersonalizado() {
+        Document doc = null;
+        String ruta = "/home/oscar/CS-DAM/2º_Curso/acceso_a_datos/evaluacion_1/tema_2/ejercicios/compañias.xml";
+        try {
+            DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance();
+            factoria.setIgnoringComments(true);
+            DocumentBuilder builder = factoria.newDocumentBuilder();
+            doc = builder.newDocument();
+
+            Element raiz = doc.createElement("compañia");
+
+            Element nodoEmpleado = doc.createElement("empregado");
+            nodoEmpleado.setAttribute("id", "1");
+
+            Element nodoNombre = doc.createElement("nombre");
+            Element nodoApellidos = doc.createElement("apellidos");
+            Element nodoAlcume = doc.createElement("alcume");
+            Element nodoSalario = doc.createElement("salario");
+
+            nodoEmpleado.appendChild(nodoNombre);
+            nodoEmpleado.appendChild(nodoApellidos);
+            nodoEmpleado.appendChild(nodoAlcume);
+            nodoEmpleado.appendChild(nodoSalario);
+
+            Text textNombre = doc.createTextNode("Juan");
+            Text textApellidos = doc.createTextNode("López Pérez");
+            Text textAlcume = doc.createTextNode("Juanin");
+            Text textSalario = doc.createTextNode("1000");
+
+            nodoNombre.appendChild(textNombre);
+            nodoApellidos.appendChild(textApellidos);
+            nodoAlcume.appendChild(textAlcume);
+            nodoSalario.appendChild(textSalario);
+
+            raiz.appendChild(nodoEmpleado);
+            doc.appendChild(raiz);
+
+            grabarDOM(doc, ruta);
+        } catch (Exception e) {
+            System.out.println(COLOR_ERROR + "Error al generar el arbol DOM" + CIERRE);
+            e.printStackTrace();
+        }
     }
 
     public void grabarDOM(Document document, String ficheroSalida)

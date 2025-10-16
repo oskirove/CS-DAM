@@ -23,6 +23,10 @@ public class Application {
 
     //f.modificarNombreDirector("Larry", "Lana");
 
-    f.añadirDirector("Dune", "Alfredo", "Landa");
+    //f.añadirDirector("Dune", "Alfredo", "Landa");
+
+    //f.eliminarPeliculas("Dune");
+
+    f.crearDomPersonalizado();
   }
 }
