@@ -1,6 +1,5 @@
 <?php
 include 'components/Modal.php';
-
 ?>
 
 <!DOCTYPE html>
