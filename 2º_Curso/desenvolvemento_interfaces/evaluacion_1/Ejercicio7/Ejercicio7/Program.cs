@@ -51,7 +51,10 @@ namespace Ejercicio7
                             }
                             break;
                         case 4:
-                            Console.WriteLine("Hola mundo");
+                            string nombreAstro = Functions.solicitarCadena("Introduce el nombre del astro: ");
+
+                            int indice = coleccion.IndexOf(nombreAstro);
+
                             break;
                         case 5:
                             Console.WriteLine("Hola mundo");
