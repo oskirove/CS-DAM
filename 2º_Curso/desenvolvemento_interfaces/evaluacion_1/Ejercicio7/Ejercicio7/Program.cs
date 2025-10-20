@@ -52,8 +52,8 @@ namespace Ejercicio7
                             break;
                         case 4:
                             string nombreAstro = Functions.solicitarCadena("Introduce el nombre del astro: ");
-
-                            int indice = coleccion.IndexOf(nombreAstro);
+                            
+                            //int indice = coleccion.IndexOf(nombreAstro)
 
                             break;
                         case 5:
