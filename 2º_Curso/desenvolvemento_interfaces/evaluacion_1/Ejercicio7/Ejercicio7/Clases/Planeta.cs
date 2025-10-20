@@ -11,7 +11,7 @@ namespace Ejercicio7.Clases
         private bool gaseoso;
         public int numSatelites;
 
-        public Planeta(String nombre, double radio, bool gaseoso, int numSatelites) : base(nombre, radio)
+        public Planeta(string nombre, double radio, bool gaseoso, int numSatelites) : base(nombre, radio)
         {
             this.gaseoso = gaseoso;
             this.numSatelites = numSatelites;
@@ -22,6 +22,29 @@ namespace Ejercicio7.Clases
 
         }
 
+        public static Planeta operator ++(Planeta p)
+        {
+            p.numSatelites++;
+            return p;
+        }
+
+        public static Planeta operator --(Planeta p)
+        {
+            if (p.numSatelites > 0)
+                p.numSatelites--;
+            return p;
+        }
+
+        public void setNumSatelites(int numSatelites)
+        {
+            this.numSatelites = numSatelites;
+        }
+
+        public int getNumSatelites()
+        {
+            return numSatelites;
+        }
+
         public void setGaseoso(bool gaseoso)
         {
             this.gaseoso = gaseoso;
@@ -29,7 +52,7 @@ namespace Ejercicio7.Clases
 
         public bool getGaseoso()
         {
-            return this.gaseoso;
+            return gaseoso;
         }
 
         public bool esHabitable()
@@ -39,8 +62,7 @@ namespace Ejercicio7.Clases
 
         public override string ToString()
         {
-            return base.ToString();
+            return String.Format("{0,10} | {1,4} | {2:F2}", nombre, numSatelites, radio);
         }
-
     }
 }

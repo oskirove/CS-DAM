@@ -8,7 +8,7 @@ namespace Ejercicio7.Clases
 {
     internal abstract class Astro
     {
-        protected String nombre;
+        protected string nombre;
         protected double radio;
 
         public Astro(string nombre, double radio)
@@ -23,14 +23,14 @@ namespace Ejercicio7.Clases
             radio = 6378;
         }
 
-        public void setNombre(String nombre)
+        public void setNombre(string nombre)
         {
             this.nombre = nombre.ToUpper();
         }
 
-        public String getNombre()
+        public string getNombre()
         {
-            return $"\"nombre\"";
+            return $"\"{nombre}\"";
         }
 
         public void setRadio(double radio)
@@ -43,11 +43,16 @@ namespace Ejercicio7.Clases
             this.radio = radio;
         }
 
+        public double getRadio()
+        {
+            return radio;
+        }
+
         public override bool Equals(object? obj)
         {
-            if (obj is String nombreString)
+            if (obj is string nombrestring)
             {
-                return nombre.Equals(nombreString, StringComparison.OrdinalIgnoreCase);
+                return nombre.Equals(nombrestring, StringComparison.OrdinalIgnoreCase);
             }
 
             if (obj is Astro otroAstro)
