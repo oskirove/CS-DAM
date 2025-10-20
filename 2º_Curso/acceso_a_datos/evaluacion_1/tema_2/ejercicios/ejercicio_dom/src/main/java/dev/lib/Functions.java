@@ -260,18 +260,23 @@ public class Functions {
     }
 
     // Ejercicio 9
-    public void modificarNombreDirector(String nombreDirector, String nombreModificado) {
+    public void modificarNombreDirector(String nombreDirector, String apellidoDirector, String nombreModificado) {
         Document doc = crearDOM();
 
         NodeList listaNombres = doc.getElementsByTagName("nombre");
+        NodeList listaApellidos = doc.getElementsByTagName("apellido");
 
         for (int i = 0; i < listaNombres.getLength(); i++) {
             Node nodoNombre = listaNombres.item(i);
             Element elementoNombre = (Element) nodoNombre;
 
-            String nombre = elementoNombre.getTextContent();
+            Node nodoApellido = listaApellidos.item(i);
+            Element elementoApellido = (Element) nodoApellido;
 
-            if (nombre.equals(nombreDirector)) {
+            String nombre = elementoNombre.getTextContent();
+            String apellido = elementoApellido.getTextContent();
+
+            if (nombre.equals(nombreDirector) && apellido.equals(apellidoDirector)) {
                 try {
                     elementoNombre.setTextContent(nombreModificado);
                     grabarDOM(doc, ruta);
