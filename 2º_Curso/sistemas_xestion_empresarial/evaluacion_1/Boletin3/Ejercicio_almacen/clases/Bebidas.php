@@ -13,7 +13,7 @@
             $this -> marca = $marca;
         }
 
-        public function setUUID(int $UUID): void {
+        public function setId(int $UUID): void {
             $this -> UUID = $UUID;
         }
 
@@ -39,7 +39,7 @@
             $this -> marca = $marca;
         }
 
-        public function getUUID(): int {
+        public function getId(): int {
             return $this -> UUID;
         }
 
@@ -51,8 +51,12 @@
             return $this -> precio;
         }
 
-        public function getMarca(): int {
+        public function getMarca(): string {
             return $this -> marca;
+        }
+
+        public function toString(): string {
+            return "ID: {$this->UUID}, Marca: {$this->marca}, Precio: {$this->precio}€, Capacidad: {$this->litros}L";
         }
     } 
 ?>

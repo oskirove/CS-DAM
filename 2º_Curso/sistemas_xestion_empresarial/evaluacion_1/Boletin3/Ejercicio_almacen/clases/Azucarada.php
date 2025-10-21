@@ -40,5 +40,10 @@
 
             parent::setPrecio($precioFinal);
         }
+
+        public function toString(): string {
+            $promocionText = $this->promocion ? "Sí" : "No";
+            return parent::toString() . ", Porcentaje de azúcar: {$this->azucar}%, Promoción: {$promocionText}";
+        }
     }
 ?>

@@ -15,5 +15,9 @@
         public function getOrigen(): string {
             return $this -> origen;
         }
+
+        public function toString(): string {
+            return parent::toString() . ", Manantial: {$this->origen}";
+        }
     }
 ?>
