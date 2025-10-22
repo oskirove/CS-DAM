@@ -16,7 +16,7 @@ public class Application {
 
     File archivoXML = new File(nombreArchivo);
     if (!archivoXML.exists()) {
-      System.err.println("Error: El archivo '" + nombreArchivo + "' no se encuentra.");
+      System.err.println("Error: El archivo " + nombreArchivo + " no se encuentra.");
       return;
     }
 
