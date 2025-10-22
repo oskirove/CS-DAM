@@ -52,18 +52,86 @@ namespace Ejercicio7
                             break;
                         case 4:
                             string nombreAstro = Functions.solicitarCadena("Introduce el nombre del astro: ");
-                            
-                            //int indice = coleccion.IndexOf(nombreAstro)
+
+                            Astro buscado = new Planeta(nombreAstro, 0, false, 0);
+                            int index = coleccion.IndexOf(buscado);
+
+                            if (index == -1)
+                            {
+                                Console.WriteLine("Planeta no encontrado");
+                            }
+                            else
+                            {
+                                Astro astro = coleccion[index];
+
+                                if (astro is Planeta p)
+                                {
+                                    string letra = Functions.solicitarCadena("Introduce - i - para incremantar o - d - para decrementar: ");
+
+                                    switch (letra)
+                                    {
+                                        case "i":
+                                            p++;
+                                            break;
+                                        case "d":
+                                            p--;
+                                            break;
+                                        default:
+                                            Console.BackgroundColor = ConsoleColor.Red;
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            Console.WriteLine();
+                                            Console.WriteLine("Esta opción no es válida");
+                                            Console.WriteLine();
+                                            Console.ResetColor();
+                                            break;
+                                    }
+
+                                    Console.WriteLine($"Estado actual del planeta: {p}");
+
+                                }
+                                else
+                                {
+                                    Console.BackgroundColor = ConsoleColor.Red;
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.WriteLine();
+                                    Console.WriteLine("El astro encontrado no es un planeta");
+                                    Console.WriteLine();
+                                    Console.ResetColor();
+                                }
+                            }
 
                             break;
                         case 5:
-                            Console.WriteLine("Hola mundo");
+                            for (int i = coleccion.Count - 1; i > 0; i--)
+                            {
+                                Astro astro = coleccion[i];
+
+                                if (astro is Planeta p)
+                                {
+                                    if (!p.esHabitable())
+                                    {
+                                        coleccion.RemoveAt(i);
+                                    }
+                                }
+                                else if (astro is Cometa c)
+                                {
+                                    if (!c.esHabitable())
+                                    {
+                                        coleccion.RemoveAt(i);
+                                    }
+                                }
+                            }
                             break;
                         case 6:
                             Console.WriteLine("Saliendo del programa.");
                             break;
                         default:
-                            Console.WriteLine("Introduce una opción válida");
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine();
+                            Console.WriteLine("Esta opción no es válida");
+                            Console.WriteLine();
+                            Console.ResetColor();
                             break;
                     }
                 }
