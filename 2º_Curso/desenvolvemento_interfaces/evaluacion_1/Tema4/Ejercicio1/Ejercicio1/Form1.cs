@@ -17,6 +17,8 @@ namespace Ejercicio1
         {
             InitializeComponent();
 
+            this.KeyPreview = true;
+
             this.MouseLeave += Form_MouseLeave;
             this.MouseMove += Form_MouseMove;
             button1.MouseMove += Form_MouseMove;
@@ -24,7 +26,6 @@ namespace Ejercicio1
             pictureBox1.MouseDown += pictureBox1_Pressed;
             pictureBox1.MouseUp += pictureBox1_NotPressed;
             this.KeyDown += Form_KeyPressed;
-
         }
 
         private void Form_MouseMove(object sender, MouseEventArgs e)
@@ -52,8 +53,7 @@ namespace Ejercicio1
         private void Form_KeyPressed(object sender, KeyEventArgs e)
         {
             title = e.KeyCode.ToString();
+            this.Text = title;
         }
-
-
     }
 }
