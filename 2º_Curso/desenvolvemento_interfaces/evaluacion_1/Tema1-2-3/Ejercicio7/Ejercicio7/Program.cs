@@ -9,6 +9,7 @@ namespace Ejercicio7
         static void Main(string[] args)
         {
             int opcion = 0;
+
             List<Astro> coleccion = new List<Astro>();
 
             do
