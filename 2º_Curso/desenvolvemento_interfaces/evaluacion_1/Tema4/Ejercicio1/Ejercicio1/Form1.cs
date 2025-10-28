@@ -26,6 +26,8 @@ namespace Ejercicio1
             pictureBox1.MouseDown += pictureBox1_Pressed;
             pictureBox1.MouseUp += pictureBox1_NotPressed;
             this.KeyDown += Form_KeyPressed;
+            this.FormClosing += closeForm;
+            crearBotonesDinamicos();
         }
 
         private void Form_MouseMove(object sender, MouseEventArgs e)
@@ -52,8 +54,63 @@ namespace Ejercicio1
 
         private void Form_KeyPressed(object sender, KeyEventArgs e)
         {
-            title = e.KeyCode.ToString();
-            this.Text = title;
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Text = "Mouse Tester";
+            }
+            else
+            {
+                title = e.KeyCode.ToString();
+                this.Text = title;
+            }
+        }
+
+        private void crearBotonesDinamicos()
+        {
+            int filas = 4;
+            int columnas = 5;
+            int ancho = 60;
+            int alto = 40;
+            int margen = 30;
+            int offsetX = 70;
+            int offsetY = 180;
+
+            int contador = 1;
+
+            for (int fila = 0; fila < filas; fila++)
+            {
+                for (int columna = 0; columna < columnas; columna++)
+                {
+                    Button btn = new Button();
+                    btn.Text = contador.ToString();
+                    btn.Width = ancho;
+                    btn.Height = alto;
+                    btn.Left = offsetX + columna * (ancho + margen);
+                    btn.Top = offsetY + fila * (alto + margen);
+
+                    btn.MouseDown += (s, e) => { btn.ForeColor = Color.Red; };
+                    btn.MouseUp += (s, e) => { btn.ForeColor = Color.Black; };
+
+                    this.Controls.Add(btn);
+                    contador++;
+                }
+            }
+        }
+
+        private void closeForm(object sender, FormClosingEventArgs e)
+        {
+            DialogResult resultado = MessageBox.Show(
+                "¿Estás seguro de que quieres salir?",
+                "Confirmar salida",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (resultado == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+
         }
     }
 }
