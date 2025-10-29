@@ -1,0 +1,11 @@
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\bin\Debug\ejercicio2.exe.config
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\bin\Debug\ejercicio2.exe
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\bin\Debug\ejercicio2.pdb
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.csproj.AssemblyReference.cache
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.Form1.resources
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.Properties.Resources.resources
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.csproj.GenerateResource.cache
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.csproj.CoreCompileInputs.cache
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.exe
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.pdb
+C:\Users\oscar\source\repos\CS-DAM\2º_Curso\desenvolvemento_interfaces\evaluacion_1\Tema4\ejercicio2\ejercicio2\obj\Debug\ejercicio2.exe.config

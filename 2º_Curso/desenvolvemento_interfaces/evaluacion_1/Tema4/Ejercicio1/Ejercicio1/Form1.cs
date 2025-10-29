@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Ejercicio1
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form//Revisar colore botones,. Coor en todos los botones. Icono. restaurar titulo al salir raton.
     {
         private string title = "Mouse Tester";
         public Form1()
@@ -32,7 +32,7 @@ namespace Ejercicio1
 
         private void Form_MouseMove(object sender, MouseEventArgs e)
         {
-            Point p = this.PointToClient(Cursor.Position);
+            Point p = this.PointToClient(Cursor.Position);//Sin esto. Detecta si es formulario o no
             this.Text = $"{title} - X:{p.X}, Y:{p.Y}";
         }
 
