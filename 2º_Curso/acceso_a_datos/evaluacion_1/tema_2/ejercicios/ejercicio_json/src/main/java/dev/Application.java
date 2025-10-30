@@ -15,7 +15,10 @@ public class Application {
       // functions.getTiempoCiudad("Vigo");
 
       // Ejercicio 2
-      functions.getTiempoCoords(42.33669 , -7.86407);
+      //functions.getTiempoCoords(42.33669 , -7.86407);
+
+      // Ejercicio 3
+      functions.getTiempoCiudades(42.33669 , -7.86407, 3);
 
       System.out.println();
 
