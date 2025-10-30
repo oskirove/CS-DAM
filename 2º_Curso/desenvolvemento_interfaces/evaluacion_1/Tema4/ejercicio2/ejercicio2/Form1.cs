@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ejercicio2
+namespace ejercicio2//Icono y cierre X. Titulo. Etiquetas informativas. Gestión acceptbutton.
 {
     public partial class Form1 : Form
     {
