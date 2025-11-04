@@ -32,10 +32,6 @@ public class Functions {
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
 
-        if (json.getValueType() != JsonValue.ValueType.OBJECT) {
-            throw new IllegalStateException("Se esperaba un objeto JSON (JsonObject) en la respuesta.");
-        }
-
         JsonObject jsonObject = (JsonObject) json;
 
         JsonArray weatherArray = jsonObject.getJsonArray("weather");
@@ -49,24 +45,37 @@ public class Functions {
 
     public void getTiempoCoords(double lat, double lon) throws URISyntaxException {
 
-
-        // "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY;
-        String URL = String.format("https://api.openweathermap.org/data/2.5/weather?lat=%.5f&lon=%.5f&appid=%s",lat, lon, API_KEY);
+        String URL = String.format("https://api.openweathermap.org/data/2.5/forecast?lat=%.5f&lon=%.5f&appid=%s", lat,
+                lon, API_KEY);
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
 
-        if (json.getValueType() != JsonValue.ValueType.OBJECT) {
-            throw new IllegalStateException("Se esperaba un objeto JSON (JsonObject) en la respuesta.");
-        }
-
         JsonObject jsonObject = (JsonObject) json;
 
-        JsonArray weatherArray = jsonObject.getJsonArray("weather");
+        JsonArray listArray = jsonObject.getJsonArray("list");
 
-        JsonObject weatherItem = weatherArray.getJsonObject(0);
+        JsonObject firstForecast = listArray.getJsonObject(0);
 
-        System.out.println(json.toString());
+        JsonArray weatherArray = firstForecast.getJsonArray("weather");
 
+        JsonObject weatherDetails = weatherArray.getJsonObject(0);
+
+        String description = weatherDetails.getString("description");
+        String mainWeather = weatherDetails.getString("main");
+
+        System.out.println("Predicción: " + mainWeather);
+        System.out.println("Descripción: " + description);
+    }
+
+    public void getTiempoCiudades(double lat, double lon, int ciudades) throws URISyntaxException {
+
+        String URL = String.format("https://api.openweathermap.org/data/2.5/find?lat=%.5f&lon=%.5f&cnt=%s&appid=%s",
+                lat, lon, ciudades, API_KEY);
+
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        System.out.println(json);
     }
 }
