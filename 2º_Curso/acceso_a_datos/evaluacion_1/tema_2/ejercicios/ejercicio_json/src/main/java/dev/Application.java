@@ -15,11 +15,16 @@ public class Application {
       // functions.getTiempoCiudad("Vigo");
 
       // Ejercicio 2
-      //functions.getTiempoCoords(42.33669 , -7.86407);
+      // functions.getTiempoCoords(42.33669 , -7.86407);
 
       // Ejercicio 3
-      functions.getTiempoCiudades(42.33669 , -7.86407, 3);
+      // functions.getTiempoCiudades(42.33669 , -7.86407, 3);
 
+      // Ejercicio 4
+      // functions.getCityID("Ourense");
+
+      // Ejercicio 5
+      functions.getCityName(42.33669 , -7.86407);
       System.out.println();
 
     } catch (Exception e) {

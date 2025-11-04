@@ -76,6 +76,47 @@ public class Functions {
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
 
-        System.out.println(json);
+        JsonObject jsonObject = (JsonObject) json;
+
+        JsonArray listArray = jsonObject.getJsonArray("list");
+
+        for (int i = 0; i < ciudades; i++) {
+            JsonObject forecasts = listArray.getJsonObject(i);
+
+            JsonArray weatherArray = forecasts.getJsonArray("weather");
+
+            JsonObject weatherDetails = weatherArray.getJsonObject(0);
+
+            String forecast = weatherDetails.getString("main");
+
+            System.out.println(forecast);
+        }
+    }
+
+    public void getCityID(String ciudad) throws URISyntaxException {
+
+        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + API_KEY;
+
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        int ID = jsonObject.getInt("id");
+
+        System.out.println(ID);
+    }
+
+    public void getCityName(double lat, double lon) throws URISyntaxException {
+
+        String URL = String.format("https://api.openweathermap.org/data/2.5/forecast?lat=%.5f&lon=%.5f&appid=%s", lat,
+                lon, API_KEY);
+
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        System.out.println(jsonObject);
     }
 }
