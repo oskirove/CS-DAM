@@ -1,0 +1,46 @@
+## ⚙️ .NET / VISUAL STUDIO ##
+
+# Directorios de compilación y temporales
+[Bb]in/
+[Oo]bj/
+*.log
+*.vspscc
+*.vssscc
+*.bak
+*.orig
+*.suo
+
+# Archivos de depuración y símbolos de usuario
+*.pdb
+*.user
+*.config.user
+
+# Paquetes NuGet
+*.nupkg
+# Directorio local de paquetes NuGet
+packages/
+
+# Directorios de Visual Studio (ocultos, contienen metadatos de usuario)
+.vs/
+
+# Caché de Roslyn (usado por el compilador de C#)
+.idea/
+.sonarlint/
+
+## 📦 MAVEN / JAVA ##
+
+# Directorio de compilación de Maven
+target/
+
+# Archivos de caché e información de IDEs Java (IntelliJ, Eclipse, VS Code)
+.idea/
+.project
+.classpath
+.settings/
+
+# Archivos .jar y .war generados
+*.jar
+*.war
+*.ear
+# Archivos de configuración de Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
