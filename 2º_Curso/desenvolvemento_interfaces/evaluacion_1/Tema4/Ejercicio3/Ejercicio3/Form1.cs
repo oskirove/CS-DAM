@@ -13,21 +13,35 @@ namespace Ejercicio3
 {
     public partial class Form1 : Form
     {
+        private Timer temporizador;
+        private int segundosTranscurridos = 0;
+
         public Form1()
         {
             InitializeComponent();
-            cambiarColorTexto();
-
+            checkBox1.CheckedChanged += (s, e) => cambiarColorTexto();
+            temporizador = new Timer();
+            temporizador.Interval = 1000;
+            temporizador.Tick += Temporizador_Tick;
+            temporizador.Start();
         }
+
+        private void Temporizador_Tick(object sender, EventArgs e)
+        {
+            segundosTranscurridos++;
+
+            int minutos = segundosTranscurridos / 60;
+            int segundos = segundosTranscurridos % 60;
+
+            this.Text = $"Visor de imágenes {minutos:D2}:{segundos:D2}";
+        }
+
 
         private void cambiarColorTexto()
         {
             if (checkBox1.Checked)
             {
-                string[] texto = checkBox1.Text.Split();
-                string palabra = texto.Length > 2 ? texto[2] : "";
-                checkBox1.Text = $"{texto[0]} {texto[1]} {palabra}";
-                checkBox1.ForeColor = Color.Green;
+                checkBox1.ForeColor = Color.Red;
             }
             else
             {

@@ -17,7 +17,7 @@ namespace Ejercicio3
             InitializeComponent();
             visualizarImagen(imagePath);
 
-            this.Text = imagePath;
+            this.Text = System.IO.Path.GetFileName(imagePath);
         }
 
         private void ajustarPerfectamenteToolStripMenuItem_Click(object sender, EventArgs e)
