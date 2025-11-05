@@ -1,8 +1,12 @@
 package dev.lib;
 
 import java.net.URISyntaxException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import javax.json.JsonArray;
+import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
@@ -109,7 +113,7 @@ public class Functions {
 
     public void getCityName(double lat, double lon) throws URISyntaxException {
 
-        String URL = String.format("https://api.openweathermap.org/data/2.5/forecast?lat=%.5f&lon=%.5f&appid=%s", lat,
+        String URL = String.format("https://api.openweathermap.org/data/2.5/weather?lat=%.5f&lon=%.5f&appid=%s", lat,
                 lon, API_KEY);
 
         JsonUtils jUtils = new JsonUtils();
@@ -117,6 +121,53 @@ public class Functions {
 
         JsonObject jsonObject = (JsonObject) json;
 
-        System.out.println(jsonObject);
+        String nombre = jsonObject.getString("name");
+
+        System.out.println(nombre);
+    }
+
+    public void getCityCo(String ciudad) throws URISyntaxException {
+
+        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + API_KEY;
+
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        JsonObject coordenadas = jsonObject.getJsonObject("coord");
+        JsonNumber lat = coordenadas.getJsonNumber("lat");
+        JsonNumber lon = coordenadas.getJsonNumber("lon");
+
+        System.out.printf("Coordenadas de %s\nlat: %.5f, lon: %.5f", ciudad, lat.doubleValue(), lon.doubleValue());
+    }
+
+    public void pronosticoCompleto(String ciudad) throws URISyntaxException {
+        String URL = "https://api.openweathermap.org/data/2.5/forecast?q=" + ciudad + "&appid=" + API_KEY;
+
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        JsonArray listArray = jsonObject.getJsonArray("list");
+
+        for (int i = 0; i < listArray.size(); i += 8) {
+
+            JsonObject objectDate = listArray.getJsonObject(i);
+
+            long date = objectDate.getJsonNumber("dt").longValue();
+
+            // jsonObject objectMain = 
+
+            // String fechaFormateada = unixTimeToString(date);
+
+            // System.out.println(fechaFormateada);
+        }
+    }
+
+    public String unixTimeToString(long unixTime) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return Instant.ofEpochSecond(unixTime).atZone(ZoneId.of("GMT+1")).format(formatter);
     }
 }

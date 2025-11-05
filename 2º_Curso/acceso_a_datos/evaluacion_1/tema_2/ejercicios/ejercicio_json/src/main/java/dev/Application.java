@@ -24,7 +24,13 @@ public class Application {
       // functions.getCityID("Ourense");
 
       // Ejercicio 5
-      functions.getCityName(42.33669 , -7.86407);
+      // functions.getCityName(42.33669 , -7.86407);
+
+      // Ejercicio 6
+      // functions.getCityCo("Ourense");
+
+      // Ejercicio 7
+      functions.pronosticoCompleto("Ourense");
       System.out.println();
 
     } catch (Exception e) {
