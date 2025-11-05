@@ -14,6 +14,7 @@ namespace Ejercicio4
     {
         private string titulo = "Gestor de listas";
         private Timer timer;
+        private ToolTip tip = new ToolTip();
         int cont = 0;
 
         public Form1()
@@ -24,7 +25,7 @@ namespace Ejercicio4
             timer.Interval = 200;
             timer.Tick += Timer_Tick;
             timer.Start();
-
+            listBox1.MouseHover += tooltip_Index;
             listBox1.SelectedIndexChanged += (s, e) => { label1.Text = "Índices: " + listBox1.SelectedIndex.ToString(); };
         }
 
@@ -121,7 +122,8 @@ namespace Ejercicio4
 
         private void tooltip_Index(object sender, EventArgs e)
         {
-
+            string contenido = listBox2.Items.Count.ToString();
+            tip.SetToolTip(listBox2, contenido);
         }
     }
 }
