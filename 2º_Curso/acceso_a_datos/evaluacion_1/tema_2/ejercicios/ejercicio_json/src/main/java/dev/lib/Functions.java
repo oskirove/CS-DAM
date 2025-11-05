@@ -154,15 +154,101 @@ public class Functions {
 
         for (int i = 0; i < listArray.size(); i += 8) {
 
-            JsonObject objectDate = listArray.getJsonObject(i);
+            JsonObject objecList = listArray.getJsonObject(i);
 
-            long date = objectDate.getJsonNumber("dt").longValue();
+            // Fecha
+            long date = objecList.getJsonNumber("dt").longValue();
+            String fechaFormateada = unixTimeToString(date);
 
-            // jsonObject objectMain = 
+            // Temperatura
+            JsonObject mainObject = objecList.getJsonObject("main");
+            double temperatura = mainObject.getJsonNumber("temp").doubleValue();
 
-            // String fechaFormateada = unixTimeToString(date);
+            // Humedad
+            int humedad = mainObject.getInt("humidity");
 
-            // System.out.println(fechaFormateada);
+            // Posibilidad de cielo con nubes
+            JsonObject cloudsObject = objecList.getJsonObject("clouds");
+            int probabilidadNubes = cloudsObject.getInt("all");
+
+            // Viento
+            JsonObject windObject = objecList.getJsonObject("wind");
+            Double velocidadViento = windObject.getJsonNumber("speed").doubleValue();
+
+            // Tiempo
+            JsonArray weatherList = objecList.getJsonArray("weather");
+            JsonObject objectWeather = weatherList.getJsonObject(0);
+            String tiempo = objectWeather.getString("main");
+            String detalles = objectWeather.getString("description");
+
+            System.out.println(fechaFormateada);
+            System.out.printf(
+                    " - Temperatura: %.2f ºC\n - Humedad: %s\n - Nublado: %s %%\n - Viento: %.2f km/h\n - Tiempo: %s\n - Detalles: %s\n",
+                    temperatura - 273.15,
+                    humedad,
+                    probabilidadNubes,
+                    velocidadViento,
+                    tiempo,
+                    detalles);
+
+            System.out.println();
+        }
+    }
+
+    public void pronosticoCompletoCiudades(double lat, double lon, int ciudades) throws URISyntaxException {
+
+        String URL = String.format("https://api.openweathermap.org/data/2.5/find?lat=%.5f&lon=%.5f&cnt=%s&appid=%s",
+                lat, lon, ciudades, API_KEY);
+
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        JsonArray listArray = jsonObject.getJsonArray("list");
+
+        for (int i = 0; i < listArray.size(); i ++) {
+
+            JsonObject objecList = listArray.getJsonObject(i);
+
+            String ciudad = objecList.getString("name");
+
+            // Fecha
+            long date = objecList.getJsonNumber("dt").longValue();
+            String fechaFormateada = unixTimeToString(date);
+
+            // Temperatura
+            JsonObject mainObject = objecList.getJsonObject("main");
+            double temperatura = mainObject.getJsonNumber("temp").doubleValue();
+
+            // Humedad
+            int humedad = mainObject.getInt("humidity");
+
+            // Posibilidad de cielo con nubes
+            JsonObject cloudsObject = objecList.getJsonObject("clouds");
+            int probabilidadNubes = cloudsObject.getInt("all");
+
+            // Viento
+            JsonObject windObject = objecList.getJsonObject("wind");
+            Double velocidadViento = windObject.getJsonNumber("speed").doubleValue();
+
+            // Tiempo
+            JsonArray weatherList = objecList.getJsonArray("weather");
+            JsonObject objectWeather = weatherList.getJsonObject(0);
+            String tiempo = objectWeather.getString("main");
+            String detalles = objectWeather.getString("description");
+
+            System.out.println(ciudad + ": " + fechaFormateada);
+            System.out.printf(
+                    " - Temperatura: %.2f ºC\n - Humedad: %s\n - Nublado: %s %%\n - Viento: %.2f km/h\n - Tiempo: %s\n - Detalles: %s\n",
+                    temperatura - 273.15,
+                    humedad,
+                    probabilidadNubes,
+                    velocidadViento,
+                    tiempo,
+                    detalles);
+
+            System.out.println();
         }
     }
 
