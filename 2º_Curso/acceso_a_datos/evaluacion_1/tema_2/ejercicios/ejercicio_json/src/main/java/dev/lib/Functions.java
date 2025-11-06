@@ -358,4 +358,30 @@ public class Functions {
             System.out.println(evento);
         }
     }
+
+    // Ejercicio 11
+        public String[] getIdEventosPais(String codigoPais) throws URISyntaxException {
+        String URL = String.format("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=%s&apikey=%s", codigoPais, API_KEY_TICKET_MASTER);
+        
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        JsonObject embeddedObject = jsonObject.getJsonObject("_embedded");
+
+        JsonArray eventsArray = embeddedObject.getJsonArray("events");
+
+        String[] arrayID = new String[eventsArray.size()];
+        
+        for (int i = 0; i < eventsArray.size(); i++) {
+            JsonObject objecEvents = eventsArray.getJsonObject(i);
+
+            String id = objecEvents.getString("id");
+
+            arrayID[i] = id;
+        }
+
+        return arrayID;
+    }
 }

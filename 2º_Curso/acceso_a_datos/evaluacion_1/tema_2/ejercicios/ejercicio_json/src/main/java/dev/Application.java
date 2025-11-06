@@ -46,7 +46,7 @@ public class Application {
       // functions.mostrarEventosPais("ES");
 
       // Ejercicio 11
-      functions.
+      functions.getIdEventosPais("ES");
       
       System.out.println();
       
