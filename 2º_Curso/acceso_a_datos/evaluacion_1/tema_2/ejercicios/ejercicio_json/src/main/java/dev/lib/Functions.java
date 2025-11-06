@@ -14,20 +14,22 @@ public class Functions {
 
     // Ejercicios con Open Weather Map
 
-    private static final String API_KEY = System.getenv("API_KEY");
+    private static final String API_KEY_OPEN_WEATHER_MAP = System.getenv("API_KEY");
 
     public static void initializeApiKey() {
 
-        if (API_KEY == null || API_KEY.isEmpty()) {
+        if (API_KEY_OPEN_WEATHER_MAP == null || API_KEY_OPEN_WEATHER_MAP.isEmpty()) {
             System.err.println(
-                    "ERROR: La variable de entorno " + API_KEY + " no está definida en tu terminal. Usa 'export "
-                            + API_KEY + "=\"...\"'.");
+                    "ERROR: La variable de entorno " + API_KEY_OPEN_WEATHER_MAP
+                            + " no está definida en tu terminal. Usa 'export "
+                            + API_KEY_OPEN_WEATHER_MAP + "=\"...\"'.");
             System.exit(1);
         }
 
         System.out.println("Clave API cargada con exito.");
 
-        System.out.println("Clave (fragmento): " + API_KEY.substring(0, Math.min(API_KEY.length(), 8)) + "...");
+        System.out.println("Clave (fragmento): "
+                + API_KEY_OPEN_WEATHER_MAP.substring(0, Math.min(API_KEY_OPEN_WEATHER_MAP.length(), 8)) + "...");
         System.out.println();
     }
 
@@ -35,7 +37,8 @@ public class Functions {
 
     public void getTiempoCiudad(String ciudad) throws URISyntaxException {
 
-        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + API_KEY;
+        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid="
+                + API_KEY_OPEN_WEATHER_MAP;
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -56,7 +59,7 @@ public class Functions {
     public void getTiempoCoords(double lat, double lon) throws URISyntaxException {
 
         String URL = String.format("https://api.openweathermap.org/data/2.5/forecast?lat=%.5f&lon=%.5f&appid=%s", lat,
-                lon, API_KEY);
+                lon, API_KEY_OPEN_WEATHER_MAP);
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -83,7 +86,7 @@ public class Functions {
     public void getTiempoCiudades(double lat, double lon, int ciudades) throws URISyntaxException {
 
         String URL = String.format("https://api.openweathermap.org/data/2.5/find?lat=%.5f&lon=%.5f&cnt=%s&appid=%s",
-                lat, lon, ciudades, API_KEY);
+                lat, lon, ciudades, API_KEY_OPEN_WEATHER_MAP);
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -109,7 +112,8 @@ public class Functions {
 
     public void getCityID(String ciudad) throws URISyntaxException {
 
-        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + API_KEY;
+        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid="
+                + API_KEY_OPEN_WEATHER_MAP;
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -126,7 +130,7 @@ public class Functions {
     public void getCityName(double lat, double lon) throws URISyntaxException {
 
         String URL = String.format("https://api.openweathermap.org/data/2.5/weather?lat=%.5f&lon=%.5f&appid=%s", lat,
-                lon, API_KEY);
+                lon, API_KEY_OPEN_WEATHER_MAP);
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -142,7 +146,8 @@ public class Functions {
 
     public void getCityCo(String ciudad) throws URISyntaxException {
 
-        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + API_KEY;
+        String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid="
+                + API_KEY_OPEN_WEATHER_MAP;
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -159,7 +164,8 @@ public class Functions {
     // Ejercicio 7
 
     public void pronosticoCompleto(String ciudad) throws URISyntaxException {
-        String URL = "https://api.openweathermap.org/data/2.5/forecast?q=" + ciudad + "&appid=" + API_KEY;
+        String URL = "https://api.openweathermap.org/data/2.5/forecast?q=" + ciudad + "&appid="
+                + API_KEY_OPEN_WEATHER_MAP;
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -216,7 +222,7 @@ public class Functions {
     public void pronosticoCompletoCiudades(double lat, double lon, int ciudades) throws URISyntaxException {
 
         String URL = String.format("https://api.openweathermap.org/data/2.5/find?lat=%.5f&lon=%.5f&cnt=%s&appid=%s",
-                lat, lon, ciudades, API_KEY);
+                lat, lon, ciudades, API_KEY_OPEN_WEATHER_MAP);
 
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
@@ -279,6 +285,7 @@ public class Functions {
 
     private static final String URLOpenTrivia = "https://opentdb.com/api.php?amount=10&category=18&difficulty=hard";
 
+    // Ejercicio 9
     public void mostrarPreguntas() throws URISyntaxException {
 
         JsonUtils jUtils = new JsonUtils();
@@ -292,21 +299,63 @@ public class Functions {
             JsonObject objetoResults = arrayResults.getJsonObject(i);
             String pregunta = objetoResults.getString("question");
             String preguntaCorrecta = objetoResults.getString("correct_answer");
-            
 
             JsonArray arrayIncorrectAnswers = objetoResults.getJsonArray("incorrect_answers");
-  
+
             System.out.println("\033[1;44m Pregunta " + (i + 1) + "\033[0m");
             System.out.println("\033[1;34m" + pregunta + "\033[0m");
             System.out.println();
             System.out.println("1.- \033[1;32m" + preguntaCorrecta + "\033[0m");
-            
+
             for (int index = 0; index < arrayIncorrectAnswers.size(); index++) {
                 String incorrectAnswers = arrayIncorrectAnswers.getString(index);
                 System.out.println((index + 2) + ".- \033[1;31m" + incorrectAnswers + "\033[0m");
             }
-            
+
             System.out.println();
+        }
+    }
+
+    // Ejercicios con Ticket master
+
+    private static final String API_KEY_TICKET_MASTER = System.getenv("API_KEY_TICKET_MASTER");
+
+    public static void initializeApiKeyTicketMaster() {
+
+        if (API_KEY_TICKET_MASTER == null || API_KEY_TICKET_MASTER.isEmpty()) {
+            System.err.println(
+                    "ERROR: La variable de entorno " + API_KEY_TICKET_MASTER
+                            + " no está definida en tu terminal. Usa 'export "
+                            + API_KEY_TICKET_MASTER + "=\"...\"'.");
+            System.exit(1);
+        }
+
+        System.out.println("Clave API cargada con exito.");
+
+        System.out.println("Clave (fragmento): "
+                + API_KEY_TICKET_MASTER.substring(0, Math.min(API_KEY_TICKET_MASTER.length(), 8)) + "...");
+        System.out.println();
+    }
+
+    // Ejercicio 10
+    public void mostrarEventosPais(String codigoPais) throws URISyntaxException {
+        String URL = String.format("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=%s&apikey=%s", codigoPais, API_KEY_TICKET_MASTER);
+        
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        JsonObject embeddedObject = jsonObject.getJsonObject("_embedded");
+
+        JsonArray eventsArray = embeddedObject.getJsonArray("events");
+
+        for (int i = 0; i < eventsArray.size(); i++) {
+            JsonObject objecEvents = eventsArray.getJsonObject(i);
+
+            String evento = objecEvents.getString("name");
+
+            System.out.println(evento);
         }
     }
 }

@@ -2,7 +2,8 @@ package dev;
 
 import dev.lib.Functions;
 
-// Usar esto en la terminal: export API_KEY="la-clave-de-api"
+// Usar esto en la terminal: export API_KEY_OPEN_WEATHER_MAP="la-clave-de-api" 
+// export API_KEY_TICKET_MASTER="la-clave-api"
 
 public class Application {
   public static void main(String[] args) {
@@ -38,7 +39,14 @@ public class Application {
       // functions.pronosticoCompletoCiudades(42.33669 , -7.86407, 8);
       
       // Ejercicio 9
-      functions.mostrarPreguntas();
+      // functions.mostrarPreguntas();
+
+      // Ejercicio 10
+      // Functions.initializeApiKeyTicketMaster();
+      // functions.mostrarEventosPais("ES");
+
+      // Ejercicio 11
+      functions.
       
       System.out.println();
       
