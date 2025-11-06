@@ -5,8 +5,8 @@ import dev.lib.Functions;
 // Usar esto en la terminal: export API_KEY="la-clave-de-api"
 
 public class Application {
-  
   public static void main(String[] args) {
+
     try {
       Functions.initializeApiKey();
       Functions functions = new Functions();
@@ -24,9 +24,22 @@ public class Application {
       // functions.getCityID("Ourense");
 
       // Ejercicio 5
-      functions.getCityName(42.33669 , -7.86407);
-      System.out.println();
+      // functions.getCityName(42.33669 , -7.86407);
 
+      // Ejercicio 6
+      // functions.getCityCo("Ourense");
+
+      // Ejercicio 7
+      // functions.pronosticoCompleto("Ourense");
+
+      // Ejercicio 8
+      // functions.pronosticoCompletoCiudades(42.33669 , -7.86407, 8);
+      
+      // Ejercicio 9
+      functions.mostrarPreguntas();
+      
+      System.out.println();
+      
     } catch (Exception e) {
       e.printStackTrace();
     }
