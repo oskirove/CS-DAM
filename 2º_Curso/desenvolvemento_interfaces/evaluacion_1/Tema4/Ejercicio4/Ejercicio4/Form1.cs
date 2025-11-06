@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Ejercicio4
-{
+namespace Ejercicio4//TODO separar rb en groupboxes. Revisar scroll. Cambio icono y uso de recursos.Seleccion multiple en 1a lista. revisar tooltip secundario
+{//Refactorizar nombres componentes
     public partial class Form1 : Form
     {
         private string titulo = "Gestor de listas";
@@ -32,11 +32,9 @@ namespace Ejercicio4
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            char[] letras = titulo.ToCharArray();
-
-            if (cont < letras.Length)
+            if (cont < titulo.Length)
             {
-                this.Text += letras[cont];
+                this.Text += titulo[cont];
                 cont++;
             }
             else
