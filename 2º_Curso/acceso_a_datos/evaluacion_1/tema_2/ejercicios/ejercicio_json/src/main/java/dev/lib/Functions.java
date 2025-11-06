@@ -280,6 +280,7 @@ public class Functions {
     private static final String URLOpenTrivia = "https://opentdb.com/api.php?amount=10&category=18&difficulty=hard";
 
     public void mostrarPreguntas() throws URISyntaxException {
+
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URLOpenTrivia);
 
@@ -292,14 +293,20 @@ public class Functions {
             String pregunta = objetoResults.getString("question");
             String preguntaCorrecta = objetoResults.getString("correct_answer");
             
+
             JsonArray arrayIncorrectAnswers = objetoResults.getJsonArray("incorrect_answers");
-
-            JsonObject objetoIncorrectAnswers = arrayIncorrectAnswers.getJsonObject(0);
-
-            System.out.println(pregunta);
-            System.out.println(preguntaCorrecta + "*");
+  
+            System.out.println("\033[1;44m Pregunta " + (i + 1) + "\033[0m");
+            System.out.println("\033[1;34m" + pregunta + "\033[0m");
+            System.out.println();
+            System.out.println("1.- \033[1;32m" + preguntaCorrecta + "\033[0m");
+            
+            for (int index = 0; index < arrayIncorrectAnswers.size(); index++) {
+                String incorrectAnswers = arrayIncorrectAnswers.getString(index);
+                System.out.println((index + 2) + ".- \033[1;31m" + incorrectAnswers + "\033[0m");
+            }
+            
             System.out.println();
         }
-
     }
 }

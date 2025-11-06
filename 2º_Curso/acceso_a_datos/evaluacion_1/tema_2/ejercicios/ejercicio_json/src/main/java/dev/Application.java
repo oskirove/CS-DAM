@@ -8,9 +8,11 @@ public class Application {
   public static void main(String[] args) {
 
     try {
-      Functions.initializeApiKey();
       Functions functions = new Functions();
-
+      
+      // Inicializar Api de Open Weather Map
+      // Functions.initializeApiKey();
+      
       // Ejercicio 1
       // functions.getTiempoCiudad("Vigo");
 
