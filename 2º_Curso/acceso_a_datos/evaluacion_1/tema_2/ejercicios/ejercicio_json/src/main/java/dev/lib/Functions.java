@@ -12,6 +12,8 @@ import javax.json.JsonValue;
 
 public class Functions {
 
+    // Ejercicios con Open Weather Map
+
     private static final String API_KEY = System.getenv("API_KEY");
 
     public static void initializeApiKey() {
@@ -28,6 +30,8 @@ public class Functions {
         System.out.println("Clave (fragmento): " + API_KEY.substring(0, Math.min(API_KEY.length(), 8)) + "...");
         System.out.println();
     }
+
+    // Ejercicio 1
 
     public void getTiempoCiudad(String ciudad) throws URISyntaxException {
 
@@ -46,6 +50,8 @@ public class Functions {
 
         System.out.println(mainweather);
     }
+
+    // Ejercicio 2
 
     public void getTiempoCoords(double lat, double lon) throws URISyntaxException {
 
@@ -72,6 +78,8 @@ public class Functions {
         System.out.println("Descripción: " + description);
     }
 
+    // Ejercicio 3
+
     public void getTiempoCiudades(double lat, double lon, int ciudades) throws URISyntaxException {
 
         String URL = String.format("https://api.openweathermap.org/data/2.5/find?lat=%.5f&lon=%.5f&cnt=%s&appid=%s",
@@ -97,6 +105,8 @@ public class Functions {
         }
     }
 
+    // Ejercicio 4
+
     public void getCityID(String ciudad) throws URISyntaxException {
 
         String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + API_KEY;
@@ -110,6 +120,8 @@ public class Functions {
 
         System.out.println(ID);
     }
+
+    // Ejercicio 5
 
     public void getCityName(double lat, double lon) throws URISyntaxException {
 
@@ -126,6 +138,8 @@ public class Functions {
         System.out.println(nombre);
     }
 
+    // Ejercicio 6
+
     public void getCityCo(String ciudad) throws URISyntaxException {
 
         String URL = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + API_KEY;
@@ -141,6 +155,8 @@ public class Functions {
 
         System.out.printf("Coordenadas de %s\nlat: %.5f, lon: %.5f", ciudad, lat.doubleValue(), lon.doubleValue());
     }
+
+    // Ejercicio 7
 
     public void pronosticoCompleto(String ciudad) throws URISyntaxException {
         String URL = "https://api.openweathermap.org/data/2.5/forecast?q=" + ciudad + "&appid=" + API_KEY;
@@ -195,6 +211,8 @@ public class Functions {
         }
     }
 
+    // Ejercicio 8
+
     public void pronosticoCompletoCiudades(double lat, double lon, int ciudades) throws URISyntaxException {
 
         String URL = String.format("https://api.openweathermap.org/data/2.5/find?lat=%.5f&lon=%.5f&cnt=%s&appid=%s",
@@ -207,7 +225,7 @@ public class Functions {
 
         JsonArray listArray = jsonObject.getJsonArray("list");
 
-        for (int i = 0; i < listArray.size(); i ++) {
+        for (int i = 0; i < listArray.size(); i++) {
 
             JsonObject objecList = listArray.getJsonObject(i);
 
@@ -255,5 +273,33 @@ public class Functions {
     public String unixTimeToString(long unixTime) {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return Instant.ofEpochSecond(unixTime).atZone(ZoneId.of("GMT+1")).format(formatter);
+    }
+
+    // Ejercicios con Open Trivia Database
+
+    private static final String URLOpenTrivia = "https://opentdb.com/api.php?amount=10&category=18&difficulty=hard";
+
+    public void mostrarPreguntas() throws URISyntaxException {
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URLOpenTrivia);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        JsonArray arrayResults = jsonObject.getJsonArray("results");
+
+        for (int i = 0; i < arrayResults.size(); i++) {
+            JsonObject objetoResults = arrayResults.getJsonObject(i);
+            String pregunta = objetoResults.getString("question");
+            String preguntaCorrecta = objetoResults.getString("correct_answer");
+            
+            JsonArray arrayIncorrectAnswers = objetoResults.getJsonArray("incorrect_answers");
+
+            JsonObject objetoIncorrectAnswers = arrayIncorrectAnswers.getJsonObject(0);
+
+            System.out.println(pregunta);
+            System.out.println(preguntaCorrecta + "*");
+            System.out.println();
+        }
+
     }
 }

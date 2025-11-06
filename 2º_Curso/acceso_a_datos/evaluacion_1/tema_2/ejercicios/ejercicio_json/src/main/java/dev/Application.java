@@ -33,9 +33,13 @@ public class Application {
       // functions.pronosticoCompleto("Ourense");
 
       // Ejercicio 8
-      functions.pronosticoCompletoCiudades(42.33669 , -7.86407, 8);
+      // functions.pronosticoCompletoCiudades(42.33669 , -7.86407, 8);
+      
+      // Ejercicio 9
+      functions.mostrarPreguntas();
+      
       System.out.println();
-
+      
     } catch (Exception e) {
       e.printStackTrace();
     }
