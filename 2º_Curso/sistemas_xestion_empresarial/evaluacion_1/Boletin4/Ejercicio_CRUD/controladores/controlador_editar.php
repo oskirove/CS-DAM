@@ -1,10 +1,9 @@
 <?php
-
 if (isset($_GET['uuid']) && is_numeric($_GET['uuid'])) {
     require_once '../modelos/modelo.php';
 
     $empleado = new Empleado();
-    $dato = $empleado->update($_POST['nombre'], $_POST['apellidos'], $_POST['telefono'], $_POST['departamento'], $_GET['uuid']);
-}
+    $dato = $empleado->edit($_GET['uuid']);
 
-?>
+    require_once '../vistas/vista_editar.php';
+}
