@@ -15,37 +15,15 @@ namespace Ejercicio5
         public Form1()
         {
             InitializeComponent();
-
-            botonReset.Click += (s, e) => metodoReset();
-            resetToolStripMenuItem.Click += (s, e) => metodoReset();
-
-            grabarNúmeroToolStripMenuItem.Click += (s, e) => {
-                Form2 f = new Form2();
-                f.ShowDialog();
-            };
-
-            acercaDeToolStripMenuItem.Click += (s, e) => { MessageBox.Show("Hola soy Óscar, el desarrollador de esta app.", "Teléfono v.0.0.1", MessageBoxButtons.OK, MessageBoxIcon.Information); };
-
+            resetToolStripMenuItem.Click += (s, e) => Reset_Function();
+            botonReset.Click += (s, e) => Reset_Function();
             this.Load += loadButtons;
-        }
-
-        public void metodoReset()
-        {
-            textScreen.Text = null;
-            foreach (Control c in this.Controls)
-            {
-                if (c is Button)
-                {
-                    c.BackColor = SystemColors.Window;
-                    c.Tag = false;
-                }
-            }
         }
 
         public void loadButtons(object sender, EventArgs e)
         {
 
-            string[] teclas = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "#" };
+            string[] teclas = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#" };
 
             int xStart = 10;
             int yStart = 50;
@@ -93,6 +71,43 @@ namespace Ejercicio5
             }
         }
 
+        private void grabarNúmeroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(textScreen.Text)) return;
 
+            Form2 f = new Form2();
+            f.ShowDialog();
+        }
+
+        private void Reset_Function()
+        {
+            textScreen.Text = null;
+            foreach (Control c in this.Controls)
+            {
+                if (c is Button)
+                {
+                    c.BackColor = SystemColors.Window;
+                    c.Tag = false;
+                }
+            }
+        }
+
+        private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hola soy Óscar, el desarrollador de esta app.", "Teléfono v.0.0.1", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mostarAgendaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form3 f = new Form3();
+            f.Show();
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        
     }
 }

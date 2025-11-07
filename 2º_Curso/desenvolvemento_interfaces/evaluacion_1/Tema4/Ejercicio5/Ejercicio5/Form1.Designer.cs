@@ -35,12 +35,12 @@ namespace Ejercicio5
             this.botonReset = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grabarNúmeroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mostarAgendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,40 +86,44 @@ namespace Ejercicio5
             this.archivoToolStripMenuItem.Size = new System.Drawing.Size(114, 36);
             this.archivoToolStripMenuItem.Text = "Archivo";
             // 
+            // grabarNúmeroToolStripMenuItem
+            // 
+            this.grabarNúmeroToolStripMenuItem.Name = "grabarNúmeroToolStripMenuItem";
+            this.grabarNúmeroToolStripMenuItem.Size = new System.Drawing.Size(308, 44);
+            this.grabarNúmeroToolStripMenuItem.Text = "Grabar número";
+            this.grabarNúmeroToolStripMenuItem.Click += new System.EventHandler(this.grabarNúmeroToolStripMenuItem_Click);
+            // 
+            // mostarAgendaToolStripMenuItem
+            // 
+            this.mostarAgendaToolStripMenuItem.Name = "mostarAgendaToolStripMenuItem";
+            this.mostarAgendaToolStripMenuItem.Size = new System.Drawing.Size(308, 44);
+            this.mostarAgendaToolStripMenuItem.Text = "Mostar agenda";
+            this.mostarAgendaToolStripMenuItem.Click += new System.EventHandler(this.mostarAgendaToolStripMenuItem_Click);
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(308, 44);
+            this.resetToolStripMenuItem.Text = "Reset";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(305, 6);
+            // 
+            // salirToolStripMenuItem
+            // 
+            this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(308, 44);
+            this.salirToolStripMenuItem.Text = "Salir";
+            this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
+            // 
             // acercaDeToolStripMenuItem
             // 
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
             this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(138, 36);
             this.acercaDeToolStripMenuItem.Text = "Acerca de";
-            // 
-            // grabarNúmeroToolStripMenuItem
-            // 
-            this.grabarNúmeroToolStripMenuItem.Name = "grabarNúmeroToolStripMenuItem";
-            this.grabarNúmeroToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
-            this.grabarNúmeroToolStripMenuItem.Text = "Grabar número";
-            // 
-            // mostarAgendaToolStripMenuItem
-            // 
-            this.mostarAgendaToolStripMenuItem.Name = "mostarAgendaToolStripMenuItem";
-            this.mostarAgendaToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
-            this.mostarAgendaToolStripMenuItem.Text = "Mostar agenda";
-            // 
-            // resetToolStripMenuItem
-            // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
-            this.resetToolStripMenuItem.Text = "Reset";
-            // 
-            // salirToolStripMenuItem
-            // 
-            this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
-            this.salirToolStripMenuItem.Text = "Salir";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(356, 6);
+            this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.acercaDeToolStripMenuItem_Click);
             // 
             // Form1
             // 

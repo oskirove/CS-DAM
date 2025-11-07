@@ -30,7 +30,7 @@ namespace Ejercicio5
                 {
                     Utils utils = new Utils();
 
-                    utils.addContactToFile(textBox1.Text);
+                    //utils.addContactToFile(textBox1.Text);
                     this.Close();
                 }
                 catch (Exception ex)
