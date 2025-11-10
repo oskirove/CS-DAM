@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ejercicio5.lib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,7 +45,7 @@ namespace Ejercicio5
                     )
                 };
 
-                boton.MouseEnter += (s, ev) => { ((Button)s).BackColor = Color.WhiteSmoke; };
+                boton.MouseEnter += (s, ev) => {((Button)s).BackColor = Color.WhiteSmoke; };
                 boton.MouseLeave += (s, ev) =>
                 {
                     Button b = ((Button)s);
@@ -75,7 +76,7 @@ namespace Ejercicio5
         {
             if (String.IsNullOrEmpty(textScreen.Text)) return;
 
-            Form2 f = new Form2();
+            Form2 f = new Form2(textScreen.Text);
             f.ShowDialog();
         }
 
@@ -99,15 +100,18 @@ namespace Ejercicio5
 
         private void mostarAgendaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form3 f = new Form3();
+            Utils utils = new Utils();
+
+            List<string> contactos = utils.getContactsFromFile();
+
+            Form3 f = new Form3(contactos);
             f.Show();
+
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        
     }
 }

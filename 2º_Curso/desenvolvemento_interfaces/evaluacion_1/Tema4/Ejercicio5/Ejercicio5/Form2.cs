@@ -13,9 +13,11 @@ namespace Ejercicio5
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        private string tel;
+        public Form2(string tel)
         {
             InitializeComponent();
+            this.tel = tel;
         }
 
         private void acceptButton_Click(object sender, EventArgs e)
@@ -28,9 +30,11 @@ namespace Ejercicio5
             {
                 try
                 {
+                    Form1 f = new Form1();
+
                     Utils utils = new Utils();
 
-                    //utils.addContactToFile(textBox1.Text);
+                    utils.addContactToFile(textBox1.Text, tel);
                     this.Close();
                 }
                 catch (Exception ex)
