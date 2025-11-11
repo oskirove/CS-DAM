@@ -15,7 +15,7 @@
         <input type="text" name="apellidos" id="apellidos" value="<?php echo $dato[0]['apellidos'] ?>">
         <input type="tel" name="telefono" id="telefono" value="<?php echo $dato[0]['telefono'] ?>">
         <input type="text" name="departamento" id="departamento" value="<?php echo $dato[0]['departamento'] ?>">
-        <input type="hidden" name="uuid" id="uuid" value="<?php $_GET['uuid'] ?>">
+        <input type="hidden" name="uuid" id="uuid" value="<?php echo isset($_GET['id']) ? $_GET['id'] : $_POST['uuid'] ?>">
         <input type="submit" value="Actualizar">
     </form>
 </body>

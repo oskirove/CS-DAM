@@ -5,6 +5,6 @@
     $empleado = new Empleado();
     $result = $empleado -> getEmpleado();
 
-    require_once '../vistas/vista.php'
+    require_once '../vistas/vista.php';
 
 ?>
