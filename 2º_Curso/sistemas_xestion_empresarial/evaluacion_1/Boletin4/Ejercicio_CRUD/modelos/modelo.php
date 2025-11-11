@@ -49,4 +49,13 @@ class Empleado
 
         return $result;
     }
+
+    public function delete($uuid)
+    {
+        $sql = "DELETE FROM empleados WHERE uuid={$uuid}";
+        $result = $this->db->query($sql);
+        $this->db = null;
+
+        return $result;
+    }
 }
