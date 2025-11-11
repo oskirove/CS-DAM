@@ -24,7 +24,11 @@
                         if (contador >= 500)
                         {
                             running = false;
+                            Console.WriteLine();
+                            Console.WriteLine("Hilo 1 ha terminado la ejecución.");
                         }
+
+                        Console.ResetColor();
                     }
                 }
             });
@@ -45,7 +49,11 @@
                         if (contador <= -500)
                         {
                             running = false;
+                            Console.WriteLine();
+                            Console.WriteLine("Hilo 2 ha terminado la ejecución.");
                         }
+
+                        Console.ResetColor();
                     }
                 }
             });
