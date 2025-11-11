@@ -14,11 +14,14 @@
                 {
                     lock (t)
                     {
+                        if (!running) break;
+
                         contador++;
 
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("Hilo 1: " + contador);
 
-                        if (contador == 500)
+                        if (contador >= 500)
                         {
                             running = false;
                         }
@@ -28,13 +31,18 @@
 
             Thread hilo2 = new Thread(() =>
             {
-                while (running)
+                while (true)
                 {
                     lock (t)
                     {
+                        if (!running) break;
+
                         contador--;
+
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("Hilo 2: " + contador);
-                        if (contador == -500)
+
+                        if (contador <= -500)
                         {
                             running = false;
                         }
