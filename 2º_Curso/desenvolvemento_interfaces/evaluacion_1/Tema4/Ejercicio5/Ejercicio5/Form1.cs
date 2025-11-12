@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Ejercicio5
+namespace Ejercicio5 //Navegacion ALT y atajos en menú. Revisar cambio de color si pulsado. Teclado. No repetir no modal si ya esta mostrado.
 {
     public partial class Form1 : Form
     {
@@ -77,7 +77,7 @@ namespace Ejercicio5
             if (String.IsNullOrEmpty(textScreen.Text)) return;
 
             Form2 f = new Form2(textScreen.Text);
-            f.ShowDialog();
+            f.ShowDialog();//ojo, mejor respuesta dialogo
         }
 
         private void Reset_Function()

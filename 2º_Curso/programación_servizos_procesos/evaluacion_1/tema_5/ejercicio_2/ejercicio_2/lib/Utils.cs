@@ -9,7 +9,7 @@ namespace ejercicio_2.lib
     internal class Utils
     {
         static bool running = true;
-        static readonly object key = new object();
+        static readonly object l = new object();
 
         public static int solicitarEntero(string mensaje)
         {
@@ -42,7 +42,7 @@ namespace ejercicio_2.lib
             }
         }
 
-        public void inicializarCaballos(int apuesta)
+        public Thread inicializarCaballos(int apuesta)
         {
             Thread[] caballos = new Thread[5];
 
@@ -53,6 +53,8 @@ namespace ejercicio_2.lib
                 caballos[i].Start(id);
                 Console.WriteLine();
             }
+
+            return caballos[apuesta - 1];
         }
 
         public void correr(object obj)
@@ -62,15 +64,16 @@ namespace ejercicio_2.lib
 
             while (true)
             {
-                lock (key)
+                lock (l)
                 {
                     if (!running) break;
 
                     pista.Append(' ');
-                    Console.SetCursorPosition(0, id + 8);
+                    Console.SetCursorPosition(0, id);
                     Console.Write(pista.ToString() + "*");
-                    Thread.Sleep(40);
-
+            
+                    int randomSleep = new Random().Next(10, 1000);
+                    Thread.Sleep(randomSleep);
 
                     if (pista.Length >= 20)
                     {
@@ -78,6 +81,7 @@ namespace ejercicio_2.lib
                     }
                 }
             }
+            Console.Clear();
         }
     }
 }

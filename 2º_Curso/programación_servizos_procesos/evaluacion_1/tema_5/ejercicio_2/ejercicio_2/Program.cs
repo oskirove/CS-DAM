@@ -24,9 +24,12 @@ namespace ejercicio_2
 
                         int apuesta = Utils.solicitarEntero("Apuesta por un caballo [1 - 5]: ");
                         Console.WriteLine();
-                        utils.inicializarCaballos(apuesta);
+                        Thread caballoApostado = utils.inicializarCaballos(apuesta);
 
-                       
+                        Console.Clear();
+
+                        caballoApostado.Join();
+
                         break;
                     case 2:
                         Console.WriteLine("Saliendo del programa...");
