@@ -72,7 +72,7 @@ namespace ejercicio_2.lib
                     Console.SetCursorPosition(0, id);
                     Console.Write(pista.ToString() + "*");
             
-                    int randomSleep = new Random().Next(10, 1000);
+                    int randomSleep = new Random().Next(10, 300);
                     Thread.Sleep(randomSleep);
 
                     if (pista.Length >= 20)
