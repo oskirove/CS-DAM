@@ -47,6 +47,7 @@ namespace ejercicio_2.lib
         {
             Thread[] caballos = new Thread[5];
             ganador = null;
+            running = true;
 
             for (int i = 0; i < caballos.Length; i++)
             {
@@ -84,14 +85,12 @@ namespace ejercicio_2.lib
                     if (pista.Length >= 20)
                     {
                         if (ganador == null) ganador = id + 1;
-
                         running = false;
                     }
                 }
             }
 
             Console.Clear();
-            running = true;
         }
     }
 }

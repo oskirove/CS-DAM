@@ -24,11 +24,11 @@ namespace ejercicio_2
                         Utils utils = new Utils();
 
                         int apuesta = Utils.solicitarEntero("Apuesta por un caballo [1 - 5]: ");
-                        
                         Console.Clear();
                         
                         int caballoGanador = utils.inicializarCaballos();
 
+                        Thread.Sleep(1000);
 
                         if (apuesta == caballoGanador)
                         {
