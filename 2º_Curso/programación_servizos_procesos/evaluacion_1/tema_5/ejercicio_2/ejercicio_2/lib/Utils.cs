@@ -72,8 +72,7 @@ namespace ejercicio_2.lib
                     Console.SetCursorPosition(0, id);
                     Console.Write(pista.ToString() + "*");
             
-                    int randomSleep = new Random().Next(10, 300);
-                    Thread.Sleep(randomSleep);
+                    Thread.Sleep(new Random().Next(10, 100));
 
                     if (pista.Length >= 20)
                     {
@@ -81,7 +80,9 @@ namespace ejercicio_2.lib
                     }
                 }
             }
+
             Console.Clear();
+            running = true;
         }
     }
 }

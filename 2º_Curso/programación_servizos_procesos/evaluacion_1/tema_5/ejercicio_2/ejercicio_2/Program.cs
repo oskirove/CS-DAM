@@ -14,6 +14,7 @@ namespace ejercicio_2
                 Console.WriteLine();
                 Console.WriteLine("1.- Iniciar carrera");
                 Console.WriteLine("2.- Salir del programa");
+                Console.WriteLine();
                 opcion = Utils.solicitarEntero("Introduce una opción: ");
                 Console.WriteLine();
 
