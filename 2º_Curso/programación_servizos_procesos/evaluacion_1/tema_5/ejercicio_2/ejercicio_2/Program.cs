@@ -24,12 +24,20 @@ namespace ejercicio_2
                         Utils utils = new Utils();
 
                         int apuesta = Utils.solicitarEntero("Apuesta por un caballo [1 - 5]: ");
-                        Console.WriteLine();
-                        Thread caballoApostado = utils.inicializarCaballos(apuesta);
-
+                        
                         Console.Clear();
+                        
+                        int caballoGanador = utils.inicializarCaballos();
 
-                        caballoApostado.Join();
+
+                        if (apuesta == caballoGanador)
+                        {
+                            Console.WriteLine($"¡Felicidades! El caballo {caballoGanador} ha ganado. Has acertado tu apuesta.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Lo siento, el caballo ganador fue el {caballoGanador}.");
+                        }
 
                         break;
                     case 2:

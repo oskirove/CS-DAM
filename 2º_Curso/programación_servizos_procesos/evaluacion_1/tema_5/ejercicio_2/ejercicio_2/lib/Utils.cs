@@ -9,6 +9,7 @@ namespace ejercicio_2.lib
     internal class Utils
     {
         static bool running = true;
+        private int? ganador = null;
         static readonly object l = new object();
 
         public static int solicitarEntero(string mensaje)
@@ -42,9 +43,10 @@ namespace ejercicio_2.lib
             }
         }
 
-        public Thread inicializarCaballos(int apuesta)
+        public int inicializarCaballos()
         {
             Thread[] caballos = new Thread[5];
+            ganador = null;
 
             for (int i = 0; i < caballos.Length; i++)
             {
@@ -54,7 +56,12 @@ namespace ejercicio_2.lib
                 Console.WriteLine();
             }
 
-            return caballos[apuesta - 1];
+            while (ganador == null)
+            {
+                Thread.Sleep(50);
+            }
+
+            return ganador.Value;
         }
 
         public void correr(object obj)
@@ -76,6 +83,8 @@ namespace ejercicio_2.lib
 
                     if (pista.Length >= 20)
                     {
+                        if (ganador == null) ganador = id + 1;
+
                         running = false;
                     }
                 }
