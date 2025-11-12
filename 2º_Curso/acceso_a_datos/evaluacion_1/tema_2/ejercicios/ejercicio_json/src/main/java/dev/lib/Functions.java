@@ -15,7 +15,6 @@ import javax.json.JsonValue;
 public class Functions {
 
     // Ejercicios con Open Weather Map
-
     private static final String API_KEY_OPEN_WEATHER_MAP = System.getenv("API_KEY_OPEN_WEATHER_MAP");
 
     public static void initializeApiKey() {
@@ -374,17 +373,6 @@ public class Functions {
     }
 
     // Ejercicio 11 y 12
-
-    public void visualizarJSON() throws URISyntaxException {
-        String URL = "https://app.ticketmaster.com/discovery/v2/events/Z7r9jZ1A7fau8.json?apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
-
-        JsonUtils jUtils = new JsonUtils();
-        JsonValue json = jUtils.leeJSON(URL);
-
-        JsonObject jsonObject = (JsonObject) json;
-
-        System.out.println(jsonObject);
-    }
 
     public String[] getIdEventosPais(String codigoPais) throws URISyntaxException {
         String URL = String.format("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=%s&apikey=%s",

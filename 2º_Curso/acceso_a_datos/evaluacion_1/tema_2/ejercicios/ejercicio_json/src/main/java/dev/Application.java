@@ -45,9 +45,7 @@ public class Application {
       // Functions.initializeApiKeyTicketMaster();
       // functions.mostrarEventosPais("ES");
 
-      // Ejercicio 11
-      //functions.visualizarJSON();
-
+      // Ejercicio 11 y 12
       String[] listaID = functions.getIdEventosPais("ES");
       functions.mostrarDatosEvento(listaID);
 
