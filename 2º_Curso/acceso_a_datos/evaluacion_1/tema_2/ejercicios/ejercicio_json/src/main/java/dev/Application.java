@@ -12,7 +12,7 @@ public class Application {
       Functions functions = new Functions();
       
       // Inicializar Api de Open Weather Map
-      // Functions.initializeApiKey();
+      Functions.initializeApiKey();
       
       // Ejercicio 1
       // functions.getTiempoCiudad("Vigo");
@@ -46,8 +46,11 @@ public class Application {
       // functions.mostrarEventosPais("ES");
 
       // Ejercicio 11
-      functions.getIdEventosPais("ES");
-      
+      //functions.visualizarJSON();
+
+      String[] listaID = functions.getIdEventosPais("ES");
+      functions.mostrarDatosEvento(listaID);
+
       System.out.println();
       
     } catch (Exception e) {

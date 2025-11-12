@@ -1,6 +1,8 @@
 package dev.lib;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +16,7 @@ public class Functions {
 
     // Ejercicios con Open Weather Map
 
-    private static final String API_KEY_OPEN_WEATHER_MAP = System.getenv("API_KEY");
+    private static final String API_KEY_OPEN_WEATHER_MAP = System.getenv("API_KEY_OPEN_WEATHER_MAP");
 
     public static void initializeApiKey() {
 
@@ -164,7 +166,18 @@ public class Functions {
     // Ejercicio 7
 
     public void pronosticoCompleto(String ciudad) throws URISyntaxException {
-        String URL = "https://api.openweathermap.org/data/2.5/forecast?q=" + ciudad + "&appid="
+
+        // Apartado para el ejercicio 11, evitamos espacios en blanco en la url para las ciudades
+        // ----------------------------------------------------------------------------
+        String encodedCiudad = null;
+        try {
+            encodedCiudad = URLEncoder.encode(ciudad, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        // ----------------------------------------------------------------------------
+
+        String URL = "https://api.openweathermap.org/data/2.5/forecast?q=" + encodedCiudad + "&appid="
                 + API_KEY_OPEN_WEATHER_MAP;
 
         JsonUtils jUtils = new JsonUtils();
@@ -339,8 +352,9 @@ public class Functions {
 
     // Ejercicio 10
     public void mostrarEventosPais(String codigoPais) throws URISyntaxException {
-        String URL = String.format("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=%s&apikey=%s", codigoPais, API_KEY_TICKET_MASTER);
-        
+        String URL = String.format("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=%s&apikey=%s",
+                codigoPais, API_KEY_TICKET_MASTER);
+
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
 
@@ -360,9 +374,22 @@ public class Functions {
     }
 
     // Ejercicio 11
-        public String[] getIdEventosPais(String codigoPais) throws URISyntaxException {
-        String URL = String.format("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=%s&apikey=%s", codigoPais, API_KEY_TICKET_MASTER);
-        
+
+    public void visualizarJSON() throws URISyntaxException {
+        String URL = "https://app.ticketmaster.com/discovery/v2/events/Z7r9jZ1A7fau8.json?apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
+
+        JsonUtils jUtils = new JsonUtils();
+        JsonValue json = jUtils.leeJSON(URL);
+
+        JsonObject jsonObject = (JsonObject) json;
+
+        System.out.println(jsonObject);
+    }
+
+    public String[] getIdEventosPais(String codigoPais) throws URISyntaxException {
+        String URL = String.format("https://app.ticketmaster.com/discovery/v2/events.json?countryCode=%s&apikey=%s",
+                codigoPais, API_KEY_TICKET_MASTER);
+
         JsonUtils jUtils = new JsonUtils();
         JsonValue json = jUtils.leeJSON(URL);
 
@@ -373,7 +400,7 @@ public class Functions {
         JsonArray eventsArray = embeddedObject.getJsonArray("events");
 
         String[] arrayID = new String[eventsArray.size()];
-        
+
         for (int i = 0; i < eventsArray.size(); i++) {
             JsonObject objecEvents = eventsArray.getJsonObject(i);
 
@@ -383,5 +410,50 @@ public class Functions {
         }
 
         return arrayID;
+    }
+
+    public void mostrarDatosEvento(String[] listaID) throws URISyntaxException, InterruptedException {
+
+        for (String id : listaID) {
+            String URL = String.format("https://app.ticketmaster.com/discovery/v2/events/%s.json?apikey=%s", id,
+                    API_KEY_TICKET_MASTER);
+
+            JsonUtils jUtils = new JsonUtils();
+            JsonValue json = jUtils.leeJSON(URL);
+
+            JsonObject jsonObject = (JsonObject) json;
+
+            // Mostrar nombre evento
+            String name = jsonObject.getString("name");
+            System.out.println("Nombre: " + name);
+
+            // Mostrar Fecha
+            JsonObject jsonObjectFechas = jsonObject.getJsonObject("dates");
+            JsonObject jsonObjectFecha = jsonObjectFechas.getJsonObject("start");
+
+            String fecha = jsonObjectFecha.getString("localDate");
+
+            System.out.println("Fecha: " + fecha);
+
+            // Mostrar localización
+            JsonObject embeddedObject = jsonObject.getJsonObject("_embedded");
+            JsonArray venuesArray = embeddedObject.getJsonArray("venues");
+
+            JsonObject venuesObject = venuesArray.getJsonObject(0);
+
+            String localizacion = venuesObject.getString("name");
+
+            JsonObject cityObject = venuesObject.getJsonObject("city");
+
+            String ciudad = cityObject.getString("name");
+
+            System.out.printf("Localización: %s, %s\n", localizacion, ciudad);
+            System.out.println("Pronóstico: ");
+            pronosticoCompleto(ciudad);
+
+            System.out.println("--------------------------------------------------");
+
+            Thread.sleep(200);
+        }
     }
 }
