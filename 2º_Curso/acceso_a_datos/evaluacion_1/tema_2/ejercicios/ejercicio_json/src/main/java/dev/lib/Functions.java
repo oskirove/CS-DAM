@@ -373,7 +373,7 @@ public class Functions {
         }
     }
 
-    // Ejercicio 11
+    // Ejercicio 11 y 12
 
     public void visualizarJSON() throws URISyntaxException {
         String URL = "https://app.ticketmaster.com/discovery/v2/events/Z7r9jZ1A7fau8.json?apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
