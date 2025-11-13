@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.txtFileName = new System.Windows.Forms.TextBox();
             this.btn1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtOut = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -52,12 +52,12 @@
             this.btn1.UseVisualStyleBackColor = true;
             this.btn1.Click += new System.EventHandler(this.btn1_Click);
             // 
-            // textBox1
+            // txtOut
             // 
-            this.textBox1.Location = new System.Drawing.Point(175, 372);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(436, 31);
-            this.textBox1.TabIndex = 2;
+            this.txtOut.Location = new System.Drawing.Point(175, 372);
+            this.txtOut.Name = "txtOut";
+            this.txtOut.Size = new System.Drawing.Size(436, 31);
+            this.txtOut.TabIndex = 2;
             // 
             // label1
             // 
@@ -75,7 +75,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtOut);
             this.Controls.Add(this.btn1);
             this.Controls.Add(this.txtFileName);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -90,7 +90,7 @@
 
         private System.Windows.Forms.TextBox txtFileName;
         private System.Windows.Forms.Button btn1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtOut;
         private System.Windows.Forms.Label label1;
     }
 }

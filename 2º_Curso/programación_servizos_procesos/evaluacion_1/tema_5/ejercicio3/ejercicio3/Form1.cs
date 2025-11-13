@@ -18,16 +18,18 @@ namespace ejercicio3
             InitializeComponent();
         }
 
-        private void btn1_Click(object sender, EventArgs e)
+        private async void btn1_Click(object sender, EventArgs e)
         {
-            string fileName = textBox1.Text;
+            string fileName = txtFileName.Text;
             Utils utils = new Utils();
 
             Random rnd = new Random();
 
-            int delay = rnd.Next(1, 10);
+            int delay = rnd.Next(1000, 10000);
 
-            Task<string> task1 = utils.downloadFileAsync(fileName, delay);
+            string promesa = await utils.downloadFileAsync(fileName, delay);
+
+            txtOut.Text = promesa;
         }
     }
 }
