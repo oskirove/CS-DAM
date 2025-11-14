@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ejercicio6
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form//TODO probar distintos directoios . Actualizar directorios. Formulario unico. Teclas
     {
 
         private FileInfo[] rutas;

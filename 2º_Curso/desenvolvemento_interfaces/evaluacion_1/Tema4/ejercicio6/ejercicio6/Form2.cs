@@ -55,9 +55,10 @@ namespace ejercicio6
                 index--;
 
                 // Hago esto para liberar la imagen anterior y
-                // evitar que aumente drásticamente el uso de memoria
+                // evitar que aumente sin sentido el uso de memoria
                 pictureBox1.Image?.Dispose();
                 pictureBox1.Image = Image.FromFile(rutas[index].FullName);
+               // GC.Collect();
                 ActualizarInfo();
             }
 
