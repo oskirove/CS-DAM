@@ -11,13 +11,20 @@
         // llamada al modelo lógico
         require_once "modelos/modelo.php";
 
-        $empleado = new Empleado();
-        $result = $empleado->setEmpleaod($_POST['nombre'], $_POST['apellidos'], $_POST['telefono'], $_POST['departamento']);
+        $directorio = "img/";
+        $nombreImagen = basename($_FILES['imagen']['name']);
 
-        if ($result) {
-            echo "<p style=\"color:green\">El usuario se ha añadido correctamente</p>";
-        } else {
-            echo "<p style=\"color:red\">El usuario no se ha añadido</p>";
+        $rutaFinal = $directorio . $nombreImagen;
+
+        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaFinal)) {
+            $empleado = new Empleado();
+            $result = $empleado->setEmpleaod($_POST['nombre'], $_POST['apellidos'], $_POST['telefono'], $_POST['departamento'], $rutaFinal);
+
+            if ($result) {
+                echo "<p style=\"color:green\">El usuario se ha añadido correctamente</p>";
+            } else {
+                echo "<p style=\"color:red\">El usuario no se ha añadido</p>";
+            }
         }
     }
     ?>
@@ -26,7 +33,7 @@
 <body>
     <h1>Formulario de la inscripcion de empleado</h1>
 
-    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <td>Nombre: </td>
@@ -43,6 +50,10 @@
             <tr>
                 <td>Departamento: </td>
                 <td><input type="text" name="departamento" id="departamento"></td>
+            </tr>
+            <tr>
+                <td>Imagen: </td>
+                <td><input type="file" name="imagen" id="imagen"></td>
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" value="Crear empleado"></td>

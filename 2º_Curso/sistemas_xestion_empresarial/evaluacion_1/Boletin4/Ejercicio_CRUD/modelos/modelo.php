@@ -11,9 +11,9 @@ class Empleado
         $this->db = new PDO("mysql:host=localhost;dbname=ejempo_mvc;charset=utf8", "root", "");
     }
 
-    public function setEmpleaod($nombre, $apellidos, $telefono, $departamento)
+    public function setEmpleaod($nombre, $apellidos, $telefono, $departamento, $imagen)
     {
-        $sql = "INSERT INTO empleados(nombre, apellidos, telefono, departamento) VALUES ('$nombre', '$apellidos', '$telefono', '$departamento')";
+        $sql = "INSERT INTO empleados(nombre, apellidos, telefono, departamento, imagen) VALUES ('$nombre', '$apellidos', '$telefono', '$departamento', '$imagen)";
         $result = $this->db->query($sql);
         $this->db = null;
 
@@ -34,16 +34,16 @@ class Empleado
 
     public function edit($uuid)
     {
-        $sql = "SELECT nombre,apellidos,telefono,departamento FROM empleados WHERE uuid='{$uuid}'";
+        $sql = "SELECT nombre,apellidos,telefono,departamento, imagen FROM empleados WHERE uuid='{$uuid}'";
         $result = $this->db->query($sql);
         $dato = $result->fetchAll(PDO::FETCH_ASSOC);
         $this->db = null;
         return $dato;
     }
 
-    public function update($nombre, $apellidos, $telefono, $departamento, $uuid)
+    public function update($nombre, $apellidos, $telefono, $departamento, $uuid, $imagen)
     {
-        $sql = "UPDATE empleados SET nombre = '{$nombre}', apellidos = '{$apellidos}', telefono = '{$telefono}', departamento = '{$departamento}' WHERE uuid={$uuid}";
+        $sql = "UPDATE empleados SET nombre = '{$nombre}', apellidos = '{$apellidos}', telefono = '{$telefono}', departamento = '{$departamento}', imagen= '{$imagen}' WHERE uuid={$uuid}";
         $result = $this -> db -> query($sql);
         $this->db = null;
 
