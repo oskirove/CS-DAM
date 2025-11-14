@@ -24,30 +24,31 @@ namespace ejercicio4
         private async void button1_Click(object sender, EventArgs e)
         {
             Utils utils = new Utils();
-
             string ruta = textBox1.Text;
+            string palabraBuscada = textBox2.Text;
+
+            // Inicialización de colecciones
+            DirectoryInfo directoryInfo = new DirectoryInfo(ruta);
+            List<string> archivosTxt = utils.getArchivosTxt(directoryInfo);
+            List<Task<string>> tareas = new List<Task<string>>();
+
+            // Validaciones
             if (string.IsNullOrEmpty(ruta))
             {
                 MessageBox.Show("Debes introducir una ruta válida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            string palabraBuscada = textBox2.Text;
             if (string.IsNullOrEmpty(palabraBuscada))
             {
                 MessageBox.Show("Debes introducir una palabra", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            DirectoryInfo directoryInfo = new DirectoryInfo(ruta);
 
             if (!directoryInfo.Exists)
             {
                 MessageBox.Show($"El directorio al que intentas acceder no existe: '{e}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            List<string> archivosTxt = utils.getArchivosTxt(directoryInfo);
-
-            List<Task<string>> tareas = new List<Task<string>>();
-
+            // Lógica creacion de tareas y agregar resultados a la lista
             foreach (string archivo in archivosTxt)
             {
                 tareas.Add(Task.Run(() => utils.BuscaPalabra(archivo, palabraBuscada)));
