@@ -15,6 +15,8 @@ namespace ejercicio_examen
         private Timer timer = new Timer();
         private int index = 0;
         private int seleccionados = 0;
+        private int puntuacion = 0;
+
 
         public FrmPrincipal()
         {
@@ -144,6 +146,7 @@ namespace ejercicio_examen
             }
 
             label1.Text = "Resultados: ";
+            puntuacion = 0;
         }
 
         private void FrmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -188,10 +191,9 @@ namespace ejercicio_examen
             else
             {
                 int[] numeros = Generar_Numeros();
-
                 label1.Text = $"Resultados: {string.Join(", ", numeros)}";
 
-                foreach (Control control in this.Controls)
+                foreach (Control control in Controls)
                 {
                     if (control is CheckBox cb && cb.Checked)
                     {
@@ -199,11 +201,23 @@ namespace ejercicio_examen
                         if (int.TryParse(cb.Text, out valor) && numeros.Contains(valor))
                         {
                             cb.BackColor = Color.Green;
+                            puntuacion++;
                         }
-                        else
-                        {
-                            cb.BackColor = Color.Red;
-                        }
+                    }
+                }
+
+                if (puntuacion > 0)
+                {
+                    FrmDatos formDatos = new FrmDatos();
+                    DialogResult result = formDatos.ShowDialog();
+
+                    if (result == DialogResult.OK)
+                    {
+
+                    }
+                    else
+                    {
+
                     }
                 }
             }
