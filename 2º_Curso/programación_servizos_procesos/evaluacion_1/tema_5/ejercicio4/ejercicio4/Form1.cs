@@ -29,7 +29,7 @@ namespace ejercicio4
 
             // Inicialización de colecciones
             DirectoryInfo directoryInfo = new DirectoryInfo(ruta);
-            List<string> archivosTxt = utils.getArchivosTxt(directoryInfo);
+            Dictionary<string, string> archivosTxt = utils.getArchivosTxt(directoryInfo);
             List<Task<string>> tareas = new List<Task<string>>();
 
             // Validaciones
@@ -49,7 +49,7 @@ namespace ejercicio4
             }
 
             // Lógica creacion de tareas y agregar resultados a la lista
-            foreach (string archivo in archivosTxt)
+            foreach (string archivo in archivosTxt.Keys)
             {
                 tareas.Add(Task.Run(() => utils.BuscaPalabra(archivo, palabraBuscada)));
             }

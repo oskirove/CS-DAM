@@ -39,13 +39,13 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(70, 37);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(328, 31);
+            this.textBox1.Size = new System.Drawing.Size(764, 31);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "Introduce una URL";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(618, 27);
+            this.button1.Location = new System.Drawing.Point(1165, 27);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(111, 51);
             this.button1.TabIndex = 1;
@@ -55,9 +55,9 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(416, 37);
+            this.textBox2.Location = new System.Drawing.Point(864, 37);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(187, 31);
+            this.textBox2.Size = new System.Drawing.Size(279, 31);
             this.textBox2.TabIndex = 2;
             this.textBox2.Text = "Palabra ";
             // 
@@ -67,14 +67,14 @@
             this.listBox1.ItemHeight = 25;
             this.listBox1.Location = new System.Drawing.Point(70, 108);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(659, 279);
+            this.listBox1.Size = new System.Drawing.Size(1206, 554);
             this.listBox1.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1348, 740);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button1);
