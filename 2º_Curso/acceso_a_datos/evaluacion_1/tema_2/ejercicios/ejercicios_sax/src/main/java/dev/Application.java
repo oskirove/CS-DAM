@@ -1,6 +1,5 @@
 package dev;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,33 +9,42 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 public class Application {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 
-    String nombreArchivo = "dom.xml";
+    String rutaArchivo = "/home/oscar/CS-DAM/2º_Curso/acceso_a_datos/evaluacion_1/tema_2/ejercicios/dom.xml";
 
-    File archivoXML = new File(nombreArchivo);
-    if (!archivoXML.exists()) {
-      System.err.println("Error: El archivo " + nombreArchivo + " no se encuentra.");
-      return;
-    }
+    // getSax14(rutaArchivo);
+    // getSax15(rutaArchivo);
+    getSax16(rutaArchivo);
+    // getSax17(rutaArchivo);
 
-    try {
-      SAXParserFactory factory = SAXParserFactory.newInstance();
+  }
 
-      SAXParser saxParser = factory.newSAXParser();
+  public static void getSax(String entradaXML) throws ParserConfigurationException, SAXException, IOException {
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    SAXParser parser = factory.newSAXParser();
+    Parser14 parserSax = new Parser14();
+    parser.parse(entradaXML, parserSax);
+  }
 
-      ParserSAXB handler = new ParserSAXB();
+  public static void getSax15(String entradaXML) throws ParserConfigurationException, SAXException, IOException {
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    SAXParser parser = factory.newSAXParser();
+    Parser15 parserSax = new Parser15();
+    parser.parse(entradaXML, parserSax);
+  }
 
-      System.out.println("Iniciando análisis del archivo: " + nombreArchivo);
+  public static void getSax16(String entradaXML) throws ParserConfigurationException, SAXException, IOException {
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    SAXParser parser = factory.newSAXParser();
+    Parser16 parserSax = new Parser16(2);
+    parser.parse(entradaXML, parserSax);
+  }
 
-      saxParser.parse(archivoXML, handler);
-
-    } catch (ParserConfigurationException e) {
-      System.err.println("Error de configuración del analizador: " + e.getMessage());
-    } catch (SAXException e) {
-      System.err.println("Error de SAX durante el análisis: " + e.getMessage());
-    } catch (IOException e) {
-      System.err.println("Error de I/O al leer el archivo: " + e.getMessage());
-    }
+  public static void getSax17(String entradaXML) throws ParserConfigurationException, SAXException, IOException {
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    SAXParser parser = factory.newSAXParser();
+    Parser17 parserSax = new Parser17();
+    parser.parse(entradaXML, parserSax);
   }
 }
