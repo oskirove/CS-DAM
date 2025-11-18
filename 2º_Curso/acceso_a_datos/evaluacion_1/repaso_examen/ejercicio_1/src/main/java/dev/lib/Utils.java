@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Utils {
-    public ArrayList<String> showContentFromTxtFile(String path) throws FileNotFoundException {
-
-        ArrayList<String> content = new ArrayList<String>();
+    public void showContentFromTxtFile(String path) throws FileNotFoundException {
         
         File directory = new File(path);
 
@@ -32,15 +30,12 @@ public class Utils {
 
                 while ((line = br.readLine()) != null) {
                     System.out.println(line);
-                    content.add(line);
                 }
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
-        return content;
     }
 
     private ArrayList<String> getTxtFilePathsFromDir(File[] files) {
