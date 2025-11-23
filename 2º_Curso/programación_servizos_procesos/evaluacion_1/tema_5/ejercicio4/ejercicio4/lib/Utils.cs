@@ -13,8 +13,6 @@ namespace ejercicio4.lib
         public async Task<string> BuscaPalabra(string ruta, string palabra)
         {
 
-
-
             return null;
         }
 
@@ -33,8 +31,6 @@ namespace ejercicio4.lib
 
             return nombreArchivosTxt;
         }
-
-       
 
         public void Dispose()
         {
