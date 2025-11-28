@@ -49,14 +49,17 @@ namespace ejercicio_2.lib
             ganador = null;
             running = true;
 
+            // los primeros hilos estan corriendo mientras los otros aun no se crearon ( Hacer dos bucles para crear los hilos y otro para lanzarlos)
             for (int i = 0; i < caballos.Length; i++)
             {
                 int id = i;
+
                 caballos[i] = new Thread(correr);
                 caballos[i].Start(id);
                 Console.WriteLine();
             }
 
+            //Join
             while (ganador == null)
             {
                 Thread.Sleep(50);
@@ -80,7 +83,6 @@ namespace ejercicio_2.lib
                     Console.SetCursorPosition(0, id);
                     Console.Write(pista.ToString() + "*");
             
-                    Thread.Sleep(new Random().Next(10, 100));
 
                     if (pista.Length >= 20)
                     {
@@ -88,9 +90,10 @@ namespace ejercicio_2.lib
                         running = false;
                     }
                 }
+                    Thread.Sleep(new Random().Next(10, 100));
             }
 
-            Console.Clear();
+           // Console.Clear();
         }
     }
 }

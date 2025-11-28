@@ -27,7 +27,7 @@ namespace ejercicio4
             string ruta = textBox1.Text;
             string palabraBuscada = textBox2.Text;
 
-            // Inicialización de colecciones
+            // Inicializacion de colecciones
             DirectoryInfo directoryInfo = new DirectoryInfo(ruta);
             Dictionary<string, string> archivosTxt = utils.getArchivosTxt(directoryInfo);
             List<Task<string>> tareas = new List<Task<string>>();

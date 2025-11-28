@@ -60,6 +60,7 @@
 
             hilo1.Start();
             hilo2.Start();
+            //Espera e indica el ganador
         }
     }
 }
