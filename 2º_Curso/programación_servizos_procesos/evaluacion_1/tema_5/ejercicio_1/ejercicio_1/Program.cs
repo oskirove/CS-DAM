@@ -14,21 +14,24 @@
                 {
                     lock (t)
                     {
-                        if (!running) break;
-
-                        contador++;
-
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine("Hilo 1: " + contador);
-
-                        if (contador >= 500)
+                        if (running)
                         {
-                            running = false;
-                            Console.WriteLine();
-                            Console.WriteLine("Hilo 1 ha terminado la ejecución.");
-                        }
 
-                        Console.ResetColor();
+
+                            contador++;
+
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.WriteLine("Hilo 1: " + contador);
+
+                            if (contador >= 500)
+                            {
+                                running = false;
+                                Console.WriteLine();
+                                Console.WriteLine("Hilo 1 ha terminado la ejecución.");
+                            }
+
+                            Console.ResetColor();
+                        }
                     }
                 }
             });
@@ -39,8 +42,10 @@
                 {
                     lock (t)
                     {
-                        if (!running) break;
-
+                        if (!running)
+                        {
+                            break;
+                        }
                         contador--;
 
                         Console.ForegroundColor = ConsoleColor.Blue;
