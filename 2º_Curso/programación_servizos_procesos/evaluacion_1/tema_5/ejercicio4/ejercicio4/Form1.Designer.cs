@@ -42,7 +42,7 @@
             this.textBox1.Size = new System.Drawing.Size(764, 31);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "Introduce una URL";
-            // 
+             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(1165, 27);

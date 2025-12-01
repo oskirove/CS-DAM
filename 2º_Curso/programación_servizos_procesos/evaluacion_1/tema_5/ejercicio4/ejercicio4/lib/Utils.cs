@@ -10,12 +10,12 @@ namespace ejercicio4.lib
 {
     internal class Utils : IDisposable
     {
-        public async Task<string> BuscaPalabra(string ruta, string palabra)
+        public string BuscaPalabra(DirectoryInfo ruta, string palabra)
         {
             int cont = 0;
             string fileName = null;
-            DirectoryInfo dir = new DirectoryInfo(ruta);
-            Dictionary<string, string> colArchivos = getArchivosTxt(dir);
+            List<string> palabras = new List<string>();
+            Dictionary<string, string> colArchivos = getArchivosTxt(ruta);
 
             foreach (KeyValuePair<string, string> archivo in colArchivos)
             {
@@ -23,9 +23,22 @@ namespace ejercicio4.lib
                 {
                     using (StreamReader lectura = new StreamReader(archivo.Value))
                     {
-                        string line = lectura.ReadLine();
-                    }
+                        string linea;
+                        while ((linea = lectura.ReadLine())!= null)
+                        {
+                            fileName = archivo.Key;
 
+                            string[] palabrasLinea = linea.Split(' ');
+                            foreach (string p in palabrasLinea)
+                            {
+                                palabras.Add(p);
+                                if (palabras.Contains(palabra))
+                                {
+                                    cont++;
+                                }
+                            }
+                        }
+                    }
                 }
                 catch (FileNotFoundException e)
                 {
