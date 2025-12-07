@@ -38,6 +38,7 @@ namespace ejercicio1
                 {
                     posicion = value;
                     recolocar();
+                    OnPosicionChanged(EventArgs.Empty);
                 }
                 else
                 {
@@ -87,6 +88,7 @@ namespace ejercicio1
                 {
                     separacion = value;
                     recolocar();
+                    OnSeparacionChanged(EventArgs.Empty);
                 }
                 else
                 {
@@ -132,6 +134,30 @@ namespace ejercicio1
         {
             base.OnPaint(e);
             recolocar();
+        }
+
+        [Category("La propiedad cambió")]
+        [Description("Se lanza cuando la propiedad Posicion cambia")]
+        public event System.EventHandler PosicionChanged;
+
+        protected virtual void OnPosicionChanged(EventArgs e)
+        {
+            if (PosicionChanged != null)
+            {
+                PosicionChanged(this, e);
+            }
+        }
+
+        [Category("La propiedad cambió")]
+        [Description("Se lanza cuando la propiedad Separacion cambia")]
+        public event System.EventHandler SeparacionChanged;
+
+        protected virtual void OnSeparacionChanged(EventArgs e)
+        {
+            if (SeparacionChanged != null)
+            {
+                SeparacionChanged(this, e);
+            }
         }
     }
 }

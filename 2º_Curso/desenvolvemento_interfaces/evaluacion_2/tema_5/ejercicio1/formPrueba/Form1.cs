@@ -17,6 +17,18 @@ namespace formPrueba
         public Form1()
         {
             InitializeComponent();
+            labelTextbox1.PosicionChanged += LabelTextbox1_PosicionChanged;
+            labelTextbox1.SeparacionChanged += LabelTextbox1_SeparacionChanged;
+        }
+
+        private void LabelTextbox1_SeparacionChanged(object sender, EventArgs e)
+        {
+            this.Text = "La separación ha cambiado";
+        }
+
+        private void LabelTextbox1_PosicionChanged(object sender, EventArgs e)
+        {
+            this.Text = labelTextbox1.Posicion.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,6 +49,16 @@ namespace formPrueba
                     labelTextbox1.Posicion = LabelTextbox.EPosicion.DERECHA;
                     break;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            labelTextbox1.Separacion--;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            labelTextbox1.Separacion++;
         }
     }
 }
