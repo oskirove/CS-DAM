@@ -17,6 +17,10 @@ public class Application {
     // db.eliminarAulas(dataBase, "Acceso a datos");
 
     // Apartado 4
-    db.
+    // db.actualizarAlumnos(dataBase, 8, "Juanin", "García", 120, 20);
+
+    // Apartado 5
+    // db.consultaAulaConAlumnos(dataBase);
+    db.datosAprobado(dataBase);
   }
 }

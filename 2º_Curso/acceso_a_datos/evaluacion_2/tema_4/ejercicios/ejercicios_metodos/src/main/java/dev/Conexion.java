@@ -143,16 +143,59 @@ public class Conexion {
 
     // Apartado 4
 
-    public void actualizarAlumnos(String DDBB, String nombre, String apellidos, int altura, int aula) {
+    public void actualizarAlumnos(String DDBB, int codAlumno, String nombre, String apellidos, int altura, int aula) {
         abrirConexion(DDBB, server, user, passwd);
 
         try (Statement stmt = this.conexion.createStatement()) {
 
-            String query = String.format("DELETE FROM aulas where nombreAula='%s';", nombre);
+            String query = String.format("UPDATE alumnos SET nombre='%s', apellidos='%s', altura=%s, aula=%s WHERE codigo=%s;", nombre, apellidos, altura, aula, codAlumno);
 
             int filasAfectadas = stmt.executeUpdate(query);
 
             System.out.printf("Han afectado a %d filas", filasAfectadas);
+
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    // Apartado 5
+
+    public void consultaAulaConAlumnos(String DDBB) {
+        abrirConexion(DDBB, server, user, passwd);
+
+        try (Statement stmt = this.conexion.createStatement()) {
+            String query = "SELECT DISTINCT A.nombreAula FROM aulas A JOIN alumnos AL ON A.numero = AL.aula WHERE A.nombreAula IS NOT NULL";
+
+            ResultSet result = stmt.executeQuery(query);
+
+            while (result.next()) {
+                String nombre = result.getString("nombreAula");
+                System.out.println(nombre);
+            }
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    public void datosAprobado(String DDBB) {
+        abrirConexion(DDBB, server, user, passwd);
+
+        try (Statement stmt = this.conexion.createStatement()) {
+
+            String query = "SELECT DISTINCT N.alumno AS alumno, N.nota AS notaAlumno, N.asignatura AS asignatura FROM notas N JOIN asignaturas T ON N.asignatura = T.COD JOIN alumnos AL ON N.alumno = AL.codigo WHERE N.nota >= 5";
+            ResultSet result = stmt.executeQuery(query);
+
+            while (result.next()) {
+                String nombre = result.getString("alumno");
+                int nota = result.getInt("notaAlumno");
+                String asignatura = result.getString("asignatura");
+                System.out.println(nombre + " " + asignatura + " " + nota);
+            }
 
         } catch (SQLException e) {
             System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
