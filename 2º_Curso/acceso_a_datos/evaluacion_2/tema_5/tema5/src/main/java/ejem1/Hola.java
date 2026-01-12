@@ -24,7 +24,7 @@ public class Hola {
     @Produces(MediaType.TEXT_HTML)
     public String htmlHola() {
         return "<html><title> Hola Rest</title><body>"
-                + "<h1> Hola Rest</h1>"
+                + "<h1> Hola Rest </h1>"
                 + "</body></html>";
     }
 
