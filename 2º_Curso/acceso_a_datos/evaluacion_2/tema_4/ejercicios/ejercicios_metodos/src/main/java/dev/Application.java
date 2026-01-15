@@ -1,5 +1,7 @@
 package dev;
 
+import java.sql.SQLException;
+
 public class Application {
   public static void main(String[] args) {
     String dataBase = "add";
@@ -21,6 +23,17 @@ public class Application {
 
     // Apartado 5
     // db.consultaAulaConAlumnos(dataBase);
-    db.datosAprobado(dataBase);
+    // db.datosAprobado(dataBase);
+    // db.asignaturas(dataBase);
+
+    // Apartado 6
+    // db.analizarPatron(dataBase, 6, 170);
+    try {
+      db.analizarPatronPS(dataBase, 6, 170);
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
   }
 }

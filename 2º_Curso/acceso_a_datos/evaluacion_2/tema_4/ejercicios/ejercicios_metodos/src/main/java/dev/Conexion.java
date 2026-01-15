@@ -2,6 +2,7 @@ package dev;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ public class Conexion {
     public void abrirConexion(String bd, String servidor, String usuario,
             String password) {
         try {
-            String url = String.format("jdbc:mariadb://%s:3306/%s", servidor, bd);
+            String url = String.format("jdbc:mariadb://%s:3306/%s?useServerPrepStmts=true", servidor, bd);
 
             this.conexion = DriverManager.getConnection(url, usuario, password);
             if (this.conexion != null) {
@@ -148,7 +149,9 @@ public class Conexion {
 
         try (Statement stmt = this.conexion.createStatement()) {
 
-            String query = String.format("UPDATE alumnos SET nombre='%s', apellidos='%s', altura=%s, aula=%s WHERE codigo=%s;", nombre, apellidos, altura, aula, codAlumno);
+            String query = String.format(
+                    "UPDATE alumnos SET nombre='%s', apellidos='%s', altura=%s, aula=%s WHERE codigo=%s;", nombre,
+                    apellidos, altura, aula, codAlumno);
 
             int filasAfectadas = stmt.executeUpdate(query);
 
@@ -187,14 +190,14 @@ public class Conexion {
 
         try (Statement stmt = this.conexion.createStatement()) {
 
-            String query = "SELECT DISTINCT N.alumno AS alumno, N.nota AS notaAlumno, N.asignatura AS asignatura FROM notas N JOIN asignaturas T ON N.asignatura = T.COD JOIN alumnos AL ON N.alumno = AL.codigo WHERE N.nota >= 5";
+            String query = "SELECT AL.nombre AS alumno, N.nota AS notaAlumno, T.nombre AS asignatura FROM notas N JOIN asignaturas T ON N.asignatura = T.COD JOIN alumnos AL ON N.alumno = AL.codigo WHERE N.nota >= 5";
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
                 String nombre = result.getString("alumno");
                 int nota = result.getInt("notaAlumno");
                 String asignatura = result.getString("asignatura");
-                System.out.println(nombre + " " + asignatura + " " + nota);
+                System.out.printf("%-10s | %-30s | %-2s %n", nombre, asignatura, nota);
             }
 
         } catch (SQLException e) {
@@ -202,5 +205,69 @@ public class Conexion {
         } finally {
             cerrarConexion();
         }
+    }
+
+    public void asignaturas(String DDBB) {
+        abrirConexion(DDBB, server, user, passwd);
+
+        try (Statement stmt = this.conexion.createStatement()) {
+
+            String query = "SELECT NOMBRE FROM asignaturas";
+            ResultSet result = stmt.executeQuery(query);
+
+            while (result.next()) {
+                String nombre = result.getString("NOMBRE");
+
+                System.out.printf("%-30s%n", nombre);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    // Apartado 6
+    public void analizarPatron(String DDBB, int patronNombre, int patronAltura) {
+        abrirConexion(DDBB, server, user, passwd);
+
+        try (Statement stmt = this.conexion.createStatement()) {
+
+            String query = String.format("SELECT nombre FROM alumnos WHERE LENGTH(nombre) < %s AND altura < %s",
+                    patronNombre, patronAltura);
+
+            ResultSet result = stmt.executeQuery(query);
+
+            while (result.next()) {
+                String nombre = result.getString("nombre");
+
+                System.out.printf("%-10s%n", nombre);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    private PreparedStatement ps = null;
+
+    public void analizarPatronPS(String DDBB, int patronNombre, int patronAltura) throws SQLException {
+        abrirConexion(DDBB, server, user, passwd);
+
+        String query = String.format("SELECT nombre FROM alumnos WHERE LENGTH(nombre) < %s AND altura < %s",
+                patronNombre, patronAltura);
+
+        if (this.ps == null)
+            this.ps = this.conexion.prepareStatement(query);
+        ps.setInt(1, patronNombre);
+        ps.setInt(2, patronAltura);
+        ResultSet resu = ps.executeQuery();
+        while (resu.next()) {
+            System.out.println(resu.getInt(1) + "\t" + resu.getString("nombreAula"));
+        }
+
     }
 }
