@@ -16,5 +16,15 @@ namespace cliente_1
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            textBox.Left = (this.ClientSize.Width - textBox.Width) / 2;
+            textBox.Top = (this.ClientSize.Height - textBox.Height) / 2;
+
+            for (int i = 0; i <= 4; i++)
+            {
+            }
+        }
     }
 }

@@ -8,64 +8,138 @@ namespace ejercicio_1.lib
 {
     internal class Server
     {
-        public static void init()
+        public bool ServerRunning { set; get; } = true;
+        public int Port { get; set; } = 4321;
+
+        public void InitServer()
         {
-            int port = 4321;
-            IPEndPoint ie = new IPEndPoint(IPAddress.Any, port);
+            bool trigger = false;
+            IPEndPoint ie = null;
 
             using (Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
-                try
+
+                while (!trigger && Port < 65535)
                 {
-                    s.Bind(ie);
-                    s.Listen(10);
-
-                    Console.WriteLine($"Servidor iniciado. Escuchando en {ie.Address}:{ie.Port}");
-                    Console.WriteLine($"Esperando conexiones");
-
-                    Socket sClient = s.Accept();
-
-                    using (sClient) 
+                    try
                     {
-                        IPEndPoint ieClient = (IPEndPoint)sClient.RemoteEndPoint;
-                        Console.WriteLine($"Cliente conectado: {ieClient.Address} en puerto {ieClient.Port}");
-
-                        using (NetworkStream ns = new NetworkStream(sClient))
-                        using (StreamReader sr = new StreamReader(ns))
-                        using (StreamWriter sw = new StreamWriter(ns))
+                        ie = new IPEndPoint(IPAddress.Any, Port);
+                        s.Bind(ie);
+                        trigger = true;
+                    }
+                    catch (SocketException ex)
+                    {
+                        if (ex.ErrorCode == 10048)
                         {
-                            string welcome = "Welcome to The Echo-Logic, Odd, Desiderable, " +
-                            "Incredible, and Javaless Echo Server (T.E.L.O.D.I.J.E Server)";
-                            // El envío por red se convierte en un WriteLine
-                            sw.WriteLine(welcome);
-                            // Con flush se fuerza el envío de los datos sin esperar al cierre
-                            // Otra opción es: sw.AutoFlush = true
-                            sw.Flush();
-                            // Esperamos a la recepción del mensaje
-                            // El ReadLine es bloqueante.
-                            // Más adelante veremos comprobaciones sobre lo recibido.
-                            string msg = sr.ReadLine();
-                            // Se muestra por consola lo que manda el cliente
-                            if (msg != null)
-                            {
-                                Console.WriteLine(msg);
-                            }
-                            else
-                            {
-                                Console.WriteLine("El cliente cerró la conexión.");
-                            }
-                            // Finalización de la conexión
+                            Console.WriteLine($"Puerto {Port} ocupado, probando el siguiente...");
+                            Port++;
                         }
                     }
                 }
-                catch (SocketException e) when (e.ErrorCode == (int)SocketError.AddressAlreadyInUse)
+
+                s.Listen(10);
+                Console.WriteLine($"Servidor iniciado. " +
+                $"Escuchando en {ie.Address}:{ie.Port}");
+                Console.WriteLine("Esperando conexiones... (Ctrl+C para salir)");
+
+                while (ServerRunning)
                 {
-                    Console.WriteLine($"Puerto {port} en uso");
+                    Socket client = s.Accept();
+
+                    Thread hilo = new Thread(() => ClientDispatcher(client));
+
+                    hilo.Start();
                 }
-                catch (SocketException e)
+            }
+        }
+
+        private void ClientDispatcher(Socket sClient)
+        {
+            using (sClient)
+            {
+                IPEndPoint ieClient = (IPEndPoint)sClient.RemoteEndPoint;
+                Console.WriteLine($"Cliente conectado:{ieClient.Address} " + $"en puerto {ieClient.Port}");
+                Encoding codificacion = Console.OutputEncoding;
+
+                using (NetworkStream ns = new NetworkStream(sClient))
+                using (StreamReader sr = new StreamReader(ns, codificacion))
+                using (StreamWriter sw = new StreamWriter(ns, codificacion))
                 {
-                    Console.WriteLine($"Error: {e.SocketErrorCode} - {e.Message}");
+                    sw.AutoFlush = true;
+                    sw.WriteLine("Servidor de tiempo");
+                    string[]? msg = null;
+
+                    string line = sr.ReadLine().Trim();
+
+                    if (line == null)
+                    {
+                        sw.WriteLine("Error: comando vacío");
+                    }
+
+                    msg = line.Split(" ");
+
+                    if (msg.Length > 3)
+                    {
+                        sw.WriteLine("Error: Demasiados argumentos en el comando");
+                    }
+
+                    if (msg.Length == 1)
+                    {
+                        switch (msg[0].ToLower())
+                        {
+                            case "time":
+                                sw.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
+                                break;
+
+                            case "date":
+                                sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
+                                break;
+
+                            case "all":
+                                sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+                                break;
+                            default:
+                                sw.WriteLine("Comando no reconocido");
+                                break;
+                        }
+                    }
+                    else if (msg.Length == 2)
+                    {
+
+                        if (msg[0].ToLower().Equals("close") && msg[1].Equals(PasswordChecker()))
+                        {
+                            sw.WriteLine("Cerrando conexión...");
+                        }
+                        else
+                        {
+                            sw.WriteLine("Contraseña incorrecta");
+                        }
+                    }
                 }
+            }
+        }
+
+        private string PasswordChecker()
+        {
+            try
+            {
+                string password = null;
+                string? programData = Environment.GetEnvironmentVariable("PROGRAMDATA");
+
+                if (programData != null)
+                {
+                    string path = Path.Combine(programData, "password.txt");
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        password = sr.ReadLine().Trim();
+                    }
+                }
+                return password;
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("No se ha podido leer el archivo." + e.Message);
+                return null;
             }
         }
     }
