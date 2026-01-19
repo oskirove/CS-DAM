@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,26 +24,47 @@ namespace cliente_1
             InitializeComponent();
         }
 
-        private void Command_Send(string tag)
+        private async Task<String> SendRecepAsync(string tag)
         {
-
-            switch (tag)
+            try
             {
-                case "time":
+                using (Socket conexion = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                {
+                    string response = null;
+                    IPEndPoint ep = new IPEndPoint(ip, port);
 
-                        break;
+                    await conexion.ConnectAsync(ep);
 
-                case "date":
+                    Encoding codificacion = Console.OutputEncoding;
+                    using (NetworkStream ns = new NetworkStream(conexion))
+                    using (StreamReader sr = new StreamReader(ns, codificacion))
+                    using (StreamWriter sw = new StreamWriter(ns, codificacion))
+                    {
 
-                    break;
+                        switch (tag)
+                        {
+                            case "time":
+                                await sw.WriteLineAsync("");
+                                break;
 
-                case "all":
+                            case "date":
 
-                    break;
+                                break;
 
-                case "close":
+                            case "all":
 
-                    break;
+                                break;
+
+                            case "close":
+
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                
             }
         }
 
@@ -73,11 +96,13 @@ namespace cliente_1
         private void button1_Click(object sender, EventArgs e)
         {
             Form2 f = new Form2();
+
             f.ShowDialog();
 
             if (f.DialogResult == DialogResult.OK)
             {
-
+                port = f.port;
+                ip = f.ip;
             }
         }
     }
