@@ -157,6 +157,12 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
         /* Footer */
         footer {
             margin-top: 3rem;
@@ -180,6 +186,69 @@
             margin-bottom: 1rem;
             opacity: 0.5;
         }
+
+        /* Alertas */
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+
+        .alert-success::before {
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .alert-error::before {
+            content: '✕';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: rgba(239, 68, 68, 0.2);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -187,11 +256,11 @@
     <div class="container">
         <nav>
             <a href="{{ route('inicio') }}">🏠 Inicio</a>
-            {{-- <a href="{{ route('formAgregar') }}">➕ Agregar</a> --}}
+            <a href="{{ route('formAgregar') }}">➕ Agregar</a>
         </nav>
-        
+
         @yield('contenido')
-        
+
         <footer>
             <p>Crud creado con Laravel por Óscar © {{ date('Y') }}</p>
         </footer>
