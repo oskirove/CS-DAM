@@ -42,7 +42,7 @@ public class GestionaDeportistas {
                 return Response.ok(deportistas).build();
 
             } catch (Exception e) {
-                return Response.status(Response.Status.BAD_REQUEST).entity("Rechazada").build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Rechazada").build();
             }
 
         } catch (ClassNotFoundException e) {
