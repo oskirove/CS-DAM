@@ -30,7 +30,6 @@ namespace cliente_1
             {
                 using (Socket conexion = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
-                    string response = null;
                     IPEndPoint ep = new IPEndPoint(ip, port);
 
                     await conexion.ConnectAsync(ep);
@@ -40,31 +39,37 @@ namespace cliente_1
                     using (StreamReader sr = new StreamReader(ns, codificacion))
                     using (StreamWriter sw = new StreamWriter(ns, codificacion))
                     {
-
+                        sw.AutoFlush = true;
                         switch (tag)
                         {
                             case "time":
-                                await sw.WriteLineAsync("");
+                                await sw.WriteLineAsync("time");
                                 break;
-
                             case "date":
-
+                                await sw.WriteLineAsync("date");
                                 break;
-
                             case "all":
-
+                                await sw.WriteLineAsync("all");
                                 break;
-
                             case "close":
-
+                                if (!string.IsNullOrEmpty(tbContraseña.Text))
+                                {
+                                    await sw.WriteLineAsync($"close {tbContraseña.Text}");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Debes introducir una contraseña", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
                                 break;
                         }
+                        string response = await sr.ReadLineAsync();
+                        return response;
                     }
                 }
             }
             catch (Exception ex)
             {
-                
+                return $"ERROR: {ex.Message}";
             }
         }
 
@@ -88,6 +93,12 @@ namespace cliente_1
                 boton.Location = new Point(nuevaX, y);
                 boton.Text = cadenas[i];
                 boton.Tag = cadenas[i];
+                boton.MouseClick += async (s, ev) =>
+                {
+                    string tag = boton.Tag.ToString().ToLower();
+                    string response = await SendRecepAsync(tag);
+                    MessageBox.Show(response);
+                };
 
                 this.Controls.Add(boton);
             }
@@ -103,6 +114,9 @@ namespace cliente_1
             {
                 port = f.port;
                 ip = f.ip;
+
+                lblIP.Text = $"IP: {f.ip.ToString()}";
+                lblPort.Text = $"Puerto: {f.port.ToString()}";
             }
         }
     }

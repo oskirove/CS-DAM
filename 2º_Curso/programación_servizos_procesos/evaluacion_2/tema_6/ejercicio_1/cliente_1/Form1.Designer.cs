@@ -32,6 +32,8 @@
             this.tbContraseña = new System.Windows.Forms.TextBox();
             this.lblContraseña = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.lblIP = new System.Windows.Forms.Label();
+            this.lblPort = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbContraseña
@@ -44,7 +46,7 @@
             // lblContraseña
             // 
             this.lblContraseña.AutoSize = true;
-            this.lblContraseña.Location = new System.Drawing.Point(329, 78);
+            this.lblContraseña.Location = new System.Drawing.Point(323, 107);
             this.lblContraseña.Name = "lblContraseña";
             this.lblContraseña.Size = new System.Drawing.Size(123, 25);
             this.lblContraseña.TabIndex = 1;
@@ -52,7 +54,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(159, 204);
+            this.button1.Location = new System.Drawing.Point(159, 229);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(460, 90);
             this.button1.TabIndex = 2;
@@ -60,11 +62,31 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // lblIP
+            // 
+            this.lblIP.AutoSize = true;
+            this.lblIP.Location = new System.Drawing.Point(154, 35);
+            this.lblIP.Name = "lblIP";
+            this.lblIP.Size = new System.Drawing.Size(133, 25);
+            this.lblIP.TabIndex = 3;
+            this.lblIP.Text = "IP: 127.0.0.1";
+            // 
+            // lblPort
+            // 
+            this.lblPort.AutoSize = true;
+            this.lblPort.Location = new System.Drawing.Point(484, 35);
+            this.lblPort.Name = "lblPort";
+            this.lblPort.Size = new System.Drawing.Size(135, 25);
+            this.lblPort.TabIndex = 4;
+            this.lblPort.Text = "Puerto: 4321";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 459);
+            this.Controls.Add(this.lblPort);
+            this.Controls.Add(this.lblIP);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lblContraseña);
             this.Controls.Add(this.tbContraseña);
@@ -83,6 +105,8 @@
         private System.Windows.Forms.TextBox tbContraseña;
         private System.Windows.Forms.Label lblContraseña;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblIP;
+        private System.Windows.Forms.Label lblPort;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -55,68 +56,81 @@ namespace ejercicio_1.lib
 
         private void ClientDispatcher(Socket sClient)
         {
-            using (sClient)
+            try
             {
-                IPEndPoint ieClient = (IPEndPoint)sClient.RemoteEndPoint;
-                Console.WriteLine($"Cliente conectado:{ieClient.Address} " + $"en puerto {ieClient.Port}");
-                Encoding codificacion = Console.OutputEncoding;
-
-                using (NetworkStream ns = new NetworkStream(sClient))
-                using (StreamReader sr = new StreamReader(ns, codificacion))
-                using (StreamWriter sw = new StreamWriter(ns, codificacion))
+                using (sClient)
                 {
-                    sw.AutoFlush = true;
-                    sw.WriteLine("Servidor de tiempo");
-                    string[]? msg = null;
+                    IPEndPoint ieClient = (IPEndPoint)sClient.RemoteEndPoint;
+                    Console.WriteLine($"Cliente conectado:{ieClient.Address} " + $"en puerto {ieClient.Port}");
+                    Encoding codificacion = Console.OutputEncoding;
 
-                    string line = sr.ReadLine().Trim();
-
-                    if (line == null)
+                    using (NetworkStream ns = new NetworkStream(sClient))
+                    using (StreamReader sr = new StreamReader(ns, codificacion))
+                    using (StreamWriter sw = new StreamWriter(ns, codificacion))
                     {
-                        sw.WriteLine("Error: comando vacío");
-                    }
+                        sw.AutoFlush = true;
+                        string[]? msg = null;
 
-                    msg = line.Split(" ");
+                        string line = sr.ReadLine();
 
-                    if (msg.Length > 3)
-                    {
-                        sw.WriteLine("Error: Demasiados argumentos en el comando");
-                    }
-
-                    if (msg.Length == 1)
-                    {
-                        switch (msg[0].ToLower())
+                        if (line == null)
                         {
-                            case "time":
-                                sw.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
-                                break;
-
-                            case "date":
-                                sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
-                                break;
-
-                            case "all":
-                                sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
-                                break;
-                            default:
-                                sw.WriteLine("Comando no reconocido");
-                                break;
+                            Console.WriteLine("Cliente desconectado");
+                            return;
                         }
-                    }
-                    else if (msg.Length == 2)
-                    {
 
-                        if (msg[0].ToLower().Equals("close") && msg[1].Equals(PasswordChecker()))
+                        line.Trim();
+
+                        msg = line.Split(" ");
+
+                        if (msg.Length == 1)
                         {
-                            sw.WriteLine("Cerrando conexión...");
+                            switch (msg[0].ToLower())
+                            {
+                                case "time":
+                                    sw.WriteLine($"Hora: {DateTime.Now.ToString("HH:mm:ss")}");
+                                    break;
+
+                                case "date":
+                                    sw.WriteLine($"Fecha: {DateTime.Now.ToString("dd/MM/yyyy")}");
+                                    break;
+
+                                case "all":
+                                    sw.WriteLine($"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}");
+                                    break;
+                                default:
+                                    sw.WriteLine("Comando no reconocido");
+                                    break;
+                            }
                         }
-                        else
+
+                        if (line.StartsWith("close"))
                         {
-                            sw.WriteLine("Contraseña incorrecta");
+
+                            string password = line.Substring(6);
+                            if (password.Equals(PasswordChecker()))
+                            {
+                                sw.WriteLine("Cerrando conexión...");
+                                ServerRunning = false;
+                            }
+                            else
+                            {
+                                sw.WriteLine("Contraseña incorrecta");
+                            }
+                            sw.WriteLine(password);
                         }
                     }
                 }
             }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"El cliente cerró la conexión: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error inesperado: {ex.Message}");
+            }
+
         }
 
         private string PasswordChecker()

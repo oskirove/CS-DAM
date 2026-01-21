@@ -23,27 +23,18 @@ namespace cliente_1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bool trigger = int.TryParse(tbPort.Text, out int puerto);
+            int.TryParse(tbPort.Text, out int puerto);
             
-            if (string.IsNullOrEmpty(tbIp.Text))
+            if (string.IsNullOrEmpty(tbIp.Text) || string.IsNullOrEmpty(tbPort.Text))
             {
-                MessageBox.Show("Revisa la IP introducida", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Los campos no pueden estar vacíos", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
                 ip = IPAddress.Parse(tbIp.Text);
-            }
-
-            if (!trigger)
-            {
-                MessageBox.Show("Revisa el puerto introducido", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
                 port = puerto;
+                this.DialogResult = DialogResult.OK;
             }
-
-            this.DialogResult = DialogResult.OK;
         }
     }
 }
