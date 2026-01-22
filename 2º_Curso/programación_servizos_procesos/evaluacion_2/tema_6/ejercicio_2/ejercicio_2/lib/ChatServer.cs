@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ejercicio_2.lib
@@ -64,7 +65,11 @@ namespace ejercicio_2.lib
                     using (StreamReader sr = new StreamReader(ns, cod))
                     using (StreamWriter sw = new StreamWriter(ns, cod))
                     {
+                        String welcomeMessage = "----- CHAT ROOM -----";
+                        sw.WriteLine(welcomeMessage);
                         sw.AutoFlush = true;
+
+                        String message = sr.ReadLine();
                     }
                 }
             }

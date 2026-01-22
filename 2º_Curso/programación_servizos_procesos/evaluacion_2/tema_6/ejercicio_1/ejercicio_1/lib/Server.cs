@@ -7,10 +7,11 @@ using System.Text;
 
 namespace ejercicio_1.lib
 {
-    internal class Server
+    internal class Server//Cierre de servidor en close cerrando socket de escucha. IsBackground. 
     {
         public bool ServerRunning { set; get; } = true;
         public int Port { get; set; } = 4321;
+        private Socket listener;
 
         public void InitServer()
         {
@@ -49,7 +50,21 @@ namespace ejercicio_1.lib
 
                     Thread hilo = new Thread(() => ClientDispatcher(client));
 
+                    hilo.IsBackground = true;
                     hilo.Start();
+                }
+
+                try
+                {
+                    if (!ServerRunning)
+                    {
+                        s.Shutdown(SocketShutdown.Both);
+                        s.Close();
+                    }
+                }
+                catch (SocketException ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -79,7 +94,7 @@ namespace ejercicio_1.lib
                             return;
                         }
 
-                        line.Trim();
+                        line = line.Trim();
 
                         msg = line.Split(" ");
 
@@ -104,11 +119,11 @@ namespace ejercicio_1.lib
                             }
                         }
 
-                        if (line.StartsWith("close"))
+                        if (line.StartsWith("close "))
                         {
 
                             string password = line.Substring(6);
-                            if (password.Equals(PasswordChecker()))
+                            if (password == (PasswordChecker()))
                             {
                                 sw.WriteLine("Cerrando conexión...");
                                 ServerRunning = false;
