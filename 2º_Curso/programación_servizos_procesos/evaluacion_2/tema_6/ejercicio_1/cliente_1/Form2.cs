@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace cliente_1
 {
-    public partial class Form2 : Form
+    public partial class Form2 : Form//Revisar comprobacion ip y puerto. No excep genérica.
     {
         public IPAddress ip { get; private set; }
         public int port { get; private set; }

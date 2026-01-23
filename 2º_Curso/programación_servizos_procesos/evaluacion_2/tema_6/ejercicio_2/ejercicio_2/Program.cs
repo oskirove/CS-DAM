@@ -9,5 +9,7 @@ namespace ejercicio_2
             ChatServer cs = new ChatServer();
             cs.InitServer();
         }
+
+
     }
 }
