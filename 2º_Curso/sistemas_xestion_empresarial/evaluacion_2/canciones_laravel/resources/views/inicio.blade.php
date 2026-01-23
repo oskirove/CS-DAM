@@ -32,8 +32,8 @@
                     <td>{{ $cancion->grupo }}</td>
                     <td>{{ $cancion->publicacion }}</td>
                     <td class="action-buttons">
-                        <a href="{{ route('editarCancion', $cancion->id) }}" class="btn btn-edit">✏️ Editar</a>
-                        <a href="{{ route('eliminarCancion', $cancion->id) }}" class="btn btn-delete">🗑️ Borrar</a>
+                        <a href="{{ route('editarCancion', $cancion->id) }}" class="btn btn-edit">Editar</a>
+                        <a href="{{ route('eliminarCancion', $cancion->id) }}" class="btn btn-delete">Borrar</a>
                     </td>
                 </tr>
             @endforeach
