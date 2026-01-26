@@ -43,6 +43,7 @@ public class Personas {
         return respuesta;
     }
 
+    //ejercicio 5
     @GET
     @Path("/buscar")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -57,6 +58,7 @@ public class Personas {
         return respuesta;
     }
 
+    //ejercicio 6
     @POST
     @Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.APPLICATION_JSON)
