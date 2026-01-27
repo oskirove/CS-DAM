@@ -43,7 +43,7 @@ public class Personas {
         return respuesta;
     }
 
-    //ejercicio 5
+    // ejercicio 5
     @GET
     @Path("/buscar")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -58,11 +58,24 @@ public class Personas {
         return respuesta;
     }
 
-    //ejercicio 6
+    // ejercicio 6
     @POST
     @Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.APPLICATION_JSON)
-    public void formSetPersona(@FormParam("id") int id, @FormParam("nombre") String nombre, @FormParam("casado") boolean casado, @FormParam("sexo") String sexo) {
+    public void formSetPersona(@FormParam("id") int id, @FormParam("nombre") String nombre,
+            @FormParam("casado") boolean casado, @FormParam("sexo") String sexo) {
         personas.add(new Persona(id, nombre, casado, sexo));
     }
+
+    // Ejercicio 8
+    @POST
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePersonaArray(@PathParam ("id") int id) {
+        personas.removeIf(p -> p.getId() == id);
+        return Response.ok(personas).build();
+    }
+
+    
 }
