@@ -1,8 +1,10 @@
 package ejem1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -15,7 +17,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/personas")
 public class Personas {
-    private static ArrayList<Persona> personas = new ArrayList<>();
+    public static ArrayList<Persona> personas = new ArrayList<>();
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -30,6 +32,7 @@ public class Personas {
         return Response.ok(personas).build();
     }
 
+    // ejercicio 4
     @GET
     @Path("/{nombre}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -43,7 +46,7 @@ public class Personas {
         return respuesta;
     }
 
-    // ejercicio 5
+    // ejercicio 4
     @GET
     @Path("/buscar")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -67,15 +70,44 @@ public class Personas {
         personas.add(new Persona(id, nombre, casado, sexo));
     }
 
-    // Ejercicio 8
+    // ejercicio 7
     @POST
-    @Path("/{id}")
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePersonaArray(@PathParam ("id") int id) {
+    public Response añadirVariasPersonasArray(Persona[] arrayPersonas) {
+
+        Collections.addAll(personas, arrayPersonas);
+
+        return Response.ok(personas).build();
+    }
+
+    // Ejercicio 8
+    @POST
+    @Path("eliminar/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePersonaArray(@PathParam("id") int id) {
         personas.removeIf(p -> p.getId() == id);
         return Response.ok(personas).build();
     }
+
+    // Ejercicio 9
+    @GET
+    @Path("/buscar2")
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response verParametrosDefecto(@DefaultValue("juan") @QueryParam("nombre") String nombre) {
+        Response respuesta = null;
+        for (Persona persona : personas) {
+            if (persona.getNombre().toLowerCase().equals(nombre)) {
+                respuesta = Response.ok(persona).build();
+            }
+        }
+
+        return respuesta;
+    }
+
+    // Ejercicio 11
 
     
 }
