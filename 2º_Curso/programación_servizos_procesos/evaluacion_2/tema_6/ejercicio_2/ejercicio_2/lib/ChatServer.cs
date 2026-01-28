@@ -83,7 +83,7 @@ namespace ejercicio_2.lib
                             Users.Add(user);
                         }
 
-                        Broadcast($"{username} Se ha unido al chat", user);
+                        Resend($"{username} Se ha unido al chat", user);
 
                         bool trigger = false;
                         string message;
@@ -102,7 +102,7 @@ namespace ejercicio_2.lib
 
                                     lock (_key)
                                     {
-                                        foreach (var u in Users)
+                                        foreach (User u in Users)
                                         {
                                             if (u.Username != user.Username)
                                             {
@@ -114,7 +114,7 @@ namespace ejercicio_2.lib
                                 else
                                 {
                                     string finalMessage = $"{username}@{ieClient.Address}: {message}";
-                                    Broadcast(finalMessage, user);
+                                    Resend(finalMessage, user);
                                 }
                             }
                         }
@@ -125,7 +125,7 @@ namespace ejercicio_2.lib
                                 Users.Remove(user);
                             }
 
-                            Broadcast($"{user.Username} ha abandonado el chat", user);
+                            Resend($"{user.Username} ha abandonado el chat", user);
                         }
                     }
                 }
@@ -140,11 +140,11 @@ namespace ejercicio_2.lib
             }
         }
 
-        private void Broadcast(string message, User sender)
+        private void Resend(string message, User sender)
         {
             lock (_key)
             {
-                foreach (var u in Users)
+                foreach (User u in Users)
                 {
                     if (u != sender)
                     {
