@@ -67,37 +67,105 @@ namespace servidor
                     using (StreamReader sr = new StreamReader(ns, codificacion))
                     using (StreamWriter sw = new StreamWriter(ns, codificacion))
                     {
+                        bool trigger = false;
+                        string finalMessage = "Conexión terminada";
+                        string command;
+                        string usersPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/usuarios.txt";
+                        string passwordPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/pin.txt";
+
+                        ReadNames(usersPath);
+
                         sw.AutoFlush = true;
                         sw.WriteLine("------- LISTA DE ESPERA -------");
                         sw.Write("Introduce tu nombre de usuario: ");
 
                         string username = sr.ReadLine();
 
-                        bool trigger = false;
-                        string finalMessage = "Conexión terminada";
-                        string command;
-                        try
+                        if (!Users.Contains(username) && username != "admin")
                         {
-                            while (!trigger && (command = sr.ReadLine()) != null)
+                            sw.WriteLine("Usuario desconocido");
+                            sClient.Close();
+                        }
+                        else
+                        {
+                            try
                             {
-                                if (command == "add")
+                                while (!trigger && (command = sr.ReadLine()) != null)
                                 {
-                                    WaitQueue.Add(username);
-                                    finalMessage = "Usuario añadido en la lista, conexión finalizada";
-                                    trigger = true;
-                                }
-                                else if (command == "list")
-                                {
-                                    WaitQueue.ForEach(user => sw.WriteLine(user));
+                                    if (command == "add")
+                                    {
+                                        string userFormatted = $"{username}:{DateTime.Now}";
+                                        WaitQueue.Add(userFormatted);
+                                        finalMessage = "Usuario añadido en la lista, conexión finalizada";
+                                        trigger = true;
+                                    }
+                                    else if (command == "list")
+                                    {
+                                        WaitQueue.ForEach(user => sw.WriteLine(user));
 
-                                    finalMessage = "Lista enviada, conexión finalizada";
-                                    trigger = true;
+                                        if (WaitQueue.Count == 0)
+                                        {
+                                            finalMessage = "La lista está vacía";
+                                        }
+                                        else
+                                        {
+                                            finalMessage = "Lista enviada, conexión finalizada";
+                                        }
+
+                                        trigger = true;
+                                    }
                                 }
                             }
+                            finally
+                            {
+                                sw.WriteLine(finalMessage);
+                            }
                         }
-                        finally
+
+                        if (username == "admin")
                         {
-                            sw.WriteLine(finalMessage);
+                            sw.Write("Introduce la contraseña: ");
+                            string password = sr.ReadLine();
+
+                            if (password == ReadPin(passwordPath).ToString())
+                            {
+                                try
+                                {
+                                    while (!trigger && (command = sr.ReadLine()) != null)
+                                    {
+                                        if (command == "add")
+                                        {
+                                            string userFormatted = $"{username}:{DateTime.Now}";
+                                            WaitQueue.Add(userFormatted);
+                                            finalMessage = "Usuario añadido en la lista, conexión finalizada";
+                                            trigger = true;
+                                        }
+                                        else if (command == "list")
+                                        {
+                                            WaitQueue.ForEach(user => sw.WriteLine(user));
+
+                                            if (WaitQueue.Count == 0)
+                                            {
+                                                finalMessage = "La lista está vacía";
+                                            }
+                                            else
+                                            {
+                                                finalMessage = "Lista enviada, conexión finalizada";
+                                            }
+
+                                            trigger = true;
+                                        }
+                                    }
+                                }
+                                finally
+                                {
+                                    sw.WriteLine(finalMessage);
+                                }
+                            } else
+                            {
+                                sw.WriteLine("Contraseña incorrecta");
+                                sClient.Close();
+                            }
                         }
                     }
                 }
@@ -112,14 +180,14 @@ namespace servidor
             }
         }
 
-        private void ReadNames(FileInfo filePath)
+        private void ReadNames(string filePath)
         {
 
             List<string> allUsers = new List<string>();
 
             try
             {
-                using (StreamReader sr = new StreamReader(filePath.FullName))
+                using (StreamReader sr = new StreamReader(filePath))
                 {
                     string line;
 
@@ -127,10 +195,7 @@ namespace servidor
                     {
                         lock (_key)
                         {
-                            if ((line = sr.ReadLine()) != null)
-                            {
-                                allUsers.AddRange(line.Split(";"));
-                            }
+                            allUsers.AddRange(line.Split(":"));
                         }
                     }
 
@@ -143,13 +208,13 @@ namespace servidor
             }
         }
 
-        private int ReadPin(FileInfo filePath)
+        private int ReadPin(string filePath)
         {
             try
             {
                 int password = 0;
 
-                using (StreamReader sr = new StreamReader(filePath.FullName))
+                using (StreamReader sr = new StreamReader(filePath))
                 {
                     string line = sr.ReadLine();
                     string nums = line.Substring(0, 3);
