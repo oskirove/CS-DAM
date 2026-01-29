@@ -12,7 +12,7 @@ namespace servidor
         private List<string> WaitQueue { get; set; } = new List<string>();
         private bool ServerRunning { get; set; } = true;
         private int Port { get; set; } = 4321;
-        private readonly object _key = new object();
+        private readonly object key = new object();
 
         public void Init()
         {
@@ -67,7 +67,8 @@ namespace servidor
                     using (StreamReader sr = new StreamReader(ns, codificacion))
                     using (StreamWriter sw = new StreamWriter(ns, codificacion))
                     {
-                        bool trigger = false;
+                        bool isAdmin = false;
+                        bool stopClient = false;
                         string finalMessage = "Conexión terminada";
                         string command;
                         string usersPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/usuarios.txt";
@@ -81,6 +82,24 @@ namespace servidor
 
                         string username = sr.ReadLine();
 
+                        if (username == "admin")
+                        {
+                            sw.Write("Introduce la contraseña: ");
+                            string password = sr.ReadLine();
+
+                            if (password == ReadPin(passwordPath).ToString())
+                            {
+                                sw.WriteLine("Usuario verificado con éxito");
+
+                                isAdmin = true;
+                            }
+                            else
+                            {
+                                sw.WriteLine("Contraseña incorrecta");
+                                sClient.Close();
+                            }
+                        }
+
                         if (!Users.Contains(username) && username != "admin")
                         {
                             sw.WriteLine("Usuario desconocido");
@@ -90,81 +109,140 @@ namespace servidor
                         {
                             try
                             {
-                                while (!trigger && (command = sr.ReadLine()) != null)
+                                while (!stopClient && (command = sr.ReadLine()) != null)
                                 {
-                                    if (command == "add")
-                                    {
-                                        string userFormatted = $"{username}:{DateTime.Now}";
-                                        WaitQueue.Add(userFormatted);
-                                        finalMessage = "Usuario añadido en la lista, conexión finalizada";
-                                        trigger = true;
-                                    }
-                                    else if (command == "list")
-                                    {
-                                        WaitQueue.ForEach(user => sw.WriteLine(user));
+                                    string[] parts = command.Split(" ", 2);
+                                    string cmd = parts[0];
+                                    string? arg = parts.Length > 1 ? parts[1] : null;
 
-                                        if (WaitQueue.Count == 0)
-                                        {
-                                            finalMessage = "La lista está vacía";
-                                        }
-                                        else
-                                        {
-                                            finalMessage = "Lista enviada, conexión finalizada";
-                                        }
+                                    switch (cmd)
+                                    {
+                                        case "add":
+                                            string userFormatted = $"{username}:{DateTime.Now}";
+                                            lock (key)
+                                            {
+                                                bool usernameExist = WaitQueue.Any(u => u.Split(":")[0] == username);
 
-                                        trigger = true;
+                                                if (usernameExist)
+                                                {
+                                                    finalMessage = "Este usuario ya está en la lista.";
+                                                }
+                                                else
+                                                {
+                                                    WaitQueue.Add(userFormatted);
+                                                    finalMessage = "Usuario añadido en la lista.";
+                                                }
+                                            }
+
+                                            if (isAdmin == false)
+                                            {
+                                                stopClient = true;
+                                            }
+                                            else
+                                            {
+                                                sw.WriteLine(finalMessage);
+                                            }
+
+                                            break;
+                                        case "list":
+                                            lock (key)
+                                            {
+                                                WaitQueue.ForEach(user => sw.WriteLine(user));
+
+                                                if (WaitQueue.Count == 0)
+                                                {
+                                                    finalMessage = "La lista está vacía.";
+                                                }
+                                                else
+                                                {
+                                                    finalMessage = "Lista enviada.";
+                                                }
+                                            }
+
+                                            if (isAdmin == false)
+                                            {
+                                                stopClient = true;
+                                            }
+                                            else
+                                            {
+                                                sw.WriteLine(finalMessage);
+                                            }
+
+                                            break;
+                                        case "del" when isAdmin == true && username == "admin":
+
+                                            if (arg == null)
+                                            {
+                                                sw.WriteLine("Comando incorrecto [del <posicion>]");
+                                            }
+                                            else
+                                            {
+                                                if (WaitQueue.Count == 0)
+                                                {
+                                                    sw.WriteLine("No hay nadie en la lista de espera");
+
+                                                }
+                                                else
+                                                {
+                                                    bool parsetrigger = int.TryParse(arg, out int index);
+
+                                                    if (index > WaitQueue.Count || index < 1)
+                                                    {
+                                                        sw.WriteLine("El índice esta fuera del rango de la lista");
+                                                    }
+                                                    else
+                                                    {
+                                                        if (parsetrigger)
+                                                        {
+                                                            lock (key)
+                                                            {
+                                                                WaitQueue.RemoveAt(index - 1);
+                                                                sw.WriteLine("Usuario eliminado");
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            sw.WriteLine("Indice incorrecto");
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            break;
+                                        case "chpin" when isAdmin == true && username == "admin":
+
+                                            if (string.IsNullOrEmpty(arg) || arg.Length > 4)
+                                            {
+                                                sw.WriteLine("La contraseña no puede estar vacía ni puede ser mayor a 4 dígitos");
+                                            }
+                                            else
+                                            {
+                                                using (StreamWriter passwordChanger = new StreamWriter(passwordPath, false))
+                                                {
+                                                    try
+                                                    {
+                                                        passwordChanger.WriteLine(arg);
+                                                        sw.WriteLine("Contraseña actualizada");
+                                                    }
+                                                    catch (IOException ex)
+                                                    {
+                                                        sw.WriteLine(ex.Message);
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                        case "exit" when isAdmin == true && username == "admin":
+                                            stopClient = true;
+                                            break;
+                                        case "shutdown" when isAdmin == true && username == "admin":
+                                            sw.WriteLine("comando shutdown");
+                                            break;
                                     }
                                 }
                             }
                             finally
                             {
                                 sw.WriteLine(finalMessage);
-                            }
-                        }
-
-                        if (username == "admin")
-                        {
-                            sw.Write("Introduce la contraseña: ");
-                            string password = sr.ReadLine();
-
-                            if (password == ReadPin(passwordPath).ToString())
-                            {
-                                try
-                                {
-                                    while (!trigger && (command = sr.ReadLine()) != null)
-                                    {
-                                        if (command == "add")
-                                        {
-                                            string userFormatted = $"{username}:{DateTime.Now}";
-                                            WaitQueue.Add(userFormatted);
-                                            finalMessage = "Usuario añadido en la lista, conexión finalizada";
-                                            trigger = true;
-                                        }
-                                        else if (command == "list")
-                                        {
-                                            WaitQueue.ForEach(user => sw.WriteLine(user));
-
-                                            if (WaitQueue.Count == 0)
-                                            {
-                                                finalMessage = "La lista está vacía";
-                                            }
-                                            else
-                                            {
-                                                finalMessage = "Lista enviada, conexión finalizada";
-                                            }
-
-                                            trigger = true;
-                                        }
-                                    }
-                                }
-                                finally
-                                {
-                                    sw.WriteLine(finalMessage);
-                                }
-                            } else
-                            {
-                                sw.WriteLine("Contraseña incorrecta");
-                                sClient.Close();
                             }
                         }
                     }
@@ -193,7 +271,7 @@ namespace servidor
 
                     while ((line = sr.ReadLine()) != null)
                     {
-                        lock (_key)
+                        lock (key)
                         {
                             allUsers.AddRange(line.Split(":"));
                         }
@@ -217,7 +295,7 @@ namespace servidor
                 using (StreamReader sr = new StreamReader(filePath))
                 {
                     string line = sr.ReadLine();
-                    string nums = line.Substring(0, 3);
+                    string nums = line.Substring(0, 4);
                     bool trigger = int.TryParse(nums, out int pins);
 
                     if (trigger)
