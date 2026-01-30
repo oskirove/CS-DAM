@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 
 namespace servidor
 {
@@ -71,6 +72,7 @@ namespace servidor
                         bool stopClient = false;
                         string finalMessage = "Conexión terminada";
                         string command;
+                        string JSONPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/datos.json";
                         string usersPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/usuarios.txt";
                         string passwordPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/pin.txt";
 
@@ -78,6 +80,16 @@ namespace servidor
 
                         sw.AutoFlush = true;
                         sw.WriteLine("------- LISTA DE ESPERA -------");
+
+                        if (File.Exists(JSONPath))
+                        {
+                            WaitQueue = InitWaitQueue(JSONPath);
+                        }
+                        else
+                        {
+                            sw.WriteLine("La cola está vacía");
+                        }
+
                         sw.Write("Introduce tu nombre de usuario: ");
 
                         string username = sr.ReadLine();
@@ -233,9 +245,11 @@ namespace servidor
                                             break;
                                         case "exit" when isAdmin == true && username == "admin":
                                             stopClient = true;
+                                            finalMessage = "Saliendo del servidor";
                                             break;
                                         case "shutdown" when isAdmin == true && username == "admin":
-                                            sw.WriteLine("comando shutdown");
+                                            SaveQueueToJSON(JSONPath);
+                                            finalMessage = "Apagando servidor";
                                             break;
                                     }
                                 }
@@ -258,14 +272,48 @@ namespace servidor
             }
         }
 
+        private void SaveQueueToJSON(string path)
+        {
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                try
+                {
+                    string json = JsonSerializer.Serialize(WaitQueue.ToArray(), new JsonSerializerOptions { WriteIndented = true });
+                    sw.Write(json);
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        private List<string> InitWaitQueue(string path)
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                try
+                {
+                    string jsonText = sr.ReadToEnd();
+                    List<string> waitQueue = JsonSerializer.Deserialize<List<string>>(jsonText);
+
+                    return waitQueue;
+                }
+                catch (IOException e)
+                {
+                    return null;
+                }
+            }
+        }
+
         private void ReadNames(string filePath)
         {
 
             List<string> allUsers = new List<string>();
 
-            try
+            using (StreamReader sr = new StreamReader(filePath))
             {
-                using (StreamReader sr = new StreamReader(filePath))
+                try
                 {
                     string line;
 
@@ -279,21 +327,21 @@ namespace servidor
 
                     Users = allUsers.ToArray();
                 }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine($"ERROR: {e.Message}");
+                catch (IOException e)
+                {
+                    Console.WriteLine($"ERROR: {e.Message}");
+                }
             }
         }
 
         private int ReadPin(string filePath)
         {
-            try
+            using (StreamReader sr = new StreamReader(filePath))
             {
-                int password = 0;
-
-                using (StreamReader sr = new StreamReader(filePath))
+                try
                 {
+                    int password = 0;
+
                     string line = sr.ReadLine();
                     string nums = line.Substring(0, 4);
                     bool trigger = int.TryParse(nums, out int pins);
@@ -306,13 +354,13 @@ namespace servidor
                     {
                         Console.WriteLine("Error al convertir los valores a entero");
                     }
-                }
 
-                return password;
-            }
-            catch (IOException e)
-            {
-                return -1;
+                    return password;
+                }
+                catch (IOException e)
+                {
+                    return -1;
+                }
             }
         }
     }
