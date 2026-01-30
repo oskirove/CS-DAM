@@ -9,15 +9,24 @@ namespace servidor
 {
     internal class ShiftServer
     {
+        private Socket MainSocket;
         private string[] Users { get; set; }
         private List<string> WaitQueue { get; set; } = new List<string>();
         private bool ServerRunning { get; set; } = true;
         private int Port { get; set; } = 4321;
         private readonly object key = new object();
+        private string JSONPath = $"{Environment.GetEnvironmentVariable("USERPROFILE")}/datos.json";
 
         public void Init()
         {
-            using (Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+
+
+            if (File.Exists(JSONPath))
+            {
+                WaitQueue = InitWaitQueue(JSONPath);
+            }
+
+            using (MainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
                 bool trigger = false;
                 IPEndPoint ie = null;
@@ -27,7 +36,7 @@ namespace servidor
                     try
                     {
                         ie = new IPEndPoint(IPAddress.Any, Port);
-                        s.Bind(ie);
+                        MainSocket.Bind(ie);
                         trigger = true;
                     }
                     catch (SocketException e)
@@ -40,16 +49,23 @@ namespace servidor
                     }
                 }
 
-                s.Listen(10);
+                MainSocket.Listen(10);
                 Console.WriteLine($"Servidor iniciado {ie.Address}:{Port}:");
                 Console.WriteLine($"Esperando conexiones... (Ctrl+C para salir)");
 
                 while (ServerRunning)
                 {
-                    Socket client = s.Accept();
-                    Thread hilo = new Thread(() => ClientDispatcher(client));
+                    try
+                    {
+                        Socket client = MainSocket.Accept();
+                        Thread hilo = new Thread(() => ClientDispatcher(client));
 
-                    hilo.Start();
+                        hilo.Start();
+                    }
+                    catch (SocketException e)
+                    {
+                        ServerRunning = false;
+                    }
                 }
             }
         }
@@ -72,7 +88,6 @@ namespace servidor
                         bool stopClient = false;
                         string finalMessage = "Conexión terminada";
                         string command;
-                        string JSONPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/datos.json";
                         string usersPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/usuarios.txt";
                         string passwordPath = Environment.GetEnvironmentVariable("USERPROFILE") + "/pin.txt";
 
@@ -80,15 +95,6 @@ namespace servidor
 
                         sw.AutoFlush = true;
                         sw.WriteLine("------- LISTA DE ESPERA -------");
-
-                        if (File.Exists(JSONPath))
-                        {
-                            WaitQueue = InitWaitQueue(JSONPath);
-                        }
-                        else
-                        {
-                            sw.WriteLine("La cola está vacía");
-                        }
 
                         sw.Write("Introduce tu nombre de usuario: ");
 
@@ -130,10 +136,12 @@ namespace servidor
                                     switch (cmd)
                                     {
                                         case "add":
-                                            string userFormatted = $"{username}:{DateTime.Now}";
+
+                                            string userFormatted = $"{username};{DateTime.Now}";
+
                                             lock (key)
                                             {
-                                                bool usernameExist = WaitQueue.Any(u => u.Split(":")[0] == username);
+                                                bool usernameExist = WaitQueue.Any(u => u.Split(";")[0] == username);
 
                                                 if (usernameExist)
                                                 {
@@ -157,9 +165,13 @@ namespace servidor
 
                                             break;
                                         case "list":
+
+                                            sw.WriteLine();
+
                                             lock (key)
                                             {
-                                                WaitQueue.ForEach(user => sw.WriteLine(user));
+                                                int cont = 0;
+                                                WaitQueue.ForEach(user => sw.WriteLine($"{(cont++) + 1,-2} | {user.Split(";")[0],-10} | {user.Split(";")[1]}"));
 
                                                 if (WaitQueue.Count == 0)
                                                 {
@@ -170,6 +182,8 @@ namespace servidor
                                                     finalMessage = "Lista enviada.";
                                                 }
                                             }
+
+                                            sw.WriteLine();
 
                                             if (isAdmin == false)
                                             {
@@ -229,11 +243,11 @@ namespace servidor
                                             }
                                             else
                                             {
-                                                using (StreamWriter passwordChanger = new StreamWriter(passwordPath, false))
+                                                using (StreamWriter fileWriter = new StreamWriter(passwordPath, false))
                                                 {
                                                     try
                                                     {
-                                                        passwordChanger.WriteLine(arg);
+                                                        fileWriter.WriteLine(arg);
                                                         sw.WriteLine("Contraseña actualizada");
                                                     }
                                                     catch (IOException ex)
@@ -250,6 +264,8 @@ namespace servidor
                                         case "shutdown" when isAdmin == true && username == "admin":
                                             SaveQueueToJSON(JSONPath);
                                             finalMessage = "Apagando servidor";
+                                            sClient.Close();
+                                            MainSocket.Close();
                                             break;
                                     }
                                 }
@@ -321,7 +337,7 @@ namespace servidor
                     {
                         lock (key)
                         {
-                            allUsers.AddRange(line.Split(":"));
+                            allUsers.AddRange(line.Split(";"));
                         }
                     }
 
