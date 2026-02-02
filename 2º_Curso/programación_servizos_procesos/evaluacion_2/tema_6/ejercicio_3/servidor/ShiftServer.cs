@@ -195,40 +195,40 @@ namespace servidor
                                             }
 
                                             break;
-                                        case "del" when isAdmin == true && username == "admin":
+                                        case "del" when isAdmin && username == "admin":
 
-                                            if (arg == null)
+                                            lock (key)
                                             {
-                                                sw.WriteLine("Comando incorrecto [del <posicion>]");
-                                            }
-                                            else
-                                            {
-                                                if (WaitQueue.Count == 0)
+                                                if (arg == null)
                                                 {
-                                                    sw.WriteLine("No hay nadie en la lista de espera");
-
+                                                    sw.WriteLine("Comando incorrecto [del <posicion>]");
                                                 }
                                                 else
                                                 {
-                                                    bool parsetrigger = int.TryParse(arg, out int index);
-
-                                                    if (index > WaitQueue.Count || index < 1)
+                                                    if (WaitQueue.Count == 0)
                                                     {
-                                                        sw.WriteLine("El índice esta fuera del rango de la lista");
+                                                        sw.WriteLine("No hay nadie en la lista de espera");
+
                                                     }
                                                     else
                                                     {
-                                                        if (parsetrigger)
+                                                        bool parsetrigger = int.TryParse(arg, out int index);
+
+                                                        if (index > WaitQueue.Count || index < 1)
                                                         {
-                                                            lock (key)
+                                                            sw.WriteLine("El índice esta fuera del rango de la lista");
+                                                        }
+                                                        else
+                                                        {
+                                                            if (parsetrigger)
                                                             {
                                                                 WaitQueue.RemoveAt(index - 1);
                                                                 sw.WriteLine("Usuario eliminado");
                                                             }
-                                                        }
-                                                        else
-                                                        {
-                                                            sw.WriteLine("Indice incorrecto");
+                                                            else
+                                                            {
+                                                                sw.WriteLine("Indice incorrecto");
+                                                            }
                                                         }
                                                     }
                                                 }
