@@ -11,7 +11,9 @@ namespace servidor
         private Socket MainSocket;
         int Port { get; set; } = 4321;
         private bool ServerRunning { get; set; } = true;
+        private readonly object key = new object();
         private readonly string WordsPath = $"{Environment.GetEnvironmentVariable("USERPROFILE")}/words.txt";
+        private List<string> Words;
 
         public void InitServer()
         {
@@ -26,6 +28,7 @@ namespace servidor
                     {
                         ie = new IPEndPoint(IPAddress.Any, Port);
                         MainSocket.Bind(ie);
+                        trigger = true;
                     }
                     catch (SocketException e)
                     {
@@ -64,9 +67,14 @@ namespace servidor
             {
                 using (sClient)
                 {
+                    bool stopClient = false;
+                    string message;
+
                     IPEndPoint ieClient = (IPEndPoint)sClient.RemoteEndPoint;
                     Console.WriteLine($"Cliente conectado: {ieClient.Address} en el puerto {ieClient.Port}");
                     Encoding encoding = Console.OutputEncoding;
+
+                    Words = ReadWordsFile(WordsPath);
 
                     using (NetworkStream ns = new NetworkStream(sClient))
                     using (StreamReader sr = new StreamReader(ns, encoding))
@@ -75,6 +83,20 @@ namespace servidor
                         sw.AutoFlush = true;
 
                         sw.WriteLine("--------- JUEGO DEL AHORCADO ---------");
+
+                        while (!stopClient && (message = sr.ReadLine()) != null)
+                        {
+                            switch (message)
+                            {
+                                case "gw":
+                                    Random rand = new Random();
+                                    int num = (int)rand.Next(0, Words.Count);
+                                    break;
+                                case "sw":
+
+                                    break;
+                            }
+                        }
                     }
                 }
             }
@@ -88,9 +110,27 @@ namespace servidor
             }
         }
 
-        private void ReadWordsFile(string path)
+        private List<string> ReadWordsFile(string path)
         {
+            List<String> words = new List<String>();
 
+            try
+            {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        words.AddRange(line.Split(",").Select(item => item.ToUpper()));
+                    }
+                }
+
+                return words;
+            }
+            catch (IOException e)
+            {
+                return null;
+            }
         }
     }
 }
