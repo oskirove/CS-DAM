@@ -1,4 +1,4 @@
-package ejem1.persona;
+package ejem1;
 
 import java.util.ArrayList;
 import java.util.Collections;

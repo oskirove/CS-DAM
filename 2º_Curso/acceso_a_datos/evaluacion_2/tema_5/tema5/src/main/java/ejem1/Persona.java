@@ -1,4 +1,4 @@
-package ejem1.persona;
+package ejem1;
 
 public class Persona {
     private int id;

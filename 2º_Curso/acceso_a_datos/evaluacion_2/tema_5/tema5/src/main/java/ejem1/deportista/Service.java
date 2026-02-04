@@ -22,8 +22,8 @@ public class Service {
     public Deportista findOne(int id) {
         try {
             Deportista d = repo.getOne(id);
-            if (d==null) {
-                 throw new ResourceNotFoundException("No se ha encontrado ningun deportista con este ID");
+            if (d == null) {
+                throw new ResourceNotFoundException("No se ha encontrado ningun deportista con este ID");
             }
             return d;
         } catch (SQLException | ClassNotFoundException e) {
@@ -31,4 +31,15 @@ public class Service {
         }
     }
 
+    public ArrayList<Deportista> findBySport(String nombre) {
+        try {
+            ArrayList<Deportista> deportistas = repo.getBySport(nombre);
+            if (deportistas.isEmpty()) {
+                throw new ResourceNotFoundException("No se han encontrado deportistas en este deporte");
+            }
+            return deportistas;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("Error en BD");
+        }
+    }
 }

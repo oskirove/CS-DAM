@@ -60,4 +60,29 @@ public class Repository {
         }
         return null;
     }
+
+    public ArrayList<Deportista> getBySport(String nombreDeporte) throws SQLException, ClassNotFoundException {
+        ArrayList<Deportista> deportistas = new ArrayList<>();
+
+        Class.forName("org.mariadb.jdbc.Driver");
+        String sql = "SELECT * FROM deportistas WHERE deporte = ?";
+
+        try (Connection conexion = DriverManager.getConnection(URL, USER, PASSWD);
+                PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, nombreDeporte);
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    deportistas.add(new Deportista(result.getInt("id"),
+                            result.getString("nombre"),
+                            result.getBoolean("activo"),
+                            result.getString("deporte"),
+                            result.getString("genero")));
+
+                }
+            }
+        }
+
+        return deportistas;
+    }
 }

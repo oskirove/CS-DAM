@@ -38,4 +38,17 @@ public class Controller {
                     .build();
         }
     }
+
+    // ejercicio 3
+    @GET
+    @Path("/deporte/{nombreDeporte}")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response findBySport(@PathParam("nombreDeporte") String nombreDeporte) {
+        try {
+            ArrayList<Deportista> deportistas = service.findBySport(nombreDeporte);
+            return Response.ok(deportistas).build();
+        } catch (ResourceNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
 }

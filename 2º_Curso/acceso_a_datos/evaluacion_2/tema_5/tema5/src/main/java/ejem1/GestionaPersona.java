@@ -1,4 +1,4 @@
-package ejem1.persona;
+package ejem1;
 
 import java.util.ArrayList;
 
@@ -42,5 +42,4 @@ public class GestionaPersona {
         this.personas.add(persona);
         return Response.ok(persona).build();
     }
-
 }
