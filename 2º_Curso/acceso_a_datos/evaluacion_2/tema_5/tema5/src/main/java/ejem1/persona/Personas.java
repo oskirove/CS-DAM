@@ -1,4 +1,4 @@
-package ejem1;
+package ejem1.persona;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class Personas {
         return Response.ok(personas).build();
     }
 
-    // ejercicio 4
+    // ejercicio 3
     @GET
     @Path("/{nombre}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

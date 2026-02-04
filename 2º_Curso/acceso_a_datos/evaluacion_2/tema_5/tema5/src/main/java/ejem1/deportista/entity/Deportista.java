@@ -1,4 +1,4 @@
-package ejem1;
+package ejem1.deportista.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
