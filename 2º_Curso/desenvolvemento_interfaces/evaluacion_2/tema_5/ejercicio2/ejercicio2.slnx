@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ejercicio2/ejercicio2.csproj" />
+  <Project Path="formulario/formulario.csproj" />
+</Solution>
