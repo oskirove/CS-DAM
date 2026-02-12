@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="cliente/cliente.csproj" Id="de3da83f-e33b-4ad7-8956-55c5f87936c2" />
+  <Project Path="Componente/Componente.csproj" Id="150b2d14-b78d-4f78-8fb7-a2b159617d32" />
   <Project Path="servidor/servidor.csproj" />
 </Solution>

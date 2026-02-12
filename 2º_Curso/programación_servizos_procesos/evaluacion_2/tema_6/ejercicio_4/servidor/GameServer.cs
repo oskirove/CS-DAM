@@ -93,10 +93,6 @@ namespace servidor
                     {
                         sw.AutoFlush = true;
 
-                        sw.WriteLine("--------- JUEGO DEL AHORCADO ---------");
-
-                        sw.Write("Introduce tu nombre de usuario: ");
-                        username = sr.ReadLine();
                         timer.Start();
 
                         while (!stopClient && (command = sr.ReadLine()) != null)
