@@ -33,14 +33,15 @@
             // 
             // etiquetaAviso1
             // 
-            this.etiquetaAviso1.ColorFinal = System.Drawing.Color.Blue;
-            this.etiquetaAviso1.ColorInicial = System.Drawing.Color.White;
+            this.etiquetaAviso1.ColorFinal = System.Drawing.Color.AliceBlue;
+            this.etiquetaAviso1.ColorInicial = System.Drawing.Color.RosyBrown;
+            this.etiquetaAviso1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.etiquetaAviso1.Gradiente = true;
-            this.etiquetaAviso1.Imagen = global::formulario.Properties.Resources.images;
+            this.etiquetaAviso1.Imagen = global::formulario.Properties.Resources.img28;
             this.etiquetaAviso1.Location = new System.Drawing.Point(282, 198);
-            this.etiquetaAviso1.Marca = ejercicio2.EtiquetaAviso.EMarca.Circulo;
+            this.etiquetaAviso1.Marca = ejercicio2.EtiquetaAviso.EMarca.Imagen;
             this.etiquetaAviso1.Name = "etiquetaAviso1";
-            this.etiquetaAviso1.Size = new System.Drawing.Size(213, 66);
+            this.etiquetaAviso1.Size = new System.Drawing.Size(800, 130);
             this.etiquetaAviso1.TabIndex = 0;
             this.etiquetaAviso1.Text = "etiquetaAviso1";
             this.etiquetaAviso1.ClickEnMarca += new System.EventHandler(this.etiquetaAviso1_ClickEnMarca_1);
@@ -50,7 +51,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1456, 598);
             this.Controls.Add(this.etiquetaAviso1);
             this.Name = "Form1";
             this.Text = "Form1";

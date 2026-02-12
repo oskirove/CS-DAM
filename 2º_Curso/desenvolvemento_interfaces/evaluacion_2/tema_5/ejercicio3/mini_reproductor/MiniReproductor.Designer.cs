@@ -34,7 +34,7 @@
             // 
             // btn
             // 
-            this.btn.Location = new System.Drawing.Point(199, 128);
+            this.btn.Location = new System.Drawing.Point(24, 64);
             this.btn.Name = "btn";
             this.btn.Size = new System.Drawing.Size(148, 91);
             this.btn.TabIndex = 1;
@@ -45,7 +45,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(232, 83);
+            this.label1.Location = new System.Drawing.Point(57, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 25);
             this.label1.TabIndex = 2;
@@ -58,7 +58,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn);
             this.Name = "MiniReproductor";
-            this.Size = new System.Drawing.Size(576, 271);
+            this.Size = new System.Drawing.Size(197, 179);
             this.ResumeLayout(false);
             this.PerformLayout();
 

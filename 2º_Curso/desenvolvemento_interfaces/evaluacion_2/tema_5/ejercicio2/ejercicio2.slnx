@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="ejercicio2/ejercicio2.csproj" />
-  <Project Path="formulario/formulario.csproj" />
+  <Project Path="ejercicio2/ejercicio2.csproj" Id="43e74cac-f159-40db-80e3-1487c72fb7d1" />
+  <Project Path="formulario/formulario.csproj" Id="28c7205e-e7ec-4769-8b0e-6616a9057dc6" />
 </Solution>

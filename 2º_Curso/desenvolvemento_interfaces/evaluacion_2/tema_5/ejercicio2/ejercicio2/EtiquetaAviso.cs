@@ -54,7 +54,11 @@ namespace ejercicio2
         public Color ColorInicial
         {
             get { return colorInicial; }
-            set { colorInicial = value; this.Refresh(); }
+            set
+            {
+                colorInicial = value;
+                this.Refresh();
+            }
         }
 
         [Category("Appearance")]
@@ -163,7 +167,7 @@ namespace ejercicio2
 
             if (rectMarca.Contains(e.Location))
             {
-                ClickEnMarca?.Invoke(this, EventArgs.Empty);
+                ClickEnMarca?.Invoke(this, EventArgs.Empty);//Esto con OnClickEnMarca
             }
         }
     }
