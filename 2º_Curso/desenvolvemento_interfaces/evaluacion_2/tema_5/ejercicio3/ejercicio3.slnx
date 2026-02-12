@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Formulario/Formulario.csproj" />
+  <Project Path="mini_reproductor/mini_reproductor.csproj" />
+</Solution>
