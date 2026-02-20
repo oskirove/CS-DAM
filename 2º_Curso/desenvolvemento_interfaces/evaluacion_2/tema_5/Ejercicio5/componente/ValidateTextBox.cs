@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace componente
 {
-    public partial class ValidateTextBox : UserControl
+    public partial class ValidateTextBox : UserControl //Cambiar color si cambia tipo. Posicion recuadro 5,5. Ajustar bien el alto.
     {
 
         [Category("Tipo")]
@@ -21,9 +21,6 @@ namespace componente
             Textual
         }
 
-        private TextBox textBoxInterno = new TextBox();
-
-
         private ETipo etipo = ETipo.Numerico;
 
         public ETipo Tipo
@@ -33,8 +30,9 @@ namespace componente
                 return etipo;
             }
             set
-            {  
+            {
                 etipo = value;
+                this.Refresh();
             }
         }
 
@@ -45,12 +43,13 @@ namespace componente
         {
             get
             {
-                return textBoxInterno.Multiline;
+                return textBox1.Multiline;
             }
             set
             {
-                textBoxInterno.Multiline = value;
-                this.Height = value ? 100 : textBoxInterno.Height + 20;
+                textBox1.Multiline = value;
+                this.Height = value ? 100 : textBox1.Height + 20;
+                this.Refresh();
             }
         }
 
@@ -62,21 +61,20 @@ namespace componente
         {
             get
             {
-                return textBoxInterno.Text;
+                return textBox1.Text;
             }
             set
             {
-                textBoxInterno.Text = value;
+                textBox1.Text = value;
+                this.Refresh();
             }
         }
-
-
 
         [Category("Evento")]
         [Description("Se lanza cuando el texto del textbox cambia.")]
         public EventHandler TextoChanged;
 
-        private Color ColorBorde = Color.Red;
+        private Color colorBorde = Color.Transparent;
         public ValidateTextBox()
         {
             InitializeComponent();
@@ -85,26 +83,75 @@ namespace componente
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            using (Pen lapiz = new Pen(ColorBorde, 8))
+            using (Pen lapiz = new Pen(colorBorde, 4))
             {
-                e.Graphics.DrawRectangle(lapiz, 5, 5, this.Width - 9, this.Height - 9);
+                e.Graphics.DrawRectangle(lapiz, 5, 5, this.Width - 10, this.Height - 10);
             }
         }
 
         private void ValidateTextBox_Load(object sender, EventArgs e)
         {
-            TextBox textBox = new TextBox();
-            textBox.Location = new Point(10, 10);
-            textBox.Width = this.Width - 20;
-            this.Height = textBox.Height + 20;
-            textBoxInterno.TextChanged += (s, ev) => OnTextChanged(EventArgs.Empty);
+            textBox1.Location = new Point(10, 10);
+            textBox1.Width = this.Width - 20;
+            this.Height = textBox1.Height + 20;
 
-            this.Controls.Add(textBox);
+            textBox1.TextChanged += (s, ev) => OnTextChanged(EventArgs.Empty);
         }
 
         protected virtual void OnTextoChanged(EventArgs e)
         {
             TextoChanged?.Invoke(this, e);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string texto = textBox1.Text;
+
+            if (string.IsNullOrEmpty(texto))
+            {
+                colorBorde = Color.Red;
+            }
+            else
+            {
+                switch (etipo)
+                {
+                    case ETipo.Numerico:
+
+                        string textoProcesado = texto.Trim();
+
+                        if (textoProcesado.Length > 0 && textoProcesado.All(char.IsDigit))
+                        {
+                            colorBorde = Color.Green;
+                        }
+                        else
+                        {
+                            colorBorde = Color.Red;
+                        }
+
+                        break;
+                    case ETipo.Textual:
+
+                        if (texto.All(c => char.IsLetter(c) || c == ' '))
+                        {
+                            colorBorde = Color.Green;
+                        }
+                        else
+                        {
+                            colorBorde = Color.Red;
+                        }
+
+                        break;
+                }
+            }
+
+            this.Refresh();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            textBox1.Width = this.Width - 20;
+            this.Height = textBox1.Height + 20;
         }
     }
 }

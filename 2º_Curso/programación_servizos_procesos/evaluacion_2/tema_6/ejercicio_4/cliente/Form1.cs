@@ -51,14 +51,16 @@ namespace cliente
                 return $"Error: {e.Message}";
             }
         }
+
         private void dibujoAhorcado1_Ahorcado(object sender, EventArgs e)
         {
             MessageBox.Show("Has perdido");
+            ResetGame();
         }
 
         private void dibujoAhorcado1_CambiaError(object sender, EventArgs e)
         {
-            MessageBox.Show($"Te faltan {7 - dibujoAhorcado1.Errores} intentos.");
+            lblIntentos.Text = ($"Intentos: {7 - dibujoAhorcado1.Errores}");
         }
 
 
@@ -68,6 +70,8 @@ namespace cliente
             lblDebug.Text = palabra;
 
             button2.Enabled = true;
+
+            GenerateLabels(indicesAcertados);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -81,7 +85,7 @@ namespace cliente
             else if (palabraComparar == palabra)
             {
                 MessageBox.Show("Has adivinado la palabra");
-                GenerateLabels(null);
+                ResetGame();
                 palabra = null;
             }
             else
@@ -92,14 +96,11 @@ namespace cliente
                 {
                     dibujoAhorcado1.Errores++;
                 }
-
-                GenerateLabels(indicesAcertados);
             }
         }
 
         private void GenerateLabels(int[] aciertos)
         {
-            if (palabra == null) return;
 
             for (int i = this.Controls.Count - 1; i >= 0; i--)
             {
@@ -121,7 +122,7 @@ namespace cliente
                 lbl.Top = 230;
                 lbl.Left = 200 + (i * 30);
                 lbl.Tag = i;
-
+                Console.WriteLine(lbl.Tag);
 
                 if (aciertos != null && aciertos.Contains(i))
                 {
@@ -142,7 +143,7 @@ namespace cliente
 
             if (palabraComparar.Length != palabra.Length)
             {
-                MessageBox.Show("Como va a ser esta la palabra si no tienen ni el mismo número de caracteres, lerdo.");
+                MessageBox.Show("El tamaño no coincide, debes estar mas atento");
             }
             else
             {
@@ -159,5 +160,20 @@ namespace cliente
             return indices.ToArray();
         }
 
+        private void ResetGame()
+        {
+            lblIntentos.Text = "Intentos: 7";
+
+            foreach (Control c in Controls)
+            {
+                if (c is Label && c.Tag is int)
+                {
+                    Controls.Remove(c);
+                }
+            }
+
+            dibujoAhorcado1.Errores = 0;
+            button2.Enabled = false;
+        }
     }
 }

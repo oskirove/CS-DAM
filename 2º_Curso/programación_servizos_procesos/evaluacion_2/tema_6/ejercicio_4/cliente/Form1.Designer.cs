@@ -33,6 +33,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.lblDebug = new System.Windows.Forms.Label();
+            this.lblIntentos = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // dibujoAhorcado1
@@ -82,11 +83,21 @@
             this.lblDebug.TabIndex = 4;
             this.lblDebug.Text = "label1";
             // 
+            // lblIntentos
+            // 
+            this.lblIntentos.AutoSize = true;
+            this.lblIntentos.Location = new System.Drawing.Point(927, 506);
+            this.lblIntentos.Name = "lblIntentos";
+            this.lblIntentos.Size = new System.Drawing.Size(112, 25);
+            this.lblIntentos.TabIndex = 5;
+            this.lblIntentos.Text = "Intentos: 7";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1131, 644);
+            this.Controls.Add(this.lblIntentos);
             this.Controls.Add(this.lblDebug);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
@@ -106,6 +117,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label lblDebug;
+        private System.Windows.Forms.Label lblIntentos;
     }
 }
 

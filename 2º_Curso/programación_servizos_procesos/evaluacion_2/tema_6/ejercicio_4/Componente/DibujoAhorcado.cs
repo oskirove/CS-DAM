@@ -24,7 +24,7 @@ namespace Componente
                     this.OnAhorcado(EventArgs.Empty);
                 }
 
-                if (value == 7)
+                if (value > 7)
                 {
                     this.OnAhorcado(EventArgs.Empty);
                 }
