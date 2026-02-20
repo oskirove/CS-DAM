@@ -12,13 +12,16 @@ namespace componente
 {
     public partial class ValidateTextBox : UserControl
     {
+
+        [Category("Tipo")]
+        [Description("Elegir entre validador textual y numérico")]
         public enum ETipo
         {
             Numerico,
             Textual
         }
 
-        private TextBox TextBoxInterno = new TextBox();
+        private TextBox textBoxInterno = new TextBox();
 
 
         private ETipo etipo = ETipo.Numerico;
@@ -35,28 +38,35 @@ namespace componente
             }
         }
 
+
+        [Category("Tipo")]
+        [Description("Cambiar a multilinea")]
         public bool Multilinea
         {
             get
             {
-                return TextBoxInterno.Multiline;
+                return textBoxInterno.Multiline;
             }
             set
             {
-                TextBoxInterno.Multiline = value;
-                this.Height = value ? 100 : TextBoxInterno.Height + 20;
+                textBoxInterno.Multiline = value;
+                this.Height = value ? 100 : textBoxInterno.Height + 20;
             }
         }
 
+
+
+        [Category("Texto")]
+        [Description("Cambia el contenido")]
         public string Texto
         {
             get
             {
-                return TextBoxInterno.Text;
+                return textBoxInterno.Text;
             }
             set
             {
-                TextBoxInterno.Text = value;
+                textBoxInterno.Text = value;
             }
         }
 
@@ -77,7 +87,6 @@ namespace componente
             base.OnPaint(e);
             using (Pen lapiz = new Pen(ColorBorde, 8))
             {
-
                 e.Graphics.DrawRectangle(lapiz, 5, 5, this.Width - 9, this.Height - 9);
             }
         }
@@ -88,7 +97,7 @@ namespace componente
             textBox.Location = new Point(10, 10);
             textBox.Width = this.Width - 20;
             this.Height = textBox.Height + 20;
-            TextBoxInterno.TextChanged += (s, ev) => OnTextChanged(EventArgs.Empty);
+            textBoxInterno.TextChanged += (s, ev) => OnTextChanged(EventArgs.Empty);
 
             this.Controls.Add(textBox);
         }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace mini_reproductor
+namespace mini_reproductor//Categorias y descrip. Invertir mayus(privado min, ublico may)
 {
     public partial class MiniReproductor : UserControl
     {

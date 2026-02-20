@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Formulario
+namespace Formulario//Titulo icono. Combo no editable. taborder. Cambiar tiempo con el combo.Revisar null. Revisar img corrupta.
 {
     public partial class Form1 : Form
     {
